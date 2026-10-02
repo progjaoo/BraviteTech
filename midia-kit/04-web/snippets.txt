@@ -1,0 +1,30 @@
+<!-- BRAVITE · trechos para integração. Ajuste os caminhos ao publicar. -->
+
+<!-- 1. Dentro de <head>. -->
+<link rel="stylesheet" href="/marca/bravite.css">
+<link rel="icon" href="/marca/icones/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/marca/icones/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="/marca/icones/apple-touch-icon-180.png" sizes="180x180">
+<meta name="theme-color" content="#0A0A0A">
+
+<!-- 2. Assinatura principal em fundo claro. O SVG preserva as letras em curvas. -->
+<a href="https://www.bravite.com.br" class="bravite-logo" aria-label="Bravite — página inicial">
+  <img src="/marca/bravite-horizontal-principal.svg" width="836" height="142" alt="Bravite">
+</a>
+
+<!-- 3. Assinatura reversa em fundo preto. -->
+<a href="https://www.bravite.com.br" class="bravite-logo bravite-dark" aria-label="Bravite — página inicial">
+  <img src="/marca/bravite-horizontal-reversa.svg" width="836" height="142" alt="Bravite">
+</a>
+
+<!-- 4. Metadados básicos. Publique a imagem social de 1200x630 e ajuste o caminho. -->
+<meta property="og:site_name" content="Bravite">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bravite · software house">
+<meta property="og:url" content="https://www.bravite.com.br/">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:image" content="https://www.bravite.com.br/marca/bravite-og-1200x630.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bravite — Coragem para criar. Engenharia para evoluir.">
+<meta name="twitter:card" content="summary_large_image">

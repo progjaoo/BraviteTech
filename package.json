@@ -1,0 +1,18 @@
+{
+  "name": "bravite", "version": "1.0.0", "private": true,
+  "workspaces": ["apps/*", "packages/shared"],
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "dev": "dotenv -e .env.local -- concurrently -k -n api,web -c blue,white \"npm:dev:api\" \"npm:dev:web\"",
+    "dev:api": "npm run dev --workspace=@bravite/api",
+    "dev:web": "npm run dev --workspace=@bravite/web",
+    "build": "npm run build --workspace=@bravite/api && npm run build --workspace=@bravite/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test:integration": "node --env-file=.env.local --test scripts/test-integration.mjs",
+    "db:start": "node scripts/start-database.mjs",
+    "start": "dotenv -e .env.local -- concurrently -k -n api,web \"npm:start:api\" \"npm:start:web\"",
+    "start:api": "npm run start --workspace=@bravite/api",
+    "start:web": "npm run start --workspace=@bravite/web"
+  },
+  "devDependencies": {"concurrently": "^9.2.0", "dotenv-cli": "^8.0.0", "typescript": "^5.9.0", "@types/node": "^24.0.0"}
+}

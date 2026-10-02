@@ -1,0 +1,1008 @@
+{
+  "name": "Bravite — mídia kit rebrand",
+  "version": "2.0",
+  "date": "2026-10-01",
+  "palette": {
+    "black": "#0A0A0A",
+    "blue": "#2D6BFF",
+    "white": "#FFFFFF",
+    "recommendedNeutral": "#F3F4F6"
+  },
+  "verification": {
+    "approvedLogoGeometryPreserved": true,
+    "approvedMasterPaths": 9,
+    "socialPieces": 19,
+    "manualPages": 12,
+    "presentationSlides": 6,
+    "logoVariants": 12,
+    "oldBrandColorsInActiveSources": 0,
+    "businessCardTrimMm": [
+      90,
+      50
+    ],
+    "businessCardBleedMm": 3,
+    "webExampleMobileDocumentWidthPx": 390
+  },
+  "files": [
+    {
+      "path": "00-guia/bravite-manual-da-marca.pdf",
+      "bytes": 1188538,
+      "sha256": "4b1051d01200940b745a1f43a820855471f45ec30c6ac6e84c0d5e43b54a065a"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/01-capa.pdf",
+      "bytes": 28301,
+      "sha256": "ab63e897198bd246a3d2cb64b418b0381804548fae1d9ce7fa89e8f0d13f6087"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/01-capa.png",
+      "bytes": 92013,
+      "sha256": "0485335de4b50041c97f37d22a27eb30433c945c5d69890106950301e87aa194"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/01-capa.svg",
+      "bytes": 2699,
+      "sha256": "9a5adcfa3d5d193c01258676f2f0e4f51e7b33c152f828c66393a807a3631062"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/02-origem.pdf",
+      "bytes": 79748,
+      "sha256": "93938b7c56f381feebecce973f50ae5986d23b3842bb44749204561948dc47fe"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/02-origem.png",
+      "bytes": 112706,
+      "sha256": "f6f4f7468b7b29d3402129f4711a19c0d249e2f774cf9f75b2be7c3587b5d080"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/02-origem.svg",
+      "bytes": 3783,
+      "sha256": "5bc20a15a71c6e83a70e62e505c1a6c0eef5fad3a7ae969e5d4fb2f036dbf3d8"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/03-logotipo.pdf",
+      "bytes": 81994,
+      "sha256": "ec1d8f1eec85d8c3c638504ec5f238f95e9eea4858dd209d77a936566e23a4e2"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/03-logotipo.png",
+      "bytes": 126218,
+      "sha256": "fb04b2d910bb3955ac7bfae9441066650d1a094af32d322f7186b291e6084fdc"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/03-logotipo.svg",
+      "bytes": 3866,
+      "sha256": "9e97ca97eb44ee8102c7812af66fd96f10cee59b09136b736b29f9fd1f6ac4fe"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/04-versoes.pdf",
+      "bytes": 55333,
+      "sha256": "38ef4309949a4ba3750819b98cbc244dd7fbfd3b72e43535d8d8ce8917b51a4e"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/04-versoes.png",
+      "bytes": 109158,
+      "sha256": "dfaa55cb3b03e1bda8f9f6ccc64d4e1776ebc35a148eea96dd7282f28a638026"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/04-versoes.svg",
+      "bytes": 6787,
+      "sha256": "a7faa309bcf034e02c40331c0adb220497baa9cba77fcc00985736d9f81c1587"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/05-respiro-tamanho.pdf",
+      "bytes": 82034,
+      "sha256": "f3fd796bafbc24a2c8a4d451586516d9b4c7a36a3a6254ccb24692a1cd0716cd"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/05-respiro-tamanho.png",
+      "bytes": 120961,
+      "sha256": "19b62330b65a93e1f7672533678e82421fbb4a72af7a280b6454672f63f9450f"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/05-respiro-tamanho.svg",
+      "bytes": 4481,
+      "sha256": "de3b5dec6dbac0ab9d61aa134cdb1be80bf53e12fd89ac4157a815cf7542a2c0"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/06-paleta-contraste.pdf",
+      "bytes": 116239,
+      "sha256": "5312a7ce5c0360293df74ea3f93f461f2df95ad36db96150f02c5c905dbf4ab7"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/06-paleta-contraste.png",
+      "bytes": 143294,
+      "sha256": "82cb19ad7a458f11392c6307e85c1ff60baaa779f484f85f633a9ef21b048e2e"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/06-paleta-contraste.svg",
+      "bytes": 4387,
+      "sha256": "d921d869437efb0765e105fb1a19d88163416a15de3d1629b1bcfdc7d64d3681"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/07-tipografia.pdf",
+      "bytes": 84850,
+      "sha256": "cf136b123a3f5daf59412d59d5c6752cd468c0646d3d2d570b1db415b7adf3f6"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/07-tipografia.png",
+      "bytes": 133137,
+      "sha256": "c4b51a9ca3fb9076d87979234020f81da7e476a084839a3383c9a8f6183fd580"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/07-tipografia.svg",
+      "bytes": 3040,
+      "sha256": "57841e25d5d03538ce426c5094c34dffafd46a941e9703308c0b794c527de9ba"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/08-linguagem-grafica.pdf",
+      "bytes": 88751,
+      "sha256": "b285b3ea0d7d3100f4c8dd1c7b94747ccf58f8e3cf4af681c7efd48ff6cc1b84"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/08-linguagem-grafica.png",
+      "bytes": 132197,
+      "sha256": "7aca9947b9078ecfe6ae05c51458dd3c08d714617af8fbca213783cd2106eb1d"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/08-linguagem-grafica.svg",
+      "bytes": 3385,
+      "sha256": "f2beb6ee1b4e628fc6d377e1f677d9639e4974de5b2ea7166790eff00455a2d4"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/09-voz.pdf",
+      "bytes": 114891,
+      "sha256": "63c555e1462cd111865158b316b04d5b5eff513d2dae81b39b17ac946a67b14a"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/09-voz.png",
+      "bytes": 165948,
+      "sha256": "a4bb0aa3be379cb83b0753412284711ee152ffe46a07aa31c38845370b600c3f"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/09-voz.svg",
+      "bytes": 3394,
+      "sha256": "70a8280a16ea78f2741f132499d915781fa9f51e76fda6f356a7cbf083aa225c"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/10-formatos.pdf",
+      "bytes": 110229,
+      "sha256": "2ec2990ae7c591ffcaefcffa6a99c15e265691001b2f0e440765d8e7f2712110"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/10-formatos.png",
+      "bytes": 148189,
+      "sha256": "7137ca4102fada088cef38313ec49bd148e06eb88b73d8dd3ed57bb71cae2884"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/10-formatos.svg",
+      "bytes": 4980,
+      "sha256": "21732f6f1db91c6392b92802672571e55c3b9e8147c475dfee508220a0a736e5"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/11-aplicacoes.pdf",
+      "bytes": 161960,
+      "sha256": "db0858fe250afdfebe3cb0ed043ce5238d38b13878ba27a2eb294ecd8c433d02"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/11-aplicacoes.png",
+      "bytes": 192161,
+      "sha256": "1ba718d57057d5c1c18518fd3a4d374b456fc2eb69d4c87ed33acd5279d6571a"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/11-aplicacoes.svg",
+      "bytes": 4065,
+      "sha256": "ff6c68ea2c1e6b441090b2caa565b067c067847de0c8672003c4e5b7cfe5d2c2"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/12-arquivos.pdf",
+      "bytes": 191812,
+      "sha256": "c47acf0c9ecf76959d54e863deb61b53a74cf17f9697dc6c052b34cf02187926"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/12-arquivos.png",
+      "bytes": 206188,
+      "sha256": "23a254786ee50d016cd3bb0ddbf037596d09bcd3cf0359a6c1618fba30532c45"
+    },
+    {
+      "path": "00-guia/paginas-editaveis/12-arquivos.svg",
+      "bytes": 4366,
+      "sha256": "51961b53c8fc71b52fbb493c5061549e67ef84cf7e7e778ac7435bfb641fb270"
+    },
+    {
+      "path": "01-logos/README.md",
+      "bytes": 1954,
+      "sha256": "1aa8979c85958d88473fedaf2834dde37c4baa1c79211b37da0230865d1e72b4"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-branca.pdf",
+      "bytes": 1505,
+      "sha256": "2863a94ee2461416edeed745e75c01bd4ac9a20e80c6accd0546ea3104d58e0c"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-branca.png",
+      "bytes": 38595,
+      "sha256": "a02c931ccda34eb8a7fb25a7f74e2a0ce3fda758d268060d2471039fac9045bf"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-branca.svg",
+      "bytes": 1285,
+      "sha256": "dc3c150d635a009aca6182f899265d6bcd573fb81743eac146e36ed6c268e99b"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-preta.pdf",
+      "bytes": 1511,
+      "sha256": "75e606043a4b709f74a4330930e172bcd8524d1f3c5d136b6caf320f42ea5a86"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-preta.png",
+      "bytes": 50877,
+      "sha256": "677b87e97628cf788bbc3c554d2e64d8d0176833f49c675cb1d44d7d45f2089f"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-preta.svg",
+      "bytes": 1284,
+      "sha256": "43c8ae9b74ab987ecbba9e2b619da864372d1f34ac61ddd467001b80d26093f1"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-principal.pdf",
+      "bytes": 1527,
+      "sha256": "bc061b52b3da89b38f6853a312cd8b7a282a1034666322fcaadb735ea40e1585"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-principal.png",
+      "bytes": 51309,
+      "sha256": "e20ba862d7d00d23e3cf6d859970bfd08e88e9601ede3dfc351a68dd9da66a40"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-principal.svg",
+      "bytes": 1288,
+      "sha256": "531f3bfc1eb964d6e87a71079309fdeb0635ceb2f57a9fa2c28351f8a2f3f3ff"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-reversa.pdf",
+      "bytes": 1518,
+      "sha256": "9d35713de8739b272b5f492f58e4e93cf13035544a765760389a55188b5d4645"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-reversa.png",
+      "bytes": 40726,
+      "sha256": "b724e76041e29238b52111855dc88e7f8ca3515f4f9f350391831b1fd6064994"
+    },
+    {
+      "path": "01-logos/horizontal/bravite-horizontal-reversa.svg",
+      "bytes": 1286,
+      "sha256": "7441fb73b62ff1eb35521fd011d337b3fbdba90894d932d6f6a817d9f08256c2"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-branca.pdf",
+      "bytes": 1129,
+      "sha256": "5a05ab7cd0ef7c8abcaf6400bda9ce255e05a26937eec2f21ec6435aecad4936"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-branca.png",
+      "bytes": 40283,
+      "sha256": "fdaf13f5f510ab6766a302b9a24c63f4ec01e6a7bb1ae09ada6473bad157579a"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-branca.svg",
+      "bytes": 347,
+      "sha256": "0c2fa9764f4675e9d9a388357332ef39e4be6686c222dc0b726410e0e9677deb"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-preta.pdf",
+      "bytes": 1137,
+      "sha256": "3c41d8c9249fe216c28d0fc09ada9abe1e3ce4933c304c0172548305bda0f311"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-preta.png",
+      "bytes": 51722,
+      "sha256": "2e7f4706f9ee0dda51703e00038020b6d2bbc60118e75b78836470bd0f019254"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-preta.svg",
+      "bytes": 346,
+      "sha256": "d8504f46db24c84fe787370ce0d7902f85171163da5683a05a9a5d8ce4c4cb83"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-principal.pdf",
+      "bytes": 1150,
+      "sha256": "480043f2788f3e2b5d0cf20be54109717ff6f00cf3ad6ed31c314219aace1c47"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-principal.png",
+      "bytes": 52451,
+      "sha256": "e6e4560bba3fd2713aff51869c4e011ae52246c57a896412b9df482def596803"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-principal.svg",
+      "bytes": 350,
+      "sha256": "b7f056a82dafa60bc37d3633c045e0f4d6b224ae1925ae2730c49f984ec2dd89"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-reversa.pdf",
+      "bytes": 1143,
+      "sha256": "f11ceaf1c3d959f4735cffc75ed94459f4b7f1cd3b8b11b209f39b1c812b1514"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-reversa.png",
+      "bytes": 45266,
+      "sha256": "90a82b8c45cfadee764e339ddb60098be073cfb135fa7d172cf65e6b78805f99"
+    },
+    {
+      "path": "01-logos/simbolo/bravite-simbolo-reversa.svg",
+      "bytes": 348,
+      "sha256": "cd501594ce031aca53aba8ab974e9ae71f200fa558ce9b221f814684295cfc15"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-branca.pdf",
+      "bytes": 1565,
+      "sha256": "7a8c2e53b533638e8fd19012c64d631c5a756b5cf80bcf6d99c461b18bda1db0"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-branca.png",
+      "bytes": 53529,
+      "sha256": "e165b6cb59352a346335fd6222987410e6ba89eb29508b2a67f894cb39613047"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-branca.svg",
+      "bytes": 1389,
+      "sha256": "45e40a7aa8e087ebd02b3a554ccc04bff2f35d45b91caddf12ed0e356d8d42ce"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-preta.pdf",
+      "bytes": 1569,
+      "sha256": "0d6790beade27ccaa5bb0abcbdda77a28cef1aaf9547e8e5f5377c8b93d8c3f0"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-preta.png",
+      "bytes": 69108,
+      "sha256": "0b01695bace2a65bef86726aba313bee65e8b714bb751e61c0d757c5f78f1ee0"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-preta.svg",
+      "bytes": 1388,
+      "sha256": "c723e32b60467647dafb85bf16ee147169b9ca2463f07f67851f545f0ac4dab1"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-principal.pdf",
+      "bytes": 1586,
+      "sha256": "caf83aab08119fb19821d03be01c696dec91b8d8255b907b7e9d4d6e77b431ca"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-principal.png",
+      "bytes": 69599,
+      "sha256": "7bc2b5505219241f36e0e4f12bb7533b3924dc80f041d4e9857612e48aeb3d8e"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-principal.svg",
+      "bytes": 1392,
+      "sha256": "b8179cf1eed21cd6dcf2f257874d891bfbd2335fafefacedbc45f400ffc4d48e"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-reversa.pdf",
+      "bytes": 1577,
+      "sha256": "65f517a0dbe487fa47ab6b975f6adf6cf4e15d5ed6c510c69f9a1ca6069b49f9"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-reversa.png",
+      "bytes": 56507,
+      "sha256": "581b22fb5e2407c706deeba94fd1c34b1df4b538dbf1134b9e4454752a4b6a90"
+    },
+    {
+      "path": "01-logos/vertical/bravite-vertical-reversa.svg",
+      "bytes": 1390,
+      "sha256": "c17528e47ab0776c43793a460e5f2ef0b773251e5607d357f083d27cd3015c24"
+    },
+    {
+      "path": "02-social/README.md",
+      "bytes": 2884,
+      "sha256": "ac027f211df0829e5287fccbce5e29aafa3a56e44ce55b7cbc8044c6d4f6eeed"
+    },
+    {
+      "path": "02-social/carrossel/01-o-que-move-a-bravite.png",
+      "bytes": 71900,
+      "sha256": "dce05f13523e63deff053b978ac475c38c24fce884b667859014b0d167f817b1"
+    },
+    {
+      "path": "02-social/carrossel/01-o-que-move-a-bravite.svg",
+      "bytes": 2949,
+      "sha256": "5c92bb7f261d8ea16bed2d5e5e6a64d7bb801aced8e07bb060be3c940e40137a"
+    },
+    {
+      "path": "02-social/carrossel/02-brave.png",
+      "bytes": 67321,
+      "sha256": "c0db9738ef6552d4262bb68c8e1f37d8927b5932870e3f8916f385624bcb9283"
+    },
+    {
+      "path": "02-social/carrossel/02-brave.svg",
+      "bytes": 2894,
+      "sha256": "45d86d5be3d07f5675026a8a9cbdc30604797a612663d93acc619bdcd2af8e0a"
+    },
+    {
+      "path": "02-social/carrossel/03-it.png",
+      "bytes": 61809,
+      "sha256": "dbca0e25ec68ae9e31d225301377947696cd1db2257beb57bc2da425d2174cf6"
+    },
+    {
+      "path": "02-social/carrossel/03-it.svg",
+      "bytes": 2970,
+      "sha256": "606e023fa866d41325bb230e9f24868ff2739f5888ed7a5e736590ef48fa532c"
+    },
+    {
+      "path": "02-social/carrossel/04-engineer.png",
+      "bytes": 62776,
+      "sha256": "00c4eda4c5116dafb5a3a16d1b03553c0f0fd4b80244752f3f1ab1f2a64e79cc"
+    },
+    {
+      "path": "02-social/carrossel/04-engineer.svg",
+      "bytes": 2809,
+      "sha256": "6dad0abe8c227b9ca51b1f8f4a93cfb7f5c796e3ec90ac340b89f79603bdfb81"
+    },
+    {
+      "path": "02-social/carrossel/05-coragem-tecnologia-engenharia.png",
+      "bytes": 74952,
+      "sha256": "3a1ea07ad826a97d11bf0cd0a0b3cff7ce2d274ec592852e9d1bd0e1e4edc043"
+    },
+    {
+      "path": "02-social/carrossel/05-coragem-tecnologia-engenharia.svg",
+      "bytes": 2750,
+      "sha256": "eb90f73c109c6e21bcd4e2808e79f18471aa7a3d5992b35f613e8c68239d271d"
+    },
+    {
+      "path": "02-social/destaques/contato.png",
+      "bytes": 32048,
+      "sha256": "a6775c896247c8ad3ef9d06046e1d59f49019fcbfb01ab7f624bd01fae4f1342"
+    },
+    {
+      "path": "02-social/destaques/contato.svg",
+      "bytes": 827,
+      "sha256": "f503bec47043777de76772d18a8a218f6eeee741f1f00c7e3ec17ae00f454d5a"
+    },
+    {
+      "path": "02-social/destaques/conteudos.png",
+      "bytes": 33769,
+      "sha256": "80ed3665f3d68609e40e38757cf9edc86955b530faba1392f014f7d6abf0503b"
+    },
+    {
+      "path": "02-social/destaques/conteudos.svg",
+      "bytes": 845,
+      "sha256": "8757617b55fe4e16e68aefe32c034e16ad1200515b7724936b48c3d3eb79ba01"
+    },
+    {
+      "path": "02-social/destaques/processo.png",
+      "bytes": 33036,
+      "sha256": "fc2d902fad514a39c5c07c66db825fcbe348ea785278a3f42a8245d9e86299d5"
+    },
+    {
+      "path": "02-social/destaques/processo.svg",
+      "bytes": 866,
+      "sha256": "f3922487fc02549b56967aba9931f3b541fc0fecdfc0743c6e198b58fc74967d"
+    },
+    {
+      "path": "02-social/destaques/projetos.png",
+      "bytes": 32087,
+      "sha256": "c0c0b27aa20bdf34bd3c6d7583d8bdde40e6fafb1776a21ee2950fc25422192f"
+    },
+    {
+      "path": "02-social/destaques/projetos.svg",
+      "bytes": 838,
+      "sha256": "7a519c3985a1e7e60ff23c50abe204f315ae0215a105a088a9edc05eccf2b269"
+    },
+    {
+      "path": "02-social/destaques/sobre.png",
+      "bytes": 30395,
+      "sha256": "f1faa145a4fa9b5781a0ff74505cae71b51fb8a9408637947e5a1d5a8e376201"
+    },
+    {
+      "path": "02-social/destaques/sobre.svg",
+      "bytes": 805,
+      "sha256": "9f993274301cdf82a2ec0e4069e186350dae618b319293feda9a130461520178"
+    },
+    {
+      "path": "02-social/feed/01-apresentacao.png",
+      "bytes": 74577,
+      "sha256": "52059d285914e4f33dc2863d07085977448afb76ce2e81f27f5ab1141418a0d2"
+    },
+    {
+      "path": "02-social/feed/01-apresentacao.svg",
+      "bytes": 2868,
+      "sha256": "72abdfc42984f0f98e21b3c182e483baf8cd1d021177d9bd8cadc745b4da01eb"
+    },
+    {
+      "path": "02-social/feed/02-conteudo-educativo.png",
+      "bytes": 116990,
+      "sha256": "5c09448b2a7a58e3000972bdc8f9f42f7d76f624309e9c31e502a5bcbf8caaf9"
+    },
+    {
+      "path": "02-social/feed/02-conteudo-educativo.svg",
+      "bytes": 3622,
+      "sha256": "377894eaf544b1e5df0e573798642597cdfc03d9c4dab3d2fe654e7a18e70687"
+    },
+    {
+      "path": "02-social/feed/03-contato.png",
+      "bytes": 74113,
+      "sha256": "6fac0dc49a91e6b700a2ed06852f367a53b762fc557b75e9ac8bbb574cc8d1a3"
+    },
+    {
+      "path": "02-social/feed/03-contato.svg",
+      "bytes": 2964,
+      "sha256": "dbb90cbf1014ae11f8a3f1b4b81dfc3b65c2fb0ec2eca023f28b4d90a4a7d64d"
+    },
+    {
+      "path": "02-social/feed/04-marca-quadrado.png",
+      "bytes": 49906,
+      "sha256": "2f43b3d03507f55f58832260f3202941acd4b934c9b84dbf4524043984be68fd"
+    },
+    {
+      "path": "02-social/feed/04-marca-quadrado.svg",
+      "bytes": 2301,
+      "sha256": "410c47c4df8382775bdb14a3de495ec40db9226ff14eb61622491dfa8409aef5"
+    },
+    {
+      "path": "02-social/linkedin/empresa-1128x191.png",
+      "bytes": 22291,
+      "sha256": "33755beca4f1c3fa9f02b1bd2e3e6b6d6dbd87fa67f7b03e0de23be8a2434b61"
+    },
+    {
+      "path": "02-social/linkedin/empresa-1128x191.svg",
+      "bytes": 2115,
+      "sha256": "72d0ce196b6b5beba5a25101b85468012367907c00d4f35fe940361539321de1"
+    },
+    {
+      "path": "02-social/linkedin/pessoal-1584x396.png",
+      "bytes": 39263,
+      "sha256": "db810f696589a4d24bfb75778bb60abfe6ccce446fa9729237dfa11edf826e3a"
+    },
+    {
+      "path": "02-social/linkedin/pessoal-1584x396.svg",
+      "bytes": 2214,
+      "sha256": "e6649026a85e4923325029d579551a2fc2f38d5b41462e47300bb1638c9ccadc"
+    },
+    {
+      "path": "02-social/stories/01-apresentacao.png",
+      "bytes": 88033,
+      "sha256": "953e0eb6315cf1e5e3707da65da52439ebefa2f2cc56f1818e07e9afdab4a62e"
+    },
+    {
+      "path": "02-social/stories/01-apresentacao.svg",
+      "bytes": 2724,
+      "sha256": "24344c2619c8d12d293bf197b5a4173d49925cb607b34c9a089002b082ac171c"
+    },
+    {
+      "path": "02-social/stories/02-contato.png",
+      "bytes": 69909,
+      "sha256": "b9b29f307deca7c145ea10daf6e4411983d6a892b0e73980aa3121fc7ea470de"
+    },
+    {
+      "path": "02-social/stories/02-contato.svg",
+      "bytes": 2699,
+      "sha256": "b480fad70f3956b32c54086d48cda6a5287aaf0f6bc62b42b243889d657befbb"
+    },
+    {
+      "path": "02-social/stories/03-pergunta.png",
+      "bytes": 83847,
+      "sha256": "601984c6b2d9d4567d5e25ff81efc4af24547fd2f538719be5bcad0b7bfce8d9"
+    },
+    {
+      "path": "02-social/stories/03-pergunta.svg",
+      "bytes": 2695,
+      "sha256": "16086aa5e307f7020f4a788a26a333fd92a4e1fbf71f4f8352e8ab8f87f1d8fc"
+    },
+    {
+      "path": "03-papelaria/LEIA-ME.md",
+      "bytes": 3084,
+      "sha256": "50aac992e82327aad7b16dc8424f50e267c28642cb8b7ded9295b72feb80a959"
+    },
+    {
+      "path": "03-papelaria/assinatura-email-previa.png",
+      "bytes": 33103,
+      "sha256": "c72400cdbba14368e88b076aa6788d7f5fc222a04d582fb3b8bbd5d524eba920"
+    },
+    {
+      "path": "03-papelaria/assinatura-email-previa.svg",
+      "bytes": 24857,
+      "sha256": "da97adb485c973e780f0205e75cd74bf001fad3ff353a3772613b34b1cd8ac70"
+    },
+    {
+      "path": "03-papelaria/assinatura-email.html",
+      "bytes": 1444,
+      "sha256": "3be9d68bffc45a5a25f1774098e32517d34cb195cefea4dc086e3255aae49109"
+    },
+    {
+      "path": "03-papelaria/assinatura-email.txt",
+      "bytes": 151,
+      "sha256": "1556dd40407ad2c669c469605ebf2b17d97fd65e0646ceec9219590a46355e78"
+    },
+    {
+      "path": "03-papelaria/assinatura-logo.png",
+      "bytes": 18083,
+      "sha256": "6e26f08a65ef11fcefd906b9c8a12ef8ff0d0f8821c555666a604c7605c56a92"
+    },
+    {
+      "path": "03-papelaria/assinatura-logo.svg",
+      "bytes": 1590,
+      "sha256": "461e84033d8a4d3698daee75250cf2411e6721c29ff1363286d6a0702e94908a"
+    },
+    {
+      "path": "03-papelaria/cartao-frente-verso.pdf",
+      "bytes": 24043,
+      "sha256": "0745b1fc17055542931e27ce6121660ac47e8a64c9cc7c39bb5d8cb1df3bb8b0"
+    },
+    {
+      "path": "03-papelaria/cartao-frente.pdf",
+      "bytes": 12566,
+      "sha256": "05dd099c17d130f173c3a6b41759abd0a64ee5923196ea08ff3bd9cf717bf198"
+    },
+    {
+      "path": "03-papelaria/cartao-frente.png",
+      "bytes": 56675,
+      "sha256": "eea857c436989f8cbecc5f89983e5cb267882f5e1f676a694c4dc485744f18c7"
+    },
+    {
+      "path": "03-papelaria/cartao-frente.svg",
+      "bytes": 1985,
+      "sha256": "06953f714130cbfcd274758744daa67809ed40b07ca1319cb2431548090a5cc7"
+    },
+    {
+      "path": "03-papelaria/cartao-previa.png",
+      "bytes": 60038,
+      "sha256": "e0fa4dbe779fcd772eadc1fcf457ae76ad7dbd99566d4e91e8c7fece86e81b86"
+    },
+    {
+      "path": "03-papelaria/cartao-previa.svg",
+      "bytes": 144095,
+      "sha256": "9574ca65e57624c1ce135b68ce236c70c53901b82635373a1a19d070868b175b"
+    },
+    {
+      "path": "03-papelaria/cartao-verso.pdf",
+      "bytes": 12513,
+      "sha256": "8c5c124260d497eaefb9464cc5e4ac543a86079937610fc8aab1d56454740cb4"
+    },
+    {
+      "path": "03-papelaria/cartao-verso.png",
+      "bytes": 50835,
+      "sha256": "18903b75e0948a278e3573997a81adffbaef6a08272b3ea86090486d6174a8f1"
+    },
+    {
+      "path": "03-papelaria/cartao-verso.svg",
+      "bytes": 1328,
+      "sha256": "26b8c06a4fc734b81355cb0ab8defdb0e7abdd4d6ead784d75a8895168cfda7f"
+    },
+    {
+      "path": "03-papelaria/ficha-institucional.pdf",
+      "bytes": 101061,
+      "sha256": "358dc94e380d710469e46de3d50c1e660a520b96ea86051da1ab46115b4fce4e"
+    },
+    {
+      "path": "03-papelaria/ficha-institucional.png",
+      "bytes": 188655,
+      "sha256": "85d285226b8b344ce9372bed566a43fdbcccef00e15520639d669997b073cf4c"
+    },
+    {
+      "path": "03-papelaria/ficha-institucional.svg",
+      "bytes": 6003,
+      "sha256": "aa78d62b79820ccc188e158e5168bcc935176ccaafe40ccaf9629fb56f8e7c11"
+    },
+    {
+      "path": "03-papelaria/papel-timbrado-limpo.pdf",
+      "bytes": 21991,
+      "sha256": "9323c6107f53e7c0ad1bfe1e0ca46b435ce0724fa67ffd2f99fbb7dd8bf2c602"
+    },
+    {
+      "path": "03-papelaria/papel-timbrado-limpo.png",
+      "bytes": 51738,
+      "sha256": "92239ce2cc2ba0cf87ba429ba0d8898ce0faf1670588fe12fbeed2e379eb2854"
+    },
+    {
+      "path": "03-papelaria/papel-timbrado-limpo.svg",
+      "bytes": 2314,
+      "sha256": "1d50eca8fb1182f711611790a238edbca509c29c36c959c31247258d2198a472"
+    },
+    {
+      "path": "03-papelaria/papel-timbrado-modelo.pdf",
+      "bytes": 95428,
+      "sha256": "1b3a4d93442a2b57c14fa0587de29ab379358fbfa97a0c510b73c1d1ce7f5533"
+    },
+    {
+      "path": "03-papelaria/papel-timbrado-modelo.png",
+      "bytes": 163236,
+      "sha256": "9c0809153c541a952893d5dc97d2c1e14dd26cea17290056c1d9587aac22c279"
+    },
+    {
+      "path": "03-papelaria/papel-timbrado-modelo.svg",
+      "bytes": 3857,
+      "sha256": "5a4ff94b2ab191280058ac97a71864c599bfc9a9255d1a6b95cca6f20be1a910"
+    },
+    {
+      "path": "04-web/README.md",
+      "bytes": 2279,
+      "sha256": "dcd0398fab51cdfb7837ba29eec8167ef3ce1e68f28499659721a7d48ad1e741"
+    },
+    {
+      "path": "04-web/bravite-og-1200x630.png",
+      "bytes": 46582,
+      "sha256": "66d80730bf036fb733d1a3958d14ce92281dadf6775458e1a6e33b3afa7347d6"
+    },
+    {
+      "path": "04-web/bravite-og-1200x630.svg",
+      "bytes": 29694,
+      "sha256": "ca02f8ecdb11ba18f021ac83b8c46767a89a0581457fa3477d44210897e93ac7"
+    },
+    {
+      "path": "04-web/bravite.css",
+      "bytes": 2350,
+      "sha256": "f582d0fafb81b48841aa3738bdb9031937227fa0258cd3161bce38162fd40307"
+    },
+    {
+      "path": "04-web/design-system.tokens.json",
+      "bytes": 5501,
+      "sha256": "f466313242162ef3c7d7e270e25b85f0b7edfbe924a73619152fd027b686f45d"
+    },
+    {
+      "path": "04-web/exemplo.html",
+      "bytes": 3108,
+      "sha256": "1f9c9b063a788fef90fa2fca3215f09a71365a612c16adf051ef6b6b9b379935"
+    },
+    {
+      "path": "04-web/icones/apple-touch-icon-180.png",
+      "bytes": 4019,
+      "sha256": "2b0499b93424ec1128c75f4d5d93f85bbecf518e96cfdda42a6bd86db38e17b9"
+    },
+    {
+      "path": "04-web/icones/bravite-app-icon.svg",
+      "bytes": 438,
+      "sha256": "3493f622ec62a53d70c957d56e8ed0de5c0466d8bb3f6d39959f12398a93918f"
+    },
+    {
+      "path": "04-web/icones/bravite-avatar-1080.pdf",
+      "bytes": 1210,
+      "sha256": "80413b71de62921945beba59d182049aee1066f1935ef04747a7804a89978c7d"
+    },
+    {
+      "path": "04-web/icones/bravite-avatar-1080.png",
+      "bytes": 27516,
+      "sha256": "414a42e57b7fa2aca43683e8785fe7f6e17bdf50e155bb7be3b119b1044fa18e"
+    },
+    {
+      "path": "04-web/icones/bravite-avatar-1080.svg",
+      "bytes": 462,
+      "sha256": "39dabc17883087ecbf72d2496a6442c219e79f4af160ed8d02ddddbf1b0afc38"
+    },
+    {
+      "path": "04-web/icones/favicon-16.png",
+      "bytes": 451,
+      "sha256": "690f42e1108180ad43f970b9122010c4f6303bcb5a922302f29777ef5e27dc95"
+    },
+    {
+      "path": "04-web/icones/favicon-192.png",
+      "bytes": 4337,
+      "sha256": "8bcf128472cc6e5dd9a199d067a0513c0837b3465a8f71fc5423dc6658496f59"
+    },
+    {
+      "path": "04-web/icones/favicon-32.png",
+      "bytes": 784,
+      "sha256": "6dee7afade14d74e871f7d98de2071b24a9498128ae50826565e9929f0c63e4d"
+    },
+    {
+      "path": "04-web/icones/favicon-48.png",
+      "bytes": 1153,
+      "sha256": "3e7604d1cad6bc6c4f65dca0fdc99b8e3601ce3c726b16aac949c3b83a887b39"
+    },
+    {
+      "path": "04-web/icones/favicon-512.png",
+      "bytes": 12536,
+      "sha256": "d4edc223331c3200eb3810dadecde6e30629bdb73187884d7b2504d1fa7a91bf"
+    },
+    {
+      "path": "04-web/icones/favicon.ico",
+      "bytes": 19653,
+      "sha256": "37d822fca5c04bd3e1b7861047446e71edba7134fec63dfdaacebedbb2369a95"
+    },
+    {
+      "path": "04-web/icones/favicon.svg",
+      "bytes": 446,
+      "sha256": "734bfe261bdcf75b2d35e0ef74f94f09ff82c7cb857720fff902d6394b530ba5"
+    },
+    {
+      "path": "04-web/previa-desktop.png",
+      "bytes": 61502,
+      "sha256": "62b5422ade62f5d4177cc390592ae2782d8c8c53f75b02581122d76236109477"
+    },
+    {
+      "path": "04-web/previa-mobile.png",
+      "bytes": 46001,
+      "sha256": "111c2d88df5055a070d5688a761b92fe08228f7ebaf684c21ccd4abcb6c7795c"
+    },
+    {
+      "path": "04-web/site.webmanifest",
+      "bytes": 325,
+      "sha256": "4e43a6072448e8d6eb3b9879d88be81d76624cc699e01cff68ab1db9ee8fc72d"
+    },
+    {
+      "path": "04-web/snippets.html",
+      "bytes": 3237,
+      "sha256": "8bff5c6abb2516f4c5629bd1f70acabd15cfd864e8d19b29aa1d5020fa9b1139"
+    },
+    {
+      "path": "04-web/snippets.txt",
+      "bytes": 1684,
+      "sha256": "5b1971460174fc3936ed860b91a5a01be24de872cf33a83b8bd080e359f889c5"
+    },
+    {
+      "path": "05-fontes/OFL.txt",
+      "bytes": 4401,
+      "sha256": "18a4de52385f6b988782639d5d0cc1326e5a8c2de9a7f01d7b20d9aedcc60943"
+    },
+    {
+      "path": "05-fontes/README.md",
+      "bytes": 1344,
+      "sha256": "2df4403241af92c7716c65aac61590e84a4a09dece70730c2f98d42d0c2d2604"
+    },
+    {
+      "path": "05-fontes/desktop/SpaceGrotesk-400.ttf",
+      "bytes": 64320,
+      "sha256": "1683b30d2300be2363cf0f5915791a8961528c2b1268805a94b436a33b1fb6fb"
+    },
+    {
+      "path": "05-fontes/desktop/SpaceGrotesk-500.ttf",
+      "bytes": 64248,
+      "sha256": "4623f7003b31d75dc43941c498fdaedb8e104096d92bee3807fbf11b703dd69b"
+    },
+    {
+      "path": "05-fontes/desktop/SpaceGrotesk-700.ttf",
+      "bytes": 64140,
+      "sha256": "e0f77c90a3ece9f9df9166a5b48e513b4eef3ff7d0c0ea1af8de11643d287178"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-400-normal.woff",
+      "bytes": 17004,
+      "sha256": "d3fcfce61e3792f35b7c95c2f7f4f26c8d19c93998c03ad77d7bf0cd6d334e35"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-400-normal.woff2",
+      "bytes": 13388,
+      "sha256": "65fd17fcbd2e2f522940b5f67ead3d23329e02891aa5495e74d11a499c0b0673"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-500-normal.woff",
+      "bytes": 16988,
+      "sha256": "aa3f2941f6db6ca253c9f55bb173e1a1ade690dcc50e501119814a4414027df3"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-500-normal.woff2",
+      "bytes": 13312,
+      "sha256": "1b1a8131d9edf975d9decee81e2f2bf504812f7a4f498e5500f28a613e22e64c"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-700-normal.woff",
+      "bytes": 16416,
+      "sha256": "145016049aa47932e2d116f70151edc5a53df894cb367514c52ea2d11289bee7"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-700-normal.woff2",
+      "bytes": 12840,
+      "sha256": "35f8aec56cfd5cbfdb03cc68733a54a0b05bb3617ffcd5fd332badc0b045ca55"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-ext-400-normal.woff",
+      "bytes": 16788,
+      "sha256": "41c5af675d526f6df3941159158f9eb6e75ac2903f0834e479205cbccccb6dfc"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-ext-400-normal.woff2",
+      "bytes": 12256,
+      "sha256": "a6658ce608a36f9ece7a65842725deebeb5f01df2debeb696b79c8536bf2ddc8"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-ext-500-normal.woff",
+      "bytes": 16788,
+      "sha256": "b1faf7147e8b2fd11385c78412b2ba9d120645e68336ec9982d2e0f645accd7a"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-ext-500-normal.woff2",
+      "bytes": 12272,
+      "sha256": "ed7e064eda944f88ce2f40101ec20e214004decdf5c0b9ad9219ae21be2dbf13"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-ext-700-normal.woff",
+      "bytes": 16460,
+      "sha256": "215b0cac2778da21525aab1d204b59b4261099b64afd010864f73ec9613ec5ba"
+    },
+    {
+      "path": "05-fontes/web/space-grotesk-latin-ext-700-normal.woff2",
+      "bytes": 11992,
+      "sha256": "7ce350b706d79c955ebf91314295f39fa82999f980b7e9beee743c2f3580a15e"
+    },
+    {
+      "path": "06-institucional/LEIA-ME.md",
+      "bytes": 2714,
+      "sha256": "d887047ddb3b7cb8491452cf66e61955386ff58813deeb1bf6b8d66e8301327c"
+    },
+    {
+      "path": "06-institucional/bravite-apresentacao-editavel.pptx",
+      "bytes": 78986,
+      "sha256": "07880547ed400a351cccec1032b4a8557f25e18cb1a077629f367fe57967fecd"
+    },
+    {
+      "path": "06-institucional/bravite-apresentacao.pdf",
+      "bytes": 33166,
+      "sha256": "1ff8adf5bf2a3843e8e969db9fba9b926e90b8892a34575c4155bb93560caf5a"
+    },
+    {
+      "path": "06-institucional/gerar-apresentacao.py",
+      "bytes": 12876,
+      "sha256": "3b0021c43bdf546ccffcc38d09f682623330201867c0375a38162a7db68919ab"
+    },
+    {
+      "path": "06-institucional/previa-apresentacao.jpg",
+      "bytes": 312459,
+      "sha256": "9963028ba541c4f5f208faf3041396d4d615f17f891bdd595a0376e52371e83c"
+    },
+    {
+      "path": "06-institucional/recursos/logo-clara.pdf",
+      "bytes": 1518,
+      "sha256": "7d9c3162214d300314cca513e5a9b73cb7721e6ea79602bd278c8df868c86ef6"
+    },
+    {
+      "path": "06-institucional/recursos/logo-clara.png",
+      "bytes": 32087,
+      "sha256": "d5ab32cbb26309050642223000fa7a4e94d91ea584e139497d1843500f60ecc0"
+    },
+    {
+      "path": "06-institucional/recursos/logo-clara.svg",
+      "bytes": 1182,
+      "sha256": "cd67ed809df0c0506eaaeae02006c5dca0389be9814374424257ff7a16d8b511"
+    },
+    {
+      "path": "06-institucional/recursos/logo-original-opcao03.svg",
+      "bytes": 1182,
+      "sha256": "b165f1413e93acb0b0e4f2e4a4d4b4042d02811c6a7e364f75aa68a0229017d0"
+    },
+    {
+      "path": "06-institucional/recursos/logo-principal.pdf",
+      "bytes": 1527,
+      "sha256": "1f9c0c40b76eb612f4a979c892e233891a78a767d4a4c8dda1049c27ee2d31ec"
+    },
+    {
+      "path": "06-institucional/recursos/logo-principal.png",
+      "bytes": 40849,
+      "sha256": "20d213b0c1f529b97b90b2db6c4ffbd5dd07fe120bc3d2c51e507bd85755d2a7"
+    },
+    {
+      "path": "06-institucional/recursos/logo-principal.svg",
+      "bytes": 1182,
+      "sha256": "c8c4fd90e0ae1d5c11e84224a7b5d19942a7fa78c1b72c656ba4ee3f211f3cdc"
+    },
+    {
+      "path": "06-institucional/textos-e-legendas.md",
+      "bytes": 8137,
+      "sha256": "d16ddf3f2a24f2d33dba070dd276f6b724ad845b39a9e1f690ce7023d467d5e2"
+    },
+    {
+      "path": "COMECE-AQUI.md",
+      "bytes": 2585,
+      "sha256": "70ec49e99e6abdda84a3d605942a7b5797d3c7f8fc7e3c9a46d496b9dcdeb936"
+    },
+    {
+      "path": "REBRAND.md",
+      "bytes": 4324,
+      "sha256": "93a628a5089df790c7b853891bda714f592854357010e059d624a3a584558301"
+    },
+    {
+      "path": "index.html",
+      "bytes": 32306,
+      "sha256": "0e9bfc7da22291aa37a5c8f746e05f1603ebdd3e3e05a03f123281f04ffc565e"
+    },
+    {
+      "path": "visao-geral.png",
+      "bytes": 236996,
+      "sha256": "2f77b45a8cf9b4fe14e094169e5169d165bd6f08f9135d38bcdd18a58cdcd991"
+    },
+    {
+      "path": "visao-geral.svg",
+      "bytes": 557426,
+      "sha256": "25d9ba1516773e476285db779af867a0fb8c59a655a92f279b47fc967d18e890"
+    }
+  ]
+}

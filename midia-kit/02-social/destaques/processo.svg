@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080" role="img" aria-labelledby="title desc">
+<title id="title">Bravite — destaque Processo</title><desc id="desc">Capa do destaque Processo; símbolo e título na região central segura para recorte circular.</desc>
+<rect x="0" y="0" width="1080" height="1080" fill="#0A0A0A" />
+<circle cx="540" cy="540" r="330" fill="none" stroke="#FFFFFF" stroke-opacity=".16" stroke-width="2" /><path d="M443 431H497V485H443Z M513 496H567V550H513Z M583 561H637V615H583Z M497 458H540V496 M567 523H610V561" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linejoin="miter" /><text x="540" y="719" font-family="Space Grotesk" font-size="55" font-weight="500" letter-spacing="0" text-anchor="middle" fill="#FFFFFF">Processo</text><path d="M498 772H582L570 784H498Z" fill="#2D6BFF" />
+</svg>

@@ -1,0 +1,40 @@
+/* Bravite 2.0 — paleta aprovada: preto, azul e branco. */
+@font-face { font-family:'Space Grotesk'; font-weight:400; font-style:normal; font-display:swap; src:url('../05-fontes/desktop/SpaceGrotesk-400.ttf') format('truetype'); }
+@font-face { font-family:'Space Grotesk'; font-weight:500; font-style:normal; font-display:swap; src:url('../05-fontes/desktop/SpaceGrotesk-500.ttf') format('truetype'); }
+@font-face { font-family:'Space Grotesk'; font-weight:700; font-style:normal; font-display:swap; src:url('../05-fontes/desktop/SpaceGrotesk-700.ttf') format('truetype'); }
+:root {
+  --bravite-black: #0A0A0A;
+  --bravite-blue: #2D6BFF;
+  --bravite-white: #FFFFFF;
+  --bravite-gray: #F3F4F6;
+  --bravite-muted: #5A6475;
+  --bravite-border: #D9DEE7;
+  --bravite-ink: #0A0A0A;
+  --bravite-font: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bravite-space-1: 0.5rem;
+  --bravite-space-2: 1rem;
+  --bravite-space-3: 1.5rem;
+  --bravite-space-4: 2rem;
+  --bravite-space-6: 3rem;
+}
+
+/* Componentes escopados: não alteram a aparência global do site. */
+.bravite-ui { font-family: var(--bravite-font); color: var(--bravite-ink); }
+.bravite-logo { display: inline-flex; padding: 0.6rem; }
+.bravite-logo img { display: block; width: 15rem; max-width: 100%; height: auto; }
+.bravite-link { color: var(--bravite-black); text-underline-offset: .2em; }
+.bravite-button {
+  display: inline-block; padding: .875rem 1.25rem;
+  color: var(--bravite-white); background: var(--bravite-blue);
+  font: 700 1rem/1.25 var(--bravite-font); text-decoration: none;
+  border: 2px solid var(--bravite-blue); border-radius: 0;
+}
+.bravite-button:hover { color: var(--bravite-white); background: var(--bravite-black); }
+.bravite-ui :focus-visible { outline: 3px solid var(--bravite-black); outline-offset: 4px; }
+.bravite-dark { color: var(--bravite-white); background: var(--bravite-black); }
+.bravite-dark :focus-visible { outline-color: var(--bravite-white); }
+.bravite-dark .bravite-link { color: var(--bravite-white); }
+
+.bravite-dark .bravite-button:hover { color:var(--bravite-black); background:var(--bravite-white); border-color:var(--bravite-white); }
+.bravite-ui .bravite-button:focus-visible { outline:3px solid var(--bravite-black); outline-offset:4px; }
+.bravite-dark .bravite-button:focus-visible { outline-color:var(--bravite-white); }

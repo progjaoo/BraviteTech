@@ -1,0 +1,226 @@
+{
+  "meta": {
+    "name": "Bravite Design System",
+    "version": "2.0",
+    "date": "2026-10-01",
+    "authority": "Paleta aprovada pelo proprietário em 01/10/2026; geometria da opção 03 preservada",
+    "templateRole": "composition reference; use Bravite colors",
+    "specification": "REBRAND.md e 00-guia/bravite-manual-da-marca.pdf",
+    "format": "project JSON tokens; not a declaration of DTCG schema compliance"
+  },
+  "color": {
+    "black": {
+      "value": "#0A0A0A",
+      "type": "color",
+      "source": "approved:rebrand",
+      "usage": "primary text and dark surfaces"
+    },
+    "blue": {
+      "value": "#2D6BFF",
+      "type": "color",
+      "source": "approved:rebrand",
+      "usage": "logo central band, accents and solid CTA background with white text"
+    },
+    "white": {
+      "value": "#FFFFFF",
+      "type": "color",
+      "source": "approved:rebrand",
+      "usage": "light surfaces and inverse text"
+    },
+    "gray": {
+      "value": "#F3F4F6",
+      "type": "color",
+      "source": "recommended:neutral-support",
+      "usage": "secondary surfaces"
+    },
+    "muted": {
+      "value": "#5A6475",
+      "type": "color",
+      "source": "recommended:functional-neutral",
+      "usage": "secondary text on white"
+    },
+    "mutedInverse": {
+      "value": "#B6BDC9",
+      "type": "color",
+      "source": "recommended:functional-neutral",
+      "usage": "secondary text on black"
+    },
+    "subtleBorder": {
+      "value": "#D9DEE7",
+      "type": "color",
+      "source": "recommended:functional-neutral",
+      "usage": "decorative divider; use muted for input outlines"
+    },
+    "error": {
+      "value": "#B42318",
+      "type": "color",
+      "source": "proposed:functional-extension"
+    },
+    "warning": {
+      "value": "#955B00",
+      "type": "color",
+      "source": "proposed:functional-extension"
+    },
+    "info": {
+      "value": "#2D6BFF",
+      "type": "color",
+      "source": "brand:functional-role"
+    },
+    "success": {
+      "value": "#0A0A0A",
+      "type": "color",
+      "source": "brand:functional-role",
+      "usage": "confirmation with text and icon"
+    }
+  },
+  "typography": {
+    "family": {
+      "value": "Space Grotesk",
+      "type": "fontFamily",
+      "source": "extracted:README-FONTES.md"
+    },
+    "fallback": [
+      "system-ui",
+      "-apple-system",
+      "Segoe UI",
+      "sans-serif"
+    ],
+    "weights": {
+      "regular": 400,
+      "medium": 500,
+      "bold": 700
+    },
+    "h1": {
+      "size": "clamp(3rem, 7vw, 6.5rem)",
+      "weight": 500,
+      "lineHeight": 1.02,
+      "letterSpacing": "-0.04em",
+      "source": "proposed:responsive-extension"
+    },
+    "h2": {
+      "size": "clamp(2rem, 4.5vw, 4rem)",
+      "weight": 500,
+      "lineHeight": 1.1,
+      "letterSpacing": "-0.03em",
+      "source": "proposed:responsive-extension"
+    },
+    "h3": {
+      "size": "clamp(1.375rem, 2.2vw, 2rem)",
+      "weight": 500,
+      "lineHeight": 1.2,
+      "letterSpacing": "-0.02em",
+      "source": "proposed:responsive-extension"
+    },
+    "body": {
+      "size": "1rem",
+      "weight": 400,
+      "lineHeight": 1.6,
+      "source": "proposed:responsive-extension"
+    },
+    "caption": {
+      "size": "0.875rem",
+      "weight": 400,
+      "lineHeight": 1.45,
+      "source": "proposed:responsive-extension"
+    },
+    "wordmark": {
+      "kind": "original SVG paths",
+      "fontReplacementAllowed": false
+    }
+  },
+  "space": {
+    "valuesPx": [
+      4,
+      8,
+      12,
+      16,
+      24,
+      32,
+      40,
+      48,
+      64,
+      80,
+      96,
+      128
+    ],
+    "source": "media-kit rhythm with proposed web extensions"
+  },
+  "layout": {
+    "containerMaxPx": 1280,
+    "mobileGutterPx": [
+      16,
+      24
+    ],
+    "desktopGutterPx": [
+      32,
+      48
+    ],
+    "sectionMobilePx": 64,
+    "sectionDesktopPx": [
+      96,
+      128
+    ],
+    "breakpointsPx": {
+      "sm": 640,
+      "md": 768,
+      "lg": 1024,
+      "xl": 1280,
+      "2xl": 1536
+    },
+    "source": "proposed:responsive-extension"
+  },
+  "radius": {
+    "buttonPx": 0,
+    "editorialPx": 0,
+    "inputPx": 4,
+    "cardMaxPx": 8,
+    "source": "media-kit plus functional web extension"
+  },
+  "control": {
+    "minHeightPx": 48,
+    "targetSizePx": 44,
+    "focusWidthPx": 3,
+    "focusOffsetPx": 4,
+    "focusLight": "#0A0A0A",
+    "focusDark": "#FFFFFF"
+  },
+  "motion": {
+    "durationMs": {
+      "fast": 150,
+      "normal": 200,
+      "slow": 250
+    },
+    "easing": "ease-out",
+    "respectReducedMotion": true,
+    "source": "proposed:functional-extension"
+  },
+  "logo": {
+    "primary": "01-logos/horizontal/bravite-horizontal-principal.svg",
+    "onDark": "01-logos/horizontal/bravite-horizontal-reversa.svg",
+    "master": "06-institucional/recursos/logo-original-opcao03.svg",
+    "minHorizontalPx": 180,
+    "minSymbolPx": 24,
+    "clearSpaceOriginalUnits": 24,
+    "referenceCroppedWidthUnits": 760,
+    "paths": 9,
+    "preserveGeometry": true,
+    "preserveOpenA": true,
+    "separateDiagonalBands": 3
+  },
+  "contrast": {
+    "blackOnWhite": 19.8,
+    "whiteOnBlue": 4.51,
+    "blueOnBlack": 4.39,
+    "blackOnGray": 17.99,
+    "mutedOnWhite": 5.98,
+    "mutedOnGray": 5.43,
+    "mutedInverseOnBlack": 10.48,
+    "subtleBorderOnWhite": 1.35
+  },
+  "contrastUsage": {
+    "primaryButton": "white on blue, without opacity",
+    "blueOnDark": "large headings or graphics only; normal text must be white",
+    "normalText": "minimum 4.5:1",
+    "largeText": "minimum 3:1"
+  }
+}

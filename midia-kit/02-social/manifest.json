@@ -1,0 +1,116 @@
+[
+  {
+    "file": "feed/01-apresentacao.svg",
+    "width": 1080,
+    "height": 1350,
+    "title": "Bravite — apresentação"
+  },
+  {
+    "file": "feed/02-conteudo-educativo.svg",
+    "width": 1080,
+    "height": 1350,
+    "title": "Bravite — conteúdo educativo"
+  },
+  {
+    "file": "feed/03-contato.svg",
+    "width": 1080,
+    "height": 1350,
+    "title": "Bravite — contato"
+  },
+  {
+    "file": "feed/04-marca-quadrado.svg",
+    "width": 1080,
+    "height": 1080,
+    "title": "Bravite — marca quadrada"
+  },
+  {
+    "file": "stories/01-apresentacao.svg",
+    "width": 1080,
+    "height": 1920,
+    "title": "Bravite — story de apresentação"
+  },
+  {
+    "file": "stories/02-contato.svg",
+    "width": 1080,
+    "height": 1920,
+    "title": "Bravite — story de contato"
+  },
+  {
+    "file": "stories/03-pergunta.svg",
+    "width": 1080,
+    "height": 1920,
+    "title": "Bravite — story com pergunta"
+  },
+  {
+    "file": "carrossel/01-o-que-move-a-bravite.svg",
+    "width": 1080,
+    "height": 1350,
+    "title": "Bravite — origem do nome, página 1 de 5"
+  },
+  {
+    "file": "carrossel/02-brave.svg",
+    "width": 1080,
+    "height": 1350,
+    "title": "Bravite — BRAVE, página 2 de 5"
+  },
+  {
+    "file": "carrossel/03-it.svg",
+    "width": 1080,
+    "height": 1350,
+    "title": "Bravite — IT, página 3 de 5"
+  },
+  {
+    "file": "carrossel/04-engineer.svg",
+    "width": 1080,
+    "height": 1350,
+    "title": "Bravite — Engineer, página 4 de 5"
+  },
+  {
+    "file": "carrossel/05-coragem-tecnologia-engenharia.svg",
+    "width": 1080,
+    "height": 1350,
+    "title": "Bravite — manifesto, página 5 de 5"
+  },
+  {
+    "file": "destaques/sobre.svg",
+    "width": 1080,
+    "height": 1080,
+    "title": "Bravite — destaque Sobre"
+  },
+  {
+    "file": "destaques/projetos.svg",
+    "width": 1080,
+    "height": 1080,
+    "title": "Bravite — destaque Projetos"
+  },
+  {
+    "file": "destaques/processo.svg",
+    "width": 1080,
+    "height": 1080,
+    "title": "Bravite — destaque Processo"
+  },
+  {
+    "file": "destaques/conteudos.svg",
+    "width": 1080,
+    "height": 1080,
+    "title": "Bravite — destaque Conteúdos"
+  },
+  {
+    "file": "destaques/contato.svg",
+    "width": 1080,
+    "height": 1080,
+    "title": "Bravite — destaque Contato"
+  },
+  {
+    "file": "linkedin/empresa-1128x191.svg",
+    "width": 1128,
+    "height": 191,
+    "title": "Bravite — capa LinkedIn empresarial"
+  },
+  {
+    "file": "linkedin/pessoal-1584x396.svg",
+    "width": 1584,
+    "height": 396,
+    "title": "Bravite — capa LinkedIn pessoal"
+  }
+]
