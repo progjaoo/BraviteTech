@@ -24,13 +24,13 @@ Login administrativo: `bravitetech@gmail.com`; a senha local está em `ADMIN_PAS
 
 ## Funcionalidades
 
-Home, sobre, seis páginas específicas de serviços, contato, cases, blog, política de privacidade e termos. Header com dropdown e menu mobile, hero animado, processo interativo com diagrama de sequência e FAQ. WhatsApp: `+55 24 99911-9722`. Instagram: `@bravite.br`.
+Home, sobre, seis páginas específicas de serviços, contato, cases, blog, política de privacidade e termos. Header fixo durante o scroll, com dropdown e menu mobile, hero animado, processo interativo com diagrama de sequência e FAQ. WhatsApp: `+55 24 99911-9722`. Instagram: `@bravite.br`.
 
 O CTA registra um interesse anônimo e abre o formulário. Nome, e-mail, WhatsApp e desafio tornam-se um lead identificável após envio e consentimento. O painel permite acompanhar e excluir pedidos, editar e publicar artigos e cases, visualizar Markdown e enviar capas com descrição. Não há identificação automática de quem apenas visita nem disparo de WhatsApp sem dados de contato.
 
 O blog começa com três textos institucionais originais, editáveis. A carga inicial roda uma vez, sem repor conteúdo excluído. Cases começam vazios; publique os projetos reais autorizados no painel. Depoimentos podem ser acrescentados quando houver material aprovado.
 
-GSAP controla o hero, as timelines e as entradas por scroll. Motion controla menu, formulário, FAQ e etapas do processo. As animações respeitam a preferência de movimento reduzido e removem seus efeitos ao desmontar os componentes.
+GSAP controla o hero, as timelines e as entradas por scroll com ScrollTrigger. Motion for React (antes Framer Motion) usa o pacote `motion` e imports de `motion/react` para as transições de menu, formulário, FAQ e etapas do processo. Cada propriedade de um elemento deve ter um único controlador de animação. As animações respeitam a preferência de movimento reduzido e removem seus efeitos ao desmontar os componentes. O header usa `position: fixed` em CSS. Veja o [plano de animações e header](docs/implementation/PLANO-ANIMACOES-HEADER.md).
 
 ## Estrutura
 
