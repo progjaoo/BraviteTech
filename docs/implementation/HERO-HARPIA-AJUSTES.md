@@ -23,7 +23,7 @@ Dois comportamentos da implementação anterior podiam deixar o fundo estático:
 
 ## Navegação e WhatsApp
 
-Serviços mantém a semântica de `details` / `summary` e fecha ao clicar fora, mover foco para fora, pressionar Escape ou navegar. Escape devolve foco ao summary.
+Serviços mantém a semântica de `details` / `summary`. No desktop, abre ao passar o mouse e permanece aberto durante o trajeto até os links; sai ao retirar o mouse, desde que o foco não esteja dentro do menu. Clique e teclado continuam disponíveis. No mobile, abre por toque. Também fecha ao clicar fora, mover foco para fora, pressionar Escape ou navegar. Escape devolve foco ao summary.
 
 O botão flutuante usa o azul Bravite e um link direto para `https://wa.me/5524999119722`, com a mensagem inicial definida em `brand.whatsapp`. Está nas páginas públicas, com nome acessível, foco visível, tooltip, área de toque de 52/56 px e proteção de safe areas. Diálogos nativos ficam acima do botão. `/admin` mantém seu shell próprio.
 

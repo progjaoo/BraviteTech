@@ -31,7 +31,7 @@ export function Header(){
   <header className="site-header"><div className="header-inner">
    <Link href="/" className="brand-link" aria-label="Bravite — início"><Image src="/brand/logo-reverse.svg" alt="Bravite" width={760} height={110} style={{width:180,height:'auto'}} priority/></Link>
    <nav className="desktop-nav" aria-label="Navegação principal"><Link href="/sobre">Sobre</Link>
-    <details className="services-dropdown" ref={menu} onToggle={e=>setDropdown(e.currentTarget.open)}><summary>Serviços<ChevronDown size={14} className={dropdown?'rotate':''}/></summary>
+    <details className="services-dropdown" ref={menu} onToggle={e=>setDropdown(e.currentTarget.open)} onPointerEnter={event=>{if(event.pointerType==='mouse'&&window.matchMedia('(hover: hover) and (pointer: fine)').matches){event.currentTarget.open=true;setDropdown(true);}}} onPointerLeave={event=>{if(event.pointerType==='mouse'&&!event.currentTarget.contains(document.activeElement)){event.currentTarget.open=false;setDropdown(false);}}}><summary>Serviços<ChevronDown size={14} className={dropdown?'rotate':''}/></summary>
      <div className="dropdown-panel">{services.map(s=><Link key={s.slug} href={`/servicos/${s.slug}`} onClick={()=>{if(menu.current)menu.current.open=false;}}><span>{s.title}</span><ArrowUpRight size={16}/></Link>)}</div>
     </details><Link href="/cases">Cases</Link><Link href="/blog">Insights</Link><Link href="/contato">Contato</Link>
    </nav><div className="header-actions"><AnalysisButton className="button button-light header-cta">Receber análise gratuita</AnalysisButton><button className="icon-button mobile-toggle" aria-label="Abrir menu" onClick={()=>setMobile(true)}><Menu size={25}/></button></div>
