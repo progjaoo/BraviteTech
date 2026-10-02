@@ -21,16 +21,38 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.product-visual svg,.article-visual svg,.showcase-top svg{transform:none!important}}
 
 /* Galaxy: decorative layers stay below the content and never capture a click. */
-.hero-field{z-index:0;background:radial-gradient(ellipse at 24% 25%,#2d6bff12,transparent 45%),var(--black)}
-.hero-field::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,#0a0a0ad9 0%,#0a0a0a65 35%,transparent 65%),linear-gradient(0deg,#0a0a0a 0%,transparent 18%,transparent 85%,#0a0a0a55)}
+.hero-field{z-index:0;background:radial-gradient(ellipse at 15% 26%,#2d6bff12,transparent 32%),radial-gradient(ellipse at 88% 76%,#2d6bff0d,transparent 30%),var(--black)}
+.hero-field::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 48%,#0a0a0ac9 0%,#0a0a0a44 38%,transparent 72%),linear-gradient(0deg,#0a0a0a 0%,transparent 20%,transparent 84%,#0a0a0a55)}
 .hero-galaxy,.galaxy-canvas,.galaxy-fallback{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .galaxy-canvas{display:block;opacity:0}
 .hero-galaxy[data-renderer=ready] .galaxy-canvas{opacity:1}
 .hero-galaxy[data-renderer=ready] .galaxy-fallback{visibility:hidden}
+.hero-field .galaxy-fallback svg{width:100%;height:100%;transform:none}
+.fallback-planet{position:absolute;display:block;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 32% 26%,#346dd0,#11284f 45%,#080e1b 74%);box-shadow:0 0 14px #2d6bff14}
+.fallback-planet-blue{left:13%;top:26%;width:clamp(70px,8.2vw,120px)}
+.fallback-planet-ringed{left:87.5%;top:76%;width:clamp(52px,5.3vw,80px);background:radial-gradient(circle at 32% 26%,#879cbf,#314059 47%,#0d1220 78%)}
+.fallback-planet-ringed::before{content:"";position:absolute;inset:23% -41%;border:4px solid #708fd63b;border-radius:50%;transform:rotate(-20deg)}
+.fallback-planet-moon{left:88%;top:24%;width:clamp(24px,2.7vw,40px);background:radial-gradient(circle at 30% 28%,#aab4c7,#3a4355 50%,#0a0e17 79%)}
 .hero-motion-controls{display:flex;align-items:center;gap:14px}
 .hero-motion-controls .icon-button{width:36px;height:36px;border-color:#454b55;border-radius:50%;color:var(--white)}
 .hero-motion-controls .icon-button:disabled,.tech-marquee-actions .icon-button:disabled{cursor:default}
 body:has(dialog[open]){overflow:hidden}
+
+/* Direct contact stays available without JavaScript and below native modal dialogs. */
+.whatsapp-float{position:fixed;z-index:35;right:max(24px,env(safe-area-inset-right));bottom:max(24px,env(safe-area-inset-bottom));width:56px;height:56px;display:grid;place-items:center;border:1px solid #ffffff29;border-radius:50%;background:var(--blue);color:var(--white);box-shadow:0 6px 26px #0005;transition:transform .2s,background .2s}
+.whatsapp-float:hover{transform:translateY(-3px);background:#245ce3}
+.whatsapp-float:focus-visible{outline:3px solid var(--white);outline-offset:4px;box-shadow:0 0 0 7px var(--black)}
+.whatsapp-float-label{position:absolute;right:calc(100% + 12px);width:max-content;padding:9px 13px;background:var(--black);border:1px solid var(--dark-line);border-radius:6px;color:var(--white);font-size:12px;font-weight:500;opacity:0;visibility:hidden;transform:translateX(5px);transition:opacity .2s,transform .2s,visibility .2s;pointer-events:none}
+.whatsapp-float:hover .whatsapp-float-label,.whatsapp-float:focus-visible .whatsapp-float-label{opacity:1;visibility:visible;transform:none}
+.hero-meta{padding-right:calc(var(--gutter) + 72px)}
+@media(max-width:700px){
+ .fallback-planet-blue{left:12%;top:22%;width:clamp(30px,11vw,48px)}
+ .fallback-planet-ringed{left:90%;top:85.5%;width:clamp(22px,6.5vw,30px)}
+ .fallback-planet-moon{left:88.5%;top:22%;width:clamp(14px,4vw,20px)}
+ .whatsapp-float{width:52px;height:52px;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom))}
+ .hero-meta{padding-right:calc(var(--gutter) + 60px)}
+ .hero-meta>span{max-width:100px}
+}
 
 /* Each repeated group includes its trailing gap so GSAP can loop exactly. */
 .tech-strip .tech-marquee-heading{margin-bottom:26px}

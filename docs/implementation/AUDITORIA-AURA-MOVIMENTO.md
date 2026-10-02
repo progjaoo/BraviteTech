@@ -54,7 +54,7 @@ Não foi instalada a skill Sphere, pois seu domínio não corresponde a esta imp
 
 ## Implementação entregue
 
-- `hero-galaxy.tsx`: import dinâmico de Three.js após idle; três planetas com `SphereGeometry`, superfícies procedurais, anéis, partículas em braços espirais e estrelas. Sem arquivos de textura, modelos externos ou chamadas a serviços 3D. Ponteiro altera suavemente a orientação da cena. Movimento contínuo usa o ticker GSAP.
+- `hero-galaxy.tsx`: import dinâmico de Three.js após idle; três planetas com `SphereGeometry`, texturas procedurais locais, anéis, partículas em braços espirais e estrelas. Sem modelos externos ou chamadas a serviços 3D. A revisão [inspirada no movimento da Harpia](HERO-HARPIA-AJUSTES.md) limita os tamanhos em pixels, usa materiais iluminados e parallax da câmera. O movimento contínuo usa `WebGLRenderer.setAnimationLoop`; GSAP continua nas timelines e no scroll.
 - `hero.tsx`: timeline de entrada, cena de fundo e controle de pausa. Camada central escura preserva a leitura.
 - `scroll-effects.tsx`: SplitText, ScrollTrigger e Lenis; remoção de listeners, splits, instâncias e ticker ao trocar de rota. Diálogos recebem scroll nativo e bloqueiam a página por trás.
 - `technology-marquee.tsx`: dois grupos de largura idêntica, animação GSAP linear na largura medida, controles de pausa e retomada, resize e estado de visibilidade.

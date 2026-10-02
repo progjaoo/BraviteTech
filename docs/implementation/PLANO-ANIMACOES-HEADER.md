@@ -15,7 +15,7 @@ O header estava com `position: absolute`: acompanhava o início da página e sa�
 | Comportamento | Responsável | Arquivo |
 | --- | --- | --- |
 | Timeline de entrada do hero | GSAP | `apps/web/src/components/hero.tsx` |
-| Galáxia e planetas interativos | Three.js + ticker GSAP | `apps/web/src/components/hero-galaxy.tsx` |
+| Galáxia e planetas interativos | Three.js (`WebGLRenderer.setAnimationLoop`) | `apps/web/src/components/hero-galaxy.tsx` |
 | Entradas dos cards ao rolar | GSAP + ScrollTrigger | `apps/web/src/components/showcase.tsx` |
 | Entradas de elementos com `data-reveal`, por rota | GSAP + ScrollTrigger/SplitText | `apps/web/src/components/scroll-effects.tsx` |
 | Inércia de roda no desktop | Lenis + ticker GSAP | `apps/web/src/components/scroll-effects.tsx` |
