@@ -2,34 +2,19 @@
 import { createContext, useContext, useState, useRef, useEffect, type ReactNode, type FormEvent } from 'react';
 import { MotionConfig, motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, X, Check, LoaderCircle } from 'lucide-react';
-import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollEffects } from './scroll-effects';
 import { brand, services } from '@/lib/brand';
 import { request } from '@/lib/api';
+import { usePrefersReducedMotion } from '@/lib/use-prefers-reduced-motion';
 
 const AnalysisContext=createContext<(source?:string)=>void>(()=>{});
 export const useAnalysis=()=>useContext(AnalysisContext);
 export function AnalysisButton({children="Receber análise gratuita",className="button button-blue",source="site"}:{children?:ReactNode;className?:string;source?:string}){
  const open=useAnalysis();return <button className={className} onClick={()=>open(source)}>{children}<ArrowUpRight size={18} aria-hidden="true"/></button>;
 }
-function ScrollEffects(){
- const path=usePathname();
- useEffect(()=>{
-  gsap.registerPlugin(ScrollTrigger);
-  const context=gsap.context(()=>{
-   const media=gsap.matchMedia();
-   media.add('(prefers-reduced-motion: no-preference)',()=>{
-    document.querySelectorAll<HTMLElement>('[data-reveal]').forEach(el=>{
-     if(el.getBoundingClientRect().top<window.innerHeight*.8)return;
-     gsap.from(el,{y:36,autoAlpha:0,duration:.8,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 90%',once:true}});
-    });
-   });
-  });return ()=>context.revert();
- },[path]);return null;
-}
 export function Providers({children}:{children:ReactNode}){
+ const reduced=usePrefersReducedMotion();
  const [open,setOpen]=useState(false),[source,setSource]=useState('site'),[intent,setIntent]=useState<{id:string;token:string}|null>(null);
  const [state,setState]=useState<'idle'|'sending'|'success'>('idle'),[error,setError]=useState('');
  const dialog=useRef<HTMLDialogElement>(null);
@@ -52,7 +37,7 @@ export function Providers({children}:{children:ReactNode}){
    setState('success');setIntent(null);
   }catch(e){setState('idle');setError(e instanceof Error?e.message:'Tente novamente em instantes.');}
  }
- return <MotionConfig reducedMotion="user"><AnalysisContext.Provider value={begin}>{children}<ScrollEffects/>
+ return <MotionConfig reducedMotion={reduced?'always':'never'}><AnalysisContext.Provider value={begin}>{children}<ScrollEffects/>
   <dialog ref={dialog} className="analysis-dialog" onCancel={e=>{e.preventDefault();if(state!=='sending')setOpen(false);}} onClick={e=>{if(e.target===dialog.current&&state!=='sending')setOpen(false);}} aria-labelledby="analysis-title">
    <AnimatePresence>{open&&<motion.div className="dialog-content" initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} exit={{opacity:0,y:12}}>
     <button className="icon-button dialog-close" onClick={()=>setOpen(false)} disabled={state==='sending'} aria-label="Fechar formulário"><X size={22}/></button>

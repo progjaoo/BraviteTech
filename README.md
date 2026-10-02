@@ -30,7 +30,11 @@ O CTA registra um interesse anônimo e abre o formulário. Nome, e-mail, WhatsAp
 
 O blog começa com três textos institucionais originais, editáveis. A carga inicial roda uma vez, sem repor conteúdo excluído. Cases começam vazios; publique os projetos reais autorizados no painel. Depoimentos podem ser acrescentados quando houver material aprovado.
 
-GSAP controla o hero, as timelines e as entradas por scroll com ScrollTrigger. Motion for React (antes Framer Motion) usa o pacote `motion` e imports de `motion/react` para as transições de menu, formulário, FAQ e etapas do processo. Cada propriedade de um elemento deve ter um único controlador de animação. As animações respeitam a preferência de movimento reduzido e removem seus efeitos ao desmontar os componentes. O header usa `position: fixed` em CSS. Veja o [plano de animações e header](docs/implementation/PLANO-ANIMACOES-HEADER.md).
+GSAP controla o hero, as timelines, o carrossel de tecnologias e as entradas por scroll com ScrollTrigger/SplitText. Motion for React (antes Framer Motion) usa o pacote `motion` e imports de `motion/react` para as transições de menu, formulário, FAQ e etapas do processo. Cada propriedade de um elemento deve ter um único controlador de animação. As animações respeitam a preferência de movimento reduzido e removem seus efeitos ao desmontar os componentes. O header usa `position: fixed` em CSS. Veja o [plano de animações e header](docs/implementation/PLANO-ANIMACOES-HEADER.md).
+
+A hero tem uma galáxia Three.js com três planetas, anéis, estrelas e resposta suave ao mouse. O código 3D é carregado após idle, com limites de resolução e partículas; pausa fora da tela, em aba oculta e pelo controle na hero. Sem WebGL, permanece um fundo SVG. Lenis suaviza o scroll no desktop, integrado ao ticker GSAP; touch, admin e movimento reduzido mantêm scroll nativo. O manifesto revela palavras conforme a rolagem e os demais títulos entram por linhas.
+
+A faixa de tecnologias faz um loop contínuo com pausa manual, no hover e no foco. Com movimento reduzido, mostra a lista estática completa. A mesma lista é usada na página Sobre. Veja a [auditoria completa do AURA e a implementação](docs/implementation/AUDITORIA-AURA-MOVIMENTO.md).
 
 ## Estrutura
 
