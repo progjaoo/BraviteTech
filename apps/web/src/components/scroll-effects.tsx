@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
+import { scrollToTopEvent } from '@/lib/scroll-navigation';
 
 export function ScrollEffects() {
  const path=usePathname();
@@ -29,6 +30,13 @@ export function ScrollEffects() {
   gsap.registerPlugin(ScrollTrigger,SplitText);
   const media=gsap.matchMedia();
   const splits:SplitText[]=[];
+  let activeLenis:Lenis|null=null;
+  const toTop=(event:Event)=>{
+   event.preventDefault();
+   if(activeLenis)activeLenis.scrollTo(0,{duration:.85,force:true});
+   else window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  };
+  window.addEventListener(scrollToTopEvent,toTop);
   media.add('(prefers-reduced-motion: no-preference)',()=>{
    document.querySelectorAll<HTMLElement>('main [data-reveal]').forEach(element=>{
     const words=element.dataset.reveal==='words';
@@ -48,14 +56,15 @@ export function ScrollEffects() {
   });
   media.add('(prefers-reduced-motion: no-preference) and (pointer: fine)',()=>{
    const lenis=new Lenis({autoRaf:false,duration:1.1,smoothWheel:true,stopInertiaOnNavigate:true,anchors:{offset:-110},prevent:()=>!!document.querySelector('dialog[open]')});
+   activeLenis=lenis;
    const tick=(time:number)=>lenis.raf(time*1000);
    lenis.on('scroll',ScrollTrigger.update);gsap.ticker.add(tick);
-   return ()=>{gsap.ticker.remove(tick);lenis.off('scroll',ScrollTrigger.update);lenis.destroy();};
+   return ()=>{gsap.ticker.remove(tick);lenis.off('scroll',ScrollTrigger.update);lenis.destroy();if(activeLenis===lenis)activeLenis=null;};
   });
   const refresh=()=>ScrollTrigger.refresh();
   let active=true;
   void document.fonts.ready.then(()=>{if(active)refresh();});
-  return ()=>{active=false;media.revert();};
+  return ()=>{active=false;window.removeEventListener(scrollToTopEvent,toTop);media.revert();};
  },[path]);
  return null;
 }

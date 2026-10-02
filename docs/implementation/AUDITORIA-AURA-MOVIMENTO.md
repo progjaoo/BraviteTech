@@ -33,8 +33,8 @@ A ordem do preview é hero → manifesto → marcas → serviços → trabalhos 
 
 - O ticker GSAP é usado uma única vez por subsistema. Lenis tem `autoRaf: false`; a função passada a `ticker.add` é a mesma removida no cleanup. Isso evita repetir o padrão do upstream, que combina autoRaf com ticker e remove uma função diferente.
 - A galáxia não move a tipografia; os CTAs permanecem estáveis e clicáveis. Canvas e fallback não capturam eventos.
-- A cena inicia automaticamente e mantém movimento enquanto a hero está visível, inclusive com movimento reduzido, por decisão de produto. Fora da viewport ou em aba oculta, suspende os frames e retoma automaticamente ao voltar. A hero não tem controle de play/pause. O carrossel também pausa no hover e no foco.
-- A cópia do carrossel é oculta das tecnologias assistivas. Com movimento reduzido, a lista fica estática e quebra linhas para mostrar todas as tecnologias.
+- A cena inicia automaticamente e mantém movimento enquanto a hero está visível, inclusive com movimento reduzido, por decisão de produto. Fora da viewport ou em aba oculta, suspende os frames e retoma automaticamente ao voltar. A hero não tem controle de play/pause. O carrossel inicia automaticamente, inclusive com movimento reduzido, e oferece pausa manual; hover e foco não interrompem a faixa.
+- As cópias do carrossel são ocultas das tecnologias assistivas. A quantidade se adapta à largura da tela, garantindo cobertura na passagem entre ciclos. O catálogo completo também aparece agrupado na página Sobre.
 - SplitText preserva rótulo acessível e recompõe linhas ao mudar a largura. O manifesto começa em opacidade 0.36, em vez do tom quase invisível do upstream.
 - Animações são criadas em componentes cliente, com cleanup por rota. GSAP administra scroll/timelines; Motion administra mudanças de estado. O admin recebe scroll nativo.
 - A preferência de movimento reduzido usa `useSyncExternalStore`: o primeiro snapshot é consistente entre servidor e hidratação, e os controles acompanham mudanças em tempo real. O `MotionConfig` recebe a preferência explicitamente.
@@ -57,8 +57,8 @@ Não foi instalada a skill Sphere, pois seu domínio não corresponde a esta imp
 - `hero-galaxy.tsx`: um `requestAnimationFrame` gerencia tempo, visibilidade e ponteiro; Canvas2D anima desde a hidratação. `hero-webgl.ts` carrega Three.js dinamicamente e assume a mesma composição após renderizar o primeiro frame com sucesso. `hero-field.ts` compartilha a onda fluida e os tamanhos limitados dos planetas entre os renderers. A revisão [inspirada no movimento da Harpia](HERO-HARPIA-AJUSTES.md) usa `SphereGeometry`, materiais iluminados, texturas procedurais locais, anéis, símbolos, partículas e parallax. GSAP continua nas timelines e no scroll.
 - `hero.tsx`: timeline de entrada e cena de fundo com início automático. Camada central escura preserva a leitura.
 - `scroll-effects.tsx`: SplitText, ScrollTrigger e Lenis; remoção de listeners, splits, instâncias e ticker ao trocar de rota. Diálogos recebem scroll nativo e bloqueiam a página por trás.
-- `technology-marquee.tsx`: dois grupos de largura idêntica, animação GSAP linear na largura medida, controles de pausa e retomada, resize e estado de visibilidade.
-- `technologies.ts`: lista compartilhada entre home e sobre: Next.js, React, TypeScript, Tailwind CSS, GSAP, Motion, Three.js, Lenis, Node.js, NestJS, PostgreSQL, OpenAPI, Swagger, Zod, class-validator, Git, GitHub, Docker e Cloudflare. Cloudflare continua dependendo da configuração de credenciais para uso real.
+- `technology-marquee.tsx`: entre Serviços e Processo; repetições de largura idêntica cobrem a viewport mais um grupo. GSAP anima linearmente por uma largura de grupo com `repeat: -1`, mantendo a fase no resize. Início automático, pausa manual e suspensão em aba oculta ou fora da viewport.
+- `technologies.ts`: catálogo de ferramentas da Bravite compartilhado entre home e Sobre: OpenAI, Next.js, JavaScript, TypeScript, React, Node.js, PostgreSQL, SQL Server, Neon DB, Electron, React Native, Figma e Hermes Agent + n8n. Esse catálogo descreve a oferta da empresa; não é um inventário de dependências do site.
 
 Dependências adicionadas ao frontend: `three@0.186.1`, `lenis@1.3.26` e `@types/three@0.186.0` (desenvolvimento). GSAP e Motion permanecem nas versões já instaladas.
 
@@ -76,9 +76,9 @@ As verificações de renderização em Chromium usam SwiftShader no ambiente em 
 - `npm run build --workspace @bravite/web`: passou. A versão standalone de produção foi iniciada em `http://localhost:3001` para as verificações, mantendo o dev na porta 3000.
 - Desktop 1440 × 1000: WebGL pronto, movimento de cena desde a carga e reação ao ponteiro, revelação progressiva de palavras, loop de tecnologias, pausa/retomada do carrossel, formulário e processo com Motion: passaram.
 - Troca de rota: canvas anterior removido, uma única instância ao retornar, retorno ao topo, restauração de posição pelo botão voltar e âncora `/sobre#tecnologia` com offset de 110 px: passaram.
-- Preferência de movimento reduzido alterada com a página aberta: o fundo da hero manteve a animação. Splits, scroll e controles dos demais componentes seguem a preferência do sistema.
-- Mobile 390 × 844 e 320 × 844 (este com movimento reduzido desde a carga inicial): nenhum overflow horizontal, menu e Escape funcionaram; lista estática completa coube na largura de 320 px.
+- Preferência de movimento reduzido alterada com a página aberta: o fundo da hero manteve a animação. Splits, scroll e transições de interface seguem a preferência do sistema; o carrossel mantém início automático e sua pausa manual.
+- Mobile 390 × 844 e 320 × 844 (este com movimento reduzido desde a carga inicial): nenhum overflow horizontal, menu e Escape funcionaram; carrossel manteve movimento e não produziu overflow horizontal em 320 px.
 - WebGL desabilitado: a alternativa Canvas2D manteve início automático e movimento contínuo. Perda do contexto WebGL em execução também migrou para Canvas2D. JavaScript desabilitado: conteúdo e fundo SVG permaneceram visíveis.
 - Nenhum erro JavaScript nas interações verificadas, incluindo hidratação em movimento reduzido. O formulário foi apenas aberto e fechado; o endpoint de intenção foi interceptado, sem criar leads de teste.
 
-Capturas da implementação: [hero desktop](previews/hero-desktop-galaxy.png), [hero mobile](previews/hero-galaxy-mobile-390.png), [carrossel desktop](previews/technology-marquee-desktop.png) e [lista com movimento reduzido](previews/technology-marquee-mobile-320.png).
+Capturas da implementação: [hero desktop](previews/hero-desktop-galaxy.png), [hero mobile](previews/hero-galaxy-mobile-390.png), [carrossel desktop](previews/technology-marquee-after-services-desktop.png) e [carrossel mobile](previews/technology-marquee-after-services-mobile-390.png).

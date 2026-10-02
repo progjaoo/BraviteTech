@@ -6,11 +6,18 @@ import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { services } from '@/lib/brand';
+import { scrollToPageTop } from '@/lib/scroll-navigation';
 import { AnalysisButton, useAnalysis } from './providers';
 export function Header(){
  const [dropdown,setDropdown]=useState(false),[mobile,setMobile]=useState(false);
  const menu=useRef<HTMLDetailsElement>(null),mobileServices=useRef<HTMLDetailsElement>(null),mobileDialog=useRef<HTMLDialogElement>(null),path=usePathname();
  const analyze=useAnalysis();
+ const homeNavigation=(event:{preventDefault:()=>void})=>{
+  if(path!=='/')return;
+  event.preventDefault();
+  if(window.location.hash||window.location.search)window.history.replaceState(window.history.state,'','/');
+  scrollToPageTop();
+ };
  useEffect(()=>{setMobile(false);setDropdown(false);if(menu.current)menu.current.open=false;if(mobileServices.current)mobileServices.current.open=false;},[path]);
  useEffect(()=>{
   const close=(details:HTMLDetailsElement)=>{details.open=false;if(details===menu.current)setDropdown(false);};
@@ -29,7 +36,7 @@ export function Header(){
  useEffect(()=>{if(mobile){mobileDialog.current?.showModal();}else{mobileDialog.current?.close();if(mobileServices.current)mobileServices.current.open=false;}},[mobile]);
  return <>
   <header className="site-header"><div className="header-inner">
-   <Link href="/" className="brand-link" aria-label="Bravite — início"><Image src="/brand/logo-reverse.svg" alt="Bravite" width={760} height={110} style={{width:180,height:'auto'}} priority/></Link>
+   <Link href="/" className="brand-link" aria-label="Bravite — início" onNavigate={homeNavigation}><Image src="/brand/logo-reverse.svg" alt="Bravite" width={760} height={110} style={{width:180,height:'auto'}} priority/></Link>
    <nav className="desktop-nav" aria-label="Navegação principal"><Link href="/sobre">Sobre</Link>
     <details className="services-dropdown" ref={menu} onToggle={e=>setDropdown(e.currentTarget.open)} onPointerEnter={event=>{if(event.pointerType==='mouse'&&window.matchMedia('(hover: hover) and (pointer: fine)').matches){event.currentTarget.open=true;setDropdown(true);}}} onPointerLeave={event=>{if(event.pointerType==='mouse'&&!event.currentTarget.contains(document.activeElement)){event.currentTarget.open=false;setDropdown(false);}}}><summary>Serviços<ChevronDown size={14} className={dropdown?'rotate':''}/></summary>
      <div className="dropdown-panel">{services.map(s=><Link key={s.slug} href={`/servicos/${s.slug}`} onClick={()=>{if(menu.current)menu.current.open=false;}}><span>{s.title}</span><ArrowUpRight size={16}/></Link>)}</div>
@@ -37,7 +44,7 @@ export function Header(){
    </nav><div className="header-actions"><AnalysisButton className="button button-light header-cta">Receber análise gratuita</AnalysisButton><button className="icon-button mobile-toggle" aria-label="Abrir menu" onClick={()=>setMobile(true)}><Menu size={25}/></button></div>
   </div></header>
   <dialog ref={mobileDialog} className="mobile-dialog" onCancel={e=>{e.preventDefault();setMobile(false);}} aria-label="Menu de navegação">
-   <div className="mobile-top"><Link href="/" onClick={()=>setMobile(false)}><Image src="/brand/logo-reverse.svg" alt="Bravite" width={760} height={110} style={{width:180,height:'auto'}}/></Link><button className="icon-button" onClick={()=>setMobile(false)} aria-label="Fechar menu"><X/></button></div>
+   <div className="mobile-top"><Link href="/" aria-label="Bravite — início" onClick={()=>{mobileDialog.current?.close();setMobile(false);}} onNavigate={homeNavigation}><Image src="/brand/logo-reverse.svg" alt="Bravite" width={760} height={110} style={{width:180,height:'auto'}}/></Link><button className="icon-button" onClick={()=>setMobile(false)} aria-label="Fechar menu"><X/></button></div>
    <AnimatePresence>{mobile&&<motion.nav aria-label="Navegação mobile" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} className="mobile-nav"><Link href="/sobre" onClick={()=>setMobile(false)}>Sobre a Bravite</Link><details ref={mobileServices}><summary>Serviços<ChevronDown/></summary>{services.map(s=><Link className="mobile-service" key={s.slug} href={`/servicos/${s.slug}`}>{s.title}</Link>)}</details><Link href="/cases">Cases</Link><Link href="/blog">Insights</Link><Link href="/contato">Contato</Link><button className="button button-blue" onClick={()=>{setMobile(false);analyze('menu');}}>Receber análise gratuita<ArrowUpRight size={18}/></button></motion.nav>}</AnimatePresence>
   </dialog>
  </>;

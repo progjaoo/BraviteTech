@@ -1,9 +1,20 @@
-/** Technologies used by this application and its development workflow. */
-export const technologyGroups=[
- {label:'Interface',items:['Next.js','React','TypeScript','Tailwind CSS']},
- {label:'Interação',items:['GSAP','Motion','Three.js','Lenis']},
- {label:'Backend e dados',items:['Node.js','NestJS','PostgreSQL']},
- {label:'Contratos e validação',items:['OpenAPI','Swagger','Zod','class-validator']},
- {label:'Entrega e infraestrutura',items:['Git','GitHub','Docker','Cloudflare']},
+/** Bravite's service portfolio; the carousel and About page share this catalog. */
+const catalog=[
+ {name:'OpenAI',category:'Inteligência artificial e automação'},
+ {name:'Next.js',category:'Desenvolvimento web'},
+ {name:'JavaScript',category:'Desenvolvimento web'},
+ {name:'TypeScript',category:'Desenvolvimento web'},
+ {name:'React',category:'Desenvolvimento web'},
+ {name:'Node.js',category:'Backend e dados'},
+ {name:'PostgreSQL',category:'Backend e dados'},
+ {name:'SQL Server',category:'Backend e dados'},
+ {name:'Neon DB',category:'Backend e dados'},
+ {name:'Electron',category:'Desktop e mobile'},
+ {name:'React Native',category:'Desktop e mobile'},
+ {name:'Figma',category:'Design e prototipação'},
+ {name:'Hermes Agent + n8n',category:'Inteligência artificial e automação'},
 ] as const;
-export const technologies=technologyGroups.flatMap(group=>[...group.items]);
+export const technologies=catalog.map(item=>item.name);
+export const technologyGroups=Array.from(new Set(catalog.map(item=>item.category))).map(label=>({
+ label,items:catalog.filter(item=>item.category===label).map(item=>item.name),
+}));
