@@ -29,10 +29,10 @@
 .hero-galaxy[data-renderer=ready] .galaxy-fallback{visibility:hidden}
 .hero-field .galaxy-fallback svg{width:100%;height:100%;transform:none}
 .fallback-planet{position:absolute;display:block;aspect-ratio:1;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 32% 26%,#346dd0,#11284f 45%,#080e1b 74%);box-shadow:0 0 14px #2d6bff14}
-.fallback-planet-blue{left:13%;top:26%;width:clamp(70px,8.2vw,120px)}
-.fallback-planet-ringed{left:87.5%;top:76%;width:clamp(52px,5.3vw,80px);background:radial-gradient(circle at 32% 26%,#879cbf,#314059 47%,#0d1220 78%)}
+.fallback-planet-blue{left:13%;top:26%;width:clamp(56px,5.8vw,84px)}
+.fallback-planet-ringed{left:87.5%;top:76%;width:clamp(38px,3.8vw,56px);background:radial-gradient(circle at 32% 26%,#879cbf,#314059 47%,#0d1220 78%)}
 .fallback-planet-ringed::before{content:"";position:absolute;inset:23% -41%;border:4px solid #708fd63b;border-radius:50%;transform:rotate(-20deg)}
-.fallback-planet-moon{left:88%;top:24%;width:clamp(24px,2.7vw,40px);background:radial-gradient(circle at 30% 28%,#aab4c7,#3a4355 50%,#0a0e17 79%)}
+.fallback-planet-moon{left:88%;top:24%;width:clamp(20px,2.1vw,30px);background:radial-gradient(circle at 30% 28%,#aab4c7,#3a4355 50%,#0a0e17 79%)}
 .hero-motion-controls{display:flex;align-items:center;gap:14px}
 .hero-motion-controls .icon-button{width:36px;height:36px;border-color:#454b55;border-radius:50%;color:var(--white)}
 .hero-motion-controls .icon-button:disabled,.tech-marquee-actions .icon-button:disabled{cursor:default}
@@ -46,9 +46,9 @@ body:has(dialog[open]){overflow:hidden}
 .whatsapp-float:hover .whatsapp-float-label,.whatsapp-float:focus-visible .whatsapp-float-label{opacity:1;visibility:visible;transform:none}
 .hero-meta{padding-right:calc(var(--gutter) + 72px)}
 @media(max-width:700px){
- .fallback-planet-blue{left:12%;top:22%;width:clamp(30px,11vw,48px)}
- .fallback-planet-ringed{left:90%;top:85.5%;width:clamp(22px,6.5vw,30px)}
- .fallback-planet-moon{left:88.5%;top:22%;width:clamp(14px,4vw,20px)}
+ .fallback-planet-blue{left:12%;top:22%;width:clamp(26px,9.5vw,40px)}
+ .fallback-planet-ringed{left:90%;top:85.5%;width:clamp(18px,5.5vw,26px)}
+ .fallback-planet-moon{left:88.5%;top:22%;width:clamp(12px,3.5vw,16px)}
  .whatsapp-float{width:52px;height:52px;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom))}
  .hero-meta{padding-right:calc(var(--gutter) + 60px)}
  .hero-meta>span{max-width:100px}

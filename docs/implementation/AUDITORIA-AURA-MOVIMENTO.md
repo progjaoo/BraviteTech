@@ -33,7 +33,7 @@ A ordem do preview é hero → manifesto → marcas → serviços → trabalhos 
 
 - O ticker GSAP é usado uma única vez por subsistema. Lenis tem `autoRaf: false`; a função passada a `ticker.add` é a mesma removida no cleanup. Isso evita repetir o padrão do upstream, que combina autoRaf com ticker e remove uma função diferente.
 - A galáxia não move a tipografia; os CTAs permanecem estáveis e clicáveis. Canvas e fallback não capturam eventos.
-- A cena pausa fora da viewport, em aba oculta, por comando do usuário e com movimento reduzido. O carrossel também pausa no hover e no foco.
+- A cena pausa fora da viewport, em aba oculta e por comando do usuário. Movimento reduzido inicia pausado; o usuário pode ativar apenas o fundo pelo botão da hero. O carrossel também pausa no hover e no foco.
 - A cópia do carrossel é oculta das tecnologias assistivas. Com movimento reduzido, a lista fica estática e quebra linhas para mostrar todas as tecnologias.
 - SplitText preserva rótulo acessível e recompõe linhas ao mudar a largura. O manifesto começa em opacidade 0.36, em vez do tom quase invisível do upstream.
 - Animações são criadas em componentes cliente, com cleanup por rota. GSAP administra scroll/timelines; Motion administra mudanças de estado. O admin recebe scroll nativo.
@@ -54,7 +54,7 @@ Não foi instalada a skill Sphere, pois seu domínio não corresponde a esta imp
 
 ## Implementação entregue
 
-- `hero-galaxy.tsx`: import dinâmico de Three.js após idle; três planetas com `SphereGeometry`, texturas procedurais locais, anéis, partículas em braços espirais e estrelas. Sem modelos externos ou chamadas a serviços 3D. A revisão [inspirada no movimento da Harpia](HERO-HARPIA-AJUSTES.md) limita os tamanhos em pixels, usa materiais iluminados e parallax da câmera. O movimento contínuo usa `WebGLRenderer.setAnimationLoop`; GSAP continua nas timelines e no scroll.
+- `hero-galaxy.tsx`: um `requestAnimationFrame` gerencia tempo, pausa, visibilidade e ponteiro; Canvas2D anima desde a hidratação. `hero-webgl.ts` carrega Three.js dinamicamente e assume a mesma composição após renderizar o primeiro frame com sucesso. `hero-field.ts` compartilha a onda fluida e os tamanhos limitados dos planetas entre os renderers. A revisão [inspirada no movimento da Harpia](HERO-HARPIA-AJUSTES.md) usa `SphereGeometry`, materiais iluminados, texturas procedurais locais, anéis, símbolos, partículas e parallax. GSAP continua nas timelines e no scroll.
 - `hero.tsx`: timeline de entrada, cena de fundo e controle de pausa. Camada central escura preserva a leitura.
 - `scroll-effects.tsx`: SplitText, ScrollTrigger e Lenis; remoção de listeners, splits, instâncias e ticker ao trocar de rota. Diálogos recebem scroll nativo e bloqueiam a página por trás.
 - `technology-marquee.tsx`: dois grupos de largura idêntica, animação GSAP linear na largura medida, controles de pausa e retomada, resize e estado de visibilidade.
@@ -66,9 +66,9 @@ Dependências adicionadas ao frontend: `three@0.186.1`, `lenis@1.3.26` e `@types
 
 A auditoria descreve o comportamento público e os scripts acessíveis do preview; não equivale a acesso ao código privado da edição adquirida. A aba do aplicativo não tem uma ferramenta de inspeção direta nesta sessão: a mesma URL foi aberta no Chromium disponível no ambiente em nuvem.
 
-A renderização 3D depende de WebGL. Quando indisponível, a hero conserva um fundo SVG estático; sem JavaScript, texto, links e o fallback também permanecem visíveis. A preferência de movimento reduzido torna a cena estática e remove os reveals e o scroll com inércia.
+A renderização 3D depende de WebGL2; quando indisponível, a hero usa uma composição Canvas2D animada e interativa. Sem JavaScript ou sem ambos os contextos gráficos, texto, links e fundo SVG permanecem visíveis. A preferência de movimento reduzido inicia o fundo pausado e remove os reveals e o scroll com inércia. O botão da hero permite uma escolha explícita de ativação, independente das demais animações.
 
-As verificações de renderização em Chromium usam SwiftShader no ambiente em nuvem. Elas comprovam funcionamento dos shaders e das interações verificadas; não são uma medição de FPS em hardware de clientes. O pixel ratio é limitado a 1.75 no desktop e 1.25 em telas estreitas, e a cena reduz o número de partículas em uma carga inicial mobile.
+As verificações de renderização em Chromium usam SwiftShader no ambiente em nuvem. Elas comprovam funcionamento dos shaders e das interações verificadas; não são uma medição de FPS em hardware de clientes. O pixel ratio é limitado a 1.5 no desktop e 1.25 em telas estreitas; a cena recalcula a quantidade de partículas ao atravessar o breakpoint mobile. A revisão da hero também foi verificada no Chromium padrão, sem forçar SwiftShader.
 
 ### Resultado das verificações
 
@@ -78,7 +78,7 @@ As verificações de renderização em Chromium usam SwiftShader no ambiente em 
 - Troca de rota: canvas anterior removido, uma única instância ao retornar, retorno ao topo, restauração de posição pelo botão voltar e âncora `/sobre#tecnologia` com offset de 110 px: passaram.
 - Preferência de movimento reduzido alterada com a página aberta: cena e controles acompanharam a mudança, splits foram removidos e o scroll passou a nativo; retomada também passou.
 - Mobile 390 × 844 e 320 × 844 (este com movimento reduzido desde a carga inicial): nenhum overflow horizontal, menu e Escape funcionaram; lista estática completa coube na largura de 320 px.
-- WebGL desabilitado: fundo SVG e título permaneceram visíveis. JavaScript desabilitado: conteúdo e fundo SVG permaneceram visíveis.
+- WebGL desabilitado: a alternativa Canvas2D manteve movimento, pausa e retomada. Perda do contexto WebGL em execução também migrou para Canvas2D. JavaScript desabilitado: conteúdo e fundo SVG permaneceram visíveis.
 - Nenhum erro JavaScript nas interações verificadas, incluindo hidratação em movimento reduzido. O formulário foi apenas aberto e fechado; o endpoint de intenção foi interceptado, sem criar leads de teste.
 
 Capturas da implementação: [hero desktop](previews/hero-desktop-galaxy.png), [hero mobile](previews/hero-galaxy-mobile-390.png), [carrossel desktop](previews/technology-marquee-desktop.png) e [lista com movimento reduzido](previews/technology-marquee-mobile-320.png).

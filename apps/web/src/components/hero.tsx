@@ -8,8 +8,10 @@ import { brand } from '@/lib/brand';
 import { HeroGalaxy } from './hero-galaxy';
 export function Hero(){
  const root=useRef<HTMLElement>(null);
- const [paused,setPaused]=useState(false);
+ const [manualPause,setManualPause]=useState<boolean|null>(null);
  const reduced=usePrefersReducedMotion();
+ const paused=manualPause??reduced;
+ const motionLabel=paused?(reduced&&manualPause===null?'Ativar animação do fundo':'Retomar animação do fundo'):'Pausar animação do fundo';
  useLayoutEffect(()=>{
   const ctx=gsap.context(()=>{
    const mm=gsap.matchMedia();
@@ -29,6 +31,6 @@ export function Hero(){
    <p className="hero-description hero-intro">Transformamos desafios de negócio em experiências digitais,<br className="desktop-break"/> sistemas e soluções construídas com intenção.</p>
    <div className="hero-actions"><AnalysisButton source="hero"/><a href={brand.whatsapp} className="button button-outline" target="_blank" rel="noopener noreferrer">Conversar no WhatsApp<ArrowUpRight size={18}/></a></div>
   </div>
-  <div className="hero-meta container"><span>ESTRATÉGIA. DESIGN. DESENVOLVIMENTO.</span><a href="#solucoes">Explore as possibilidades<ArrowDownRight size={18}/></a><div className="hero-motion-controls"><span className="hero-coordinate">BRAVE + IT + ENGINEER</span><button className="icon-button" disabled={!!reduced} aria-label={reduced?'Movimento reduzido ativado':paused?'Retomar animação do fundo':'Pausar animação do fundo'} aria-pressed={paused||!!reduced} onClick={()=>setPaused(value=>!value)}>{paused||reduced?<Play size={16}/>:<Pause size={16}/>}</button></div></div>
+  <div className="hero-meta container"><span>ESTRATÉGIA. DESIGN. DESENVOLVIMENTO.</span><a href="#solucoes">Explore as possibilidades<ArrowDownRight size={18}/></a><div className="hero-motion-controls"><span className="hero-coordinate">BRAVE + IT + ENGINEER</span><button className="icon-button" aria-label={motionLabel} title={motionLabel} aria-pressed={paused} onClick={()=>setManualPause(!paused)}>{paused?<Play size={16}/>:<Pause size={16}/>}</button></div></div>
  </section>;
 }
