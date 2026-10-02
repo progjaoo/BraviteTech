@@ -4,11 +4,8 @@ import { useEffect, useRef } from 'react';
 import { createCanvasEngine, type HeroEngine, type HeroFrame } from './hero-field';
 
 /** One native RAF owns the background; GSAP owns page timelines, Motion component transitions. */
-export function HeroGalaxy({ paused }: { paused: boolean }) {
+export function HeroGalaxy() {
   const host = useRef<HTMLDivElement>(null);
-  const controls = useRef<{ refresh: () => void } | null>(null);
-  const pausedRef = useRef(paused);
-  useEffect(() => { pausedRef.current = paused; controls.current?.refresh(); }, [paused]);
 
   useEffect(() => {
     const element = host.current, hero = element?.closest('section');
@@ -59,7 +56,7 @@ export function HeroGalaxy({ paused }: { paused: boolean }) {
       if (running && !cancelled) raf = requestAnimationFrame(tick);
     }
     function activity() {
-      const next = !!engine && visible && !document.hidden && !pausedRef.current && !cancelled;
+      const next = !!engine && visible && !document.hidden && !cancelled;
       element!.dataset.motion = next ? 'running' : 'paused';
       if (next === running) return;
       running = next; previousTime = null;
@@ -72,7 +69,7 @@ export function HeroGalaxy({ paused }: { paused: boolean }) {
     }
     function leave() { target.x = 0; target.y = 0; target.influence = 0; }
     function move(event: PointerEvent) {
-      if (!fine.matches || pausedRef.current || event.pointerType === 'touch') return;
+      if (!fine.matches || event.pointerType === 'touch') return;
       const bounds = hero!.getBoundingClientRect();
       target.x = Math.max(-1, Math.min(1, (event.clientX - bounds.left) / bounds.width * 2 - 1));
       target.y = Math.max(-1, Math.min(1, 1 - (event.clientY - bounds.top) / bounds.height * 2));
@@ -83,7 +80,6 @@ export function HeroGalaxy({ paused }: { paused: boolean }) {
     observer.observe(hero); dimensions.observe(element);
     hero.addEventListener('pointermove', move, { passive: true }); hero.addEventListener('pointerleave', leave);
     document.addEventListener('visibilitychange', activity); fine.addEventListener('change', leave);
-    controls.current = { refresh: activity };
     fallback(); // Visible, moving from hydration; never wait for the Three.js chunk or idle callback.
     void import('./hero-webgl').then(({ createWebGLEngine }) => {
       if (cancelled) return;
@@ -97,7 +93,7 @@ export function HeroGalaxy({ paused }: { paused: boolean }) {
       observer.disconnect(); dimensions.disconnect();
       hero.removeEventListener('pointermove', move); hero.removeEventListener('pointerleave', leave);
       document.removeEventListener('visibilitychange', activity); fine.removeEventListener('change', leave);
-      controls.current = null; engine?.dispose(); engine = null;
+      engine?.dispose(); engine = null;
     };
   }, []);
 

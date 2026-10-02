@@ -1,17 +1,12 @@
 "use client";
-import { useLayoutEffect, useRef, useState } from 'react';
-import { ArrowDownRight, ArrowUpRight, Pause, Play } from 'lucide-react';
-import { usePrefersReducedMotion } from '@/lib/use-prefers-reduced-motion';
+import { useLayoutEffect, useRef } from 'react';
+import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import gsap from 'gsap';
 import { AnalysisButton } from './providers';
 import { brand } from '@/lib/brand';
 import { HeroGalaxy } from './hero-galaxy';
 export function Hero(){
  const root=useRef<HTMLElement>(null);
- const [manualPause,setManualPause]=useState<boolean|null>(null);
- const reduced=usePrefersReducedMotion();
- const paused=manualPause??reduced;
- const motionLabel=paused?(reduced&&manualPause===null?'Ativar animação do fundo':'Retomar animação do fundo'):'Pausar animação do fundo';
  useLayoutEffect(()=>{
   const ctx=gsap.context(()=>{
    const mm=gsap.matchMedia();
@@ -25,12 +20,12 @@ export function Hero(){
   },root);return ()=>ctx.revert();
  },[]);
  return <section className="hero" ref={root} aria-labelledby="hero-heading">
-  <div className="hero-field" aria-hidden="true"><HeroGalaxy paused={paused}/></div>
+  <div className="hero-field" aria-hidden="true"><HeroGalaxy/></div>
   <div className="hero-content container"><p className="eyebrow hero-intro"><span className="blue-dot"/>SOFTWARE HOUSE · BRAVITE</p>
    <h1 id="hero-heading"><span className="word-mask"><span className="hero-word">Coragem para criar.</span></span><span className="word-mask"><span className="hero-word hero-accent">Engenharia para evoluir.</span></span></h1>
    <p className="hero-description hero-intro">Transformamos desafios de negócio em experiências digitais,<br className="desktop-break"/> sistemas e soluções construídas com intenção.</p>
    <div className="hero-actions"><AnalysisButton source="hero"/><a href={brand.whatsapp} className="button button-outline" target="_blank" rel="noopener noreferrer">Conversar no WhatsApp<ArrowUpRight size={18}/></a></div>
   </div>
-  <div className="hero-meta container"><span>ESTRATÉGIA. DESIGN. DESENVOLVIMENTO.</span><a href="#solucoes">Explore as possibilidades<ArrowDownRight size={18}/></a><div className="hero-motion-controls"><span className="hero-coordinate">BRAVE + IT + ENGINEER</span><button className="icon-button" aria-label={motionLabel} title={motionLabel} aria-pressed={paused} onClick={()=>setManualPause(!paused)}>{paused?<Play size={16}/>:<Pause size={16}/>}</button></div></div>
+  <div className="hero-meta container"><span>ESTRATÉGIA. DESIGN. DESENVOLVIMENTO.</span><a href="#solucoes">Explore as possibilidades<ArrowDownRight size={18}/></a><span className="hero-coordinate">BRAVE + IT + ENGINEER</span></div>
  </section>;
 }
