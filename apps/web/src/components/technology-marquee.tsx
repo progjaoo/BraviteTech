@@ -106,6 +106,7 @@ export function TechnologyMarquee({
               autoFill
               loop={0}
               play={playing}
+              pauseOnHover
               speed={marqueeSpeed}
               gradient
               gradientColor="var(--black)"
