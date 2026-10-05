@@ -23,7 +23,7 @@ export class PublicController {
  @Post('leads/intent') @Throttle({default:{limit:15,ttl:60000}}) @ApiBody({type:IntentDto})
  @ApiOperation({summary:'Register an anonymous CTA intent without identifying the visitor'})
  intent(@Body(new DtoPipe(IntentDto))dto:IntentDto,@Req()req:Request){checkOrigin(req);return this.leads.intent(dto.source);}
- @Post('leads') @Throttle({default:{limit:5,ttl:60000}}) @ApiBody({type:LeadDto})
+ @Post('leads') @Throttle({default:{limit:5,ttl:60000},formBudget:{limit:30,ttl:60000}}) @ApiBody({type:LeadDto})
  @ApiOperation({summary:'Save a consented analysis request and enqueue an owner notification'})
  lead(@Body(new DtoPipe(LeadDto))dto:LeadDto,@Req()req:Request){checkOrigin(req);return this.leads.submit(dto);}
 }

@@ -20,6 +20,7 @@
     "class-transformer": "^0.5.1",
     "pg": "^8.16.0",
     "cookie-parser": "^1.4.7",
+    "express": "^5.2.1",
     "nodemailer": "^7.0.0",
     "@bravite/shared": "1.0.0"
   },

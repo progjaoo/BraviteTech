@@ -8,7 +8,7 @@ import pg from 'pg';
 const origin=process.env.APP_ORIGIN?.split(',')[0]||'http://localhost:3000';
 const target=new URL(origin);
 if(!['localhost','127.0.0.1'].includes(target.hostname))throw new Error('Integration tests require a local server.');
-if(process.env.SMTP_HOST||process.env.CLOUDFLARE_IMAGES_TOKEN)throw new Error('Use local storage and disable external delivery when testing.');
+if(process.env.RESEND_API_KEY||process.env.SMTP_HOST||process.env.CLOUDFLARE_IMAGES_TOKEN)throw new Error('Use local storage and disable external delivery when testing.');
 let cookie='';
 async function api(path,{method='GET',body,authenticated=false,expected=200,requestOrigin=origin}={}){
  const response=await fetch(`${origin}/api/v1/${path}`,{method,headers:{'Content-Type':'application/json',Origin:requestOrigin,...(authenticated?{Cookie:cookie}:{})},...(body?{body:JSON.stringify(body)}:{})});

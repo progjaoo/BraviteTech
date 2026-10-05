@@ -63,6 +63,8 @@ O navegador chama `/api/v1/...` no mesmo domínio; o Next encaminha ao NestJS. A
 
 Autenticação administrativa usa cookie HttpOnly/SameSite Strict, sessões opacas armazenadas como hash, senha com scrypt, verificação de origem em operações de escrita, limites por rota e queries parametrizadas. Imagens aceitas: PNG, JPEG, WebP e AVIF até 8 MB; SVG enviado pelo painel é rejeitado. Markdown não executa HTML arbitrário.
 
+O formulário possui máscara de WhatsApp, validação no servidor, serviços permitidos, limite de JSON, honeypot e proteção contra repetição e abuso. Os controles e as referências OWASP estão em [Segurança do formulário](docs/implementation/SEGURANCA-FORMULARIO.md). Rode `npm run test:form-security` para verificar esses controles localmente, sem banco ou envio de e-mail.
+
 ## E-mail e Cloudflare
 
 Os pedidos são persistidos e as notificações para `bravitetech@gmail.com` entram numa fila transacional. A integração preferencial usa o SMTP do Resend com a chave privada em `RESEND_API_KEY` e o remetente em `RESEND_FROM`. Para este domínio, o exemplo usa `Bravite <site@resend.grupogtf.com.br>`; o domínio `resend.grupogtf.com.br` precisa estar verificado na conta do Resend e a chave precisa ter permissão de envio. No SMTP do Resend, o host é `smtp.resend.com`, a porta é `465` com TLS e o usuário é `resend`; o backend configura esses valores automaticamente.
@@ -86,7 +88,7 @@ NODE_ENV=production npm start
 
 O build usa Webpack porque o Turbopack encontrou uma restrição de portas auxiliares neste ambiente. A saída do Next é standalone; o script de produção copia `public` e `.next/static` para o diretório correto do monorepo antes de iniciar o servidor. `PORT` controla a porta pública; `API_PORT` controla o NestJS.
 
-Os testes de integração verificam consentimento, conversão de interesse em lead, sessões, controle de acesso e origem, rascunhos, publicação, slug duplicado, upload e schemas OpenAPI. Usam registros temporários removidos ao terminar e exigem um servidor local com entrega SMTP e Cloudflare desativadas.
+Os testes de integração verificam consentimento, conversão de interesse em lead, sessões, controle de acesso e origem, rascunhos, publicação, slug duplicado, upload e schemas OpenAPI. Usam registros temporários removidos ao terminar e exigem um servidor local com entrega Resend/SMTP e Cloudflare desativadas.
 
 ## AURA adquirido na 21st
 

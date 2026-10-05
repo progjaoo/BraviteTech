@@ -4,6 +4,7 @@ import { MotionConfig, motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, X, Check, LoaderCircle } from 'lucide-react';
 import Link from 'next/link';
 import { ScrollEffects } from './scroll-effects';
+import { WhatsAppInput } from './whatsapp-input';
 import { brand, services } from '@/lib/brand';
 import { request } from '@/lib/api';
 import { usePrefersReducedMotion } from '@/lib/use-prefers-reduced-motion';
@@ -18,10 +19,13 @@ export function Providers({children}:{children:ReactNode}){
  const [open,setOpen]=useState(false),[source,setSource]=useState('site'),[intent,setIntent]=useState<{id:string;token:string}|null>(null);
  const [state,setState]=useState<'idle'|'sending'|'success'>('idle'),[error,setError]=useState('');
  const dialog=useRef<HTMLDialogElement>(null);
+ const submitting=useRef(false);
+ const intentRequest=useRef(0);
  const begin=(nextSource='site')=>{
   setSource(nextSource);setOpen(true);setState('idle');setError('');
   // Clicks are anonymous intent records; personal data arrives only with consent.
-  if(!intent)void request<{id:string;token:string}>('leads/intent',{method:'POST',body:JSON.stringify({source:nextSource})}).then(setIntent).catch(()=>{});
+  const sequence=++intentRequest.current;
+  setIntent(null);void request<{id:string;token:string}>('leads/intent',{method:'POST',body:JSON.stringify({source:nextSource})}).then(value=>{if(sequence===intentRequest.current)setIntent(value);}).catch(()=>{});
  };
  useEffect(()=>{
   if(open){dialog.current?.showModal();document.body.style.overflow='hidden';}
@@ -29,13 +33,15 @@ export function Providers({children}:{children:ReactNode}){
   return ()=>{document.body.style.overflow='';};
  },[open]);
  async function submit(event:FormEvent<HTMLFormElement>){
-  event.preventDefault();setState('sending');setError('');
+  event.preventDefault();if(submitting.current)return;
+  submitting.current=true;setState('sending');setError('');
   const fields=new FormData(event.currentTarget);
-  const data=Object.fromEntries(fields.entries());
+  const data={name:fields.get('name'),email:fields.get('email'),phone:fields.get('phone'),company:fields.get('company'),service:fields.get('service'),message:fields.get('message'),website:fields.get('website')};
   try{
    await request('leads',{method:'POST',body:JSON.stringify({...data,consent:fields.get('consent')==='on',...(intent?{intentId:intent.id,intentToken:intent.token}:{})})});
-   setState('success');setIntent(null);
+   setState('success');intentRequest.current++;setIntent(null);
   }catch(e){setState('idle');setError(e instanceof Error?e.message:'Tente novamente em instantes.');}
+  finally{submitting.current=false;}
  }
  return <MotionConfig reducedMotion={reduced?'always':'never'}><AnalysisContext.Provider value={begin}>{children}<ScrollEffects/>
   <dialog ref={dialog} className="analysis-dialog" onCancel={e=>{e.preventDefault();if(state!=='sending')setOpen(false);}} onClick={e=>{if(e.target===dialog.current&&state!=='sending')setOpen(false);}} aria-labelledby="analysis-title">
@@ -46,7 +52,7 @@ export function Providers({children}:{children:ReactNode}){
      <p className="dialog-description">Você visitou nossa página. Se ainda há interesse, preencha o formulário para receber sua análise gratuita.</p>
      <form onSubmit={submit} className="analysis-form">
       <div className="form-grid"><label>Seu nome<input name="name" autoComplete="name" required minLength={2} maxLength={120} placeholder="Como podemos chamar você?"/></label><label>E-mail<input name="email" type="email" autoComplete="email" required maxLength={254} placeholder="voce@empresa.com.br"/></label></div>
-      <div className="form-grid"><label>WhatsApp<input name="phone" type="tel" autoComplete="tel" required minLength={10} maxLength={25} placeholder="(DDD) 99999-9999"/></label><label><span>Empresa <span className="optional">(opcional)</span></span><input name="company" autoComplete="organization" maxLength={160} placeholder="Nome da sua empresa"/></label></div>
+      <div className="form-grid"><label>WhatsApp<WhatsAppInput/></label><label><span>Empresa <span className="optional">(opcional)</span></span><input name="company" autoComplete="organization" maxLength={160} placeholder="Nome da sua empresa"/></label></div>
       <label>O que você tem em mente?<select name="service" defaultValue={services.find(s=>s.slug===source)?.title||''} required><option value="" disabled>Selecione uma possibilidade</option>{services.map(s=><option key={s.slug}>{s.title}</option>)}<option>Ainda preciso entender a melhor solução</option></select></label>
       <label>Conte um pouco sobre seu desafio<textarea name="message" rows={3} required minLength={10} maxLength={3000} placeholder="O que você quer construir ou melhorar no seu negócio?"/></label>
       <div className="honeypot" aria-hidden="true"><label>Website<input name="website" tabIndex={-1} autoComplete="off"/></label></div>

@@ -28,6 +28,7 @@ export function checkOrigin(req:Request){
  const origin=req.headers.origin;
  const allowed=new Set((process.env.APP_ORIGIN||'http://localhost:3000').split(',').map(v=>v.trim()));
  if(req.method!=='GET' && req.method!=='HEAD' && (!origin||!allowed.has(origin))) throw new ForbiddenException('Origem não autorizada.');
+ if(req.method!=='GET' && req.method!=='HEAD' && req.headers['sec-fetch-site']==='cross-site') throw new ForbiddenException('Origem não autorizada.');
 }
 @Injectable()
 export class AdminGuard implements CanActivate {

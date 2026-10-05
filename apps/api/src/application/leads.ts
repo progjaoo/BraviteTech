@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { randomUUID, randomBytes } from 'node:crypto';
 import nodemailer from 'nodemailer';
 import { Database } from '../infrastructure/database';
@@ -38,7 +38,8 @@ export class LeadsService implements OnModuleInit,OnModuleDestroy {
   try{
    await client.query('BEGIN');let id:string|undefined;
    if(dto.intentId&&dto.intentToken){
-    const updated=await client.query("UPDATE leads SET name=$1,email=$2,phone=$3,company=$4,service=$5,message=$6,status='new',consent_at=now(),consent_version='2026-10',intent_token_hash=NULL,updated_at=now() WHERE id=$7 AND intent_token_hash=$8 AND status='intent' RETURNING id",[dto.name.trim(),dto.email.toLowerCase(),dto.phone,dto.company||null,dto.service,dto.message.trim(),dto.intentId,digest(dto.intentToken)]);id=updated.rows[0]?.id;
+    const updated=await client.query("UPDATE leads SET name=$1,email=$2,phone=$3,company=$4,service=$5,message=$6,status='new',consent_at=now(),consent_version='2026-10',intent_token_hash=NULL,updated_at=now() WHERE id=$7 AND intent_token_hash=$8 AND status='intent' AND created_at>now()-interval '30 minutes' RETURNING id",[dto.name.trim(),dto.email.toLowerCase(),dto.phone,dto.company||null,dto.service,dto.message.trim(),dto.intentId,digest(dto.intentToken)]);id=updated.rows[0]?.id;
+    if(!id)throw new BadRequestException('Esta solicitação expirou ou já foi enviada. Feche e abra o formulário para tentar novamente.');
    }
    if(!id){id=randomUUID();await client.query("INSERT INTO leads(id,name,email,phone,company,service,message,status,consent_at,consent_version,source) VALUES($1,$2,$3,$4,$5,$6,$7,'new',now(),'2026-10','form')",[id,dto.name.trim(),dto.email.toLowerCase(),dto.phone,dto.company||null,dto.service,dto.message.trim()]);}
    await client.query('INSERT INTO notification_outbox(id,lead_id) VALUES($1,$2)',[randomUUID(),id]);
