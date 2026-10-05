@@ -8,7 +8,7 @@ import { resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { Database } from '../infrastructure/database';
 import { ContentService } from '../application/content';
-import { LeadsService } from '../application/leads';
+import { isMailConfigured, LeadsService } from '../application/leads';
 import { AuthService, AdminGuard, checkOrigin, sessionCookie } from '../application/auth';
 import { IntentDto, LeadDto, PostDto, CaseDto, LoginDto, StatusDto, DtoPipe } from './dto';
 
@@ -43,7 +43,7 @@ export class AdminController {
  constructor(@Inject(Database)private db:Database,@Inject(ContentService)private content:ContentService){}
  @Get('overview') async overview(){
   const {rows}=await this.db.query("SELECT (SELECT count(*)::int FROM leads WHERE status<>'intent') AS leads, (SELECT count(*)::int FROM leads WHERE status='intent') AS intents, (SELECT count(*)::int FROM posts WHERE status='published') AS posts, (SELECT count(*)::int FROM cases WHERE status='published') AS cases, (SELECT count(*)::int FROM notification_outbox WHERE status='pending') AS pending_notifications");
-  return {...rows[0],mail_configured:!!process.env.SMTP_HOST&&!!process.env.SMTP_FROM,media_provider:process.env.CLOUDFLARE_IMAGES_TOKEN?'cloudflare':'local'};
+  return {...rows[0],mail_configured:isMailConfigured(),media_provider:process.env.CLOUDFLARE_IMAGES_TOKEN?'cloudflare':'local'};
  }
  @Get('leads') async leads(){return (await this.db.query("SELECT id,name,email,phone,company,service,message,status,created_at FROM leads WHERE status<>'intent' ORDER BY created_at DESC LIMIT 200")).rows;}
  @Patch('leads/:id') @ApiBody({type:StatusDto}) async status(@Param('id',ParseUUIDPipe)id:string,@Body(new DtoPipe(StatusDto))dto:StatusDto){const {rows}=await this.db.query("UPDATE leads SET status=$1,updated_at=now() WHERE id=$2 AND status<>'intent' RETURNING id,status",[dto.status,id]);if(!rows[0])throw new NotFoundException();return rows[0];}

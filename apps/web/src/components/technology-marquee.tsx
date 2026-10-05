@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
 import Marquee from 'react-fast-marquee';
-import { ArrowRight, Pause, Play } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { defaultTechnologies, type Technology } from '@/lib/technology-icons';
 import { usePrefersReducedMotion } from '@/lib/use-prefers-reduced-motion';
 import styles from './technology-marquee.module.css';
@@ -35,7 +35,6 @@ export function TechnologyMarquee({
 }: TechnologyMarqueeProps = {}) {
   const root = useRef<HTMLElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const [paused, setPaused] = useState(false);
   const [visible, setVisible] = useState(true);
   const [pageVisible, setPageVisible] = useState(true);
 
@@ -56,10 +55,9 @@ export function TechnologyMarquee({
   if (!technologies.length) return null;
 
   const staticMode = technologies.length < 2;
-  const playing = !staticMode && !paused && visible && pageVisible;
+  const playing = !staticMode && visible && pageVisible;
   const requestedSpeed = Number.isFinite(speed) && speed > 0 ? speed : 50;
   const marqueeSpeed = reducedMotion ? Math.min(requestedSpeed, 24) : requestedSpeed;
-  const pauseLabel = paused ? 'Retomar carrossel de tecnologias' : 'Pausar carrossel de tecnologias';
 
   return (
     <section
@@ -73,16 +71,6 @@ export function TechnologyMarquee({
         <span>ENGENHARIA PARA EVOLUIR</span>
         <div className="tech-marquee-actions">
           <Link href="/sobre#tecnologia">Tecnologia com critério<ArrowRight size={15} /></Link>
-          <button
-            type="button"
-            className="icon-button"
-            aria-label={pauseLabel}
-            aria-pressed={paused}
-            disabled={technologies.length < 2}
-            onClick={() => setPaused(value => !value)}
-          >
-            {paused ? <Play size={16} aria-hidden="true" /> : <Pause size={16} aria-hidden="true" />}
-          </button>
         </div>
       </div>
 

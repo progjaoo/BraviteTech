@@ -5,6 +5,24 @@ import { Database } from '../infrastructure/database';
 import { digest } from './auth';
 import type { LeadCommand } from '../domain/contracts';
 
+function mailConfiguration() {
+ const resendKey=process.env.RESEND_API_KEY?.trim();
+ if(resendKey){
+  return {
+   from:process.env.RESEND_FROM?.trim()||'Bravite <site@resend.grupogtf.com.br>',
+   transport:{host:'smtp.resend.com',port:465,secure:true,auth:{user:'resend',pass:resendKey},connectionTimeout:10000,socketTimeout:15000},
+  };
+ }
+ if(!process.env.SMTP_HOST||!process.env.SMTP_FROM)return null;
+ const port=Number(process.env.SMTP_PORT||587);
+ return {
+  from:process.env.SMTP_FROM,
+  transport:{host:process.env.SMTP_HOST,port,secure:port===465,auth:process.env.SMTP_USER?{user:process.env.SMTP_USER,pass:process.env.SMTP_PASS}:undefined,connectionTimeout:10000,socketTimeout:15000},
+ };
+}
+
+export function isMailConfigured(){return mailConfiguration()!==null;}
+
 @Injectable()
 export class LeadsService implements OnModuleInit,OnModuleDestroy {
  private timer?:NodeJS.Timeout;
@@ -28,16 +46,17 @@ export class LeadsService implements OnModuleInit,OnModuleDestroy {
   }catch(e){await client.query('ROLLBACK');throw e;}finally{client.release();}
  }
  async flush(){
-  if(!process.env.SMTP_HOST||!process.env.SMTP_FROM||this.processing)return;
+  const configuration=mailConfiguration();
+  if(!configuration||this.processing)return;
   this.processing=true;
   try{
-   const mail=nodemailer.createTransport({host:process.env.SMTP_HOST,port:Number(process.env.SMTP_PORT||587),secure:process.env.SMTP_PORT==='465',auth:process.env.SMTP_USER?{user:process.env.SMTP_USER,pass:process.env.SMTP_PASS}:undefined,connectionTimeout:10000,socketTimeout:15000});
+   const mail=nodemailer.createTransport(configuration.transport);
    const {rows}=await this.db.query("SELECT o.id AS notification_id,l.* FROM notification_outbox o JOIN leads l ON l.id=o.lead_id WHERE o.status='pending' AND o.attempts<5 ORDER BY o.created_at LIMIT 5");
    for(const lead of rows){
     try{
-     await mail.sendMail({from:process.env.SMTP_FROM,to:process.env.LEAD_NOTIFICATION_EMAIL||'bravitetech@gmail.com',replyTo:lead.email,subject:'Bravite — novo pedido de análise',text:`Nome: ${lead.name}\nE-mail: ${lead.email}\nWhatsApp: ${lead.phone}\nEmpresa: ${lead.company||'Não informada'}\nServiço: ${lead.service}\n\n${lead.message}`});
+     await mail.sendMail({from:configuration.from,to:process.env.LEAD_NOTIFICATION_EMAIL||'bravitetech@gmail.com',replyTo:lead.email,subject:'Bravite — novo pedido de análise',text:`Nome: ${lead.name}\nE-mail: ${lead.email}\nWhatsApp: ${lead.phone}\nEmpresa: ${lead.company||'Não informada'}\nServiço: ${lead.service}\n\n${lead.message}`});
      await this.db.query("UPDATE notification_outbox SET status='sent',sent_at=now(),error=NULL WHERE id=$1",[lead.notification_id]);
-    }catch{await this.db.query("UPDATE notification_outbox SET attempts=attempts+1,error='Falha de entrega SMTP; verificar configuração' WHERE id=$1",[lead.notification_id]);}
+    }catch{await this.db.query("UPDATE notification_outbox SET attempts=attempts+1,error='Falha no provedor de e-mail; verificar configuração e tentativas' WHERE id=$1",[lead.notification_id]);}
    }
   }catch{console.error('Notification queue unavailable.');}finally{this.processing=false;}
  }

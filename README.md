@@ -65,7 +65,9 @@ Autenticação administrativa usa cookie HttpOnly/SameSite Strict, sessões opac
 
 ## E-mail e Cloudflare
 
-Os pedidos são persistidos e as notificações para `bravitetech@gmail.com` entram numa fila transacional. Para entrega real, configure `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` e `SMTP_FROM` conforme seu provedor. Reinicie a API. Sem SMTP, o painel informa a pendência; o site não afirma que um e-mail foi entregue. Há até cinco tentativas por notificação.
+Os pedidos são persistidos e as notificações para `bravitetech@gmail.com` entram numa fila transacional. A integração preferencial usa o SMTP do Resend com a chave privada em `RESEND_API_KEY` e o remetente em `RESEND_FROM`. Para este domínio, o exemplo usa `Bravite <site@resend.grupogtf.com.br>`; o domínio `resend.grupogtf.com.br` precisa estar verificado na conta do Resend e a chave precisa ter permissão de envio. No SMTP do Resend, o host é `smtp.resend.com`, a porta é `465` com TLS e o usuário é `resend`; o backend configura esses valores automaticamente.
+
+Mantenha `RESEND_API_KEY` somente no `.env` do servidor, nunca em variáveis `NEXT_PUBLIC_*` nem no frontend, e reinicie a API depois de configurá-la. `LEAD_NOTIFICATION_EMAIL` define quem recebe os pedidos (o padrão é `bravitetech@gmail.com`). O endereço do lead é usado como `Reply-To`, permitindo responder diretamente. SMTP genérico continua disponível como fallback por `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` e `SMTP_FROM`. Sem um provedor configurado, os e-mails permanecem pendentes; há até cinco tentativas por notificação.
 
 Para imagens na Cloudflare Images, configure `CLOUDFLARE_ACCOUNT_ID` e `CLOUDFLARE_IMAGES_TOKEN` com permissão de upload. A API armazena a URL `imagedelivery.net` devolvida pelo provedor e o Next otimiza a imagem. Em desenvolvimento, as imagens ficam em `.local/uploads`. Em produção, use Cloudflare ou armazenamento persistente; arquivos locais não sobrevivem a uma instância descartável.
 
