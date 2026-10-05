@@ -11,6 +11,7 @@
 
 .viewport {
   padding-block: 8px;
+  overflow-y: hidden;
 }
 
 .item {
