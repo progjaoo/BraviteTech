@@ -1,0 +1,21 @@
+Planet surface and ring textures — Solar System Scope / INOVE
+Source collection: https://www.solarsystemscope.com/textures/
+License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+https://creativecommons.org/licenses/by/4.0/
+
+Original files:
+https://www.solarsystemscope.com/textures/download/2k_neptune.jpg
+https://www.solarsystemscope.com/textures/download/2k_saturn.jpg
+https://www.solarsystemscope.com/textures/download/2k_moon.jpg
+https://www.solarsystemscope.com/textures/download/2k_saturn_ring_alpha.png
+
+Changes for Bravite:
+- Surface maps converted to WebP for delivery.
+- Neptune and Saturn retain 2048 x 1024 pixels.
+- Moon optimized to 1024 x 512 pixels for its small on-screen diameter.
+- Ring image retained at 2048 x 125 pixels.
+- Cool material tints, lighting and atmospheric rims applied by Three.js.
+- Moon albedo reused as a subtle artistic bump; this is not an elevation dataset.
+
+These maps are artistic reconstructions based on astronomical imagery.
+They are used as decorative imagery, not scientifically calibrated simulations.

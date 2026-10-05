@@ -84,32 +84,89 @@ export function createWebGLEngine(onFailure: () => void): HeroEngine | null {
     let points = createField(false), positions = new Float32Array(0), layout = planetLayout(1);
     const position = { x: 0, y: 0, z: 0 };
 
-    // Smooth mineral clouds without image downloads or exaggerated horizontal stripes.
-    function planetTexture(tint: string) {
-      const data = new Uint8Array(256 * 128 * 4), color = new THREE.Color(tint), sample = new THREE.Color();
-      for (let y = 0; y < 128; y++) for (let x = 0; x < 256; x++) {
-        const u = x / 256 * Math.PI * 2, v = y / 128 * Math.PI;
-        const a = Math.cos(u) * Math.sin(v), b = Math.sin(u) * Math.sin(v), c = Math.cos(v);
-        const noise = Math.sin(a * 11 + Math.sin(b * 7) * 2 + c * 9) * 0.1
-          + Math.sin(b * 23 + Math.sin(c * 17) + a * 19) * 0.055;
-        sample.copy(color).multiplyScalar(0.65 + noise).convertLinearToSRGB();
-        const offset = (y * 256 + x) * 4;
-        data[offset] = sample.r * 255; data[offset + 1] = sample.g * 255; data[offset + 2] = sample.b * 255; data[offset + 3] = 255;
-      }
-      const texture = new THREE.DataTexture(data, 256, 128, THREE.RGBAFormat);
+    // Local astronomical maps, optimized from Solar System Scope (CC BY 4.0).
+    // Attribution: /textures/planets/CREDITS.txt. Image loading never owns the animation loop.
+    const loader = new THREE.TextureLoader();
+    const anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+    function loadSurface(material: THREE.MeshStandardMaterial, file: string, tint: string, relief = false) {
+      const texture = loader.load(`/textures/planets/${file}`, () => {
+        if (disposed) { texture.dispose(); return; }
+        material.map = texture; material.color.set(tint);
+        if (relief) {
+          // Only the rocky moon gets a subtle bump. Gas clouds must stay smooth.
+          const bump = texture.clone(); bump.colorSpace = THREE.NoColorSpace; bump.needsUpdate = true;
+          textures.add(bump); material.bumpMap = bump; material.bumpScale = 0.004;
+        }
+        material.needsUpdate = true;
+      }, undefined, () => { /* A failed image keeps the smooth, lit base material. */ });
       texture.colorSpace = THREE.SRGBColorSpace; texture.wrapS = THREE.RepeatWrapping;
-      texture.magFilter = THREE.LinearFilter; texture.minFilter = THREE.LinearFilter; texture.needsUpdate = true;
-      textures.add(texture); return texture;
+      texture.minFilter = THREE.LinearMipmapLinearFilter; texture.magFilter = THREE.LinearFilter;
+      texture.anisotropy = anisotropy; textures.add(texture);
     }
-    const sphere = new THREE.SphereGeometry(1, 40, 28); geometries.add(sphere);
-    const planets = ['#2D6BFF', '#A3B9E8', '#B6BDC9'].map((tint, index) => {
+    const sphere = new THREE.SphereGeometry(1, 64, 48); geometries.add(sphere);
+    const appearances = [
+      { file: 'neptune-albedo.webp', base: '#2D6BFF', tint: '#e1edff', atmosphere: '#538eff' },
+      { file: 'saturn-albedo.webp', base: '#A3B9E8', tint: '#aecaff', atmosphere: '#abc9ff' },
+      { file: 'moon-albedo.webp', base: '#B6BDC9', tint: '#d4deef', atmosphere: null },
+    ];
+    const planets = appearances.map((appearance, index) => {
       const group = new THREE.Group();
-      const surface = new THREE.MeshStandardMaterial({ map: planetTexture(tint), roughness: 0.9, metalness: 0.04 });
+      const surface = new THREE.MeshStandardMaterial({ color: appearance.base, roughness: 1, metalness: 0 });
+      loadSurface(surface, appearance.file, appearance.tint, index === 2);
       materials.add(surface);
       const mesh = new THREE.Mesh(sphere, surface); group.add(mesh);
+      if (appearance.atmosphere) {
+        const atmosphere = new THREE.ShaderMaterial({
+          transparent: true, depthWrite: false, side: THREE.BackSide, blending: THREE.AdditiveBlending,
+          uniforms: {
+            uColor: { value: new THREE.Color(appearance.atmosphere) },
+            uSunDirection: { value: light.position.clone().normalize() },
+          },
+          vertexShader: `
+            varying vec3 vWorldNormal;
+            varying vec3 vWorldPosition;
+            void main() {
+              vec4 world = modelMatrix * vec4(position, 1.0);
+              vWorldNormal = normalize(mat3(modelMatrix) * normal);
+              vWorldPosition = world.xyz;
+              gl_Position = projectionMatrix * viewMatrix * world;
+            }`,
+          fragmentShader: `
+            uniform vec3 uColor;
+            uniform vec3 uSunDirection;
+            varying vec3 vWorldNormal;
+            varying vec3 vWorldPosition;
+            void main() {
+              vec3 normal = normalize(vWorldNormal);
+              vec3 viewDirection = normalize(cameraPosition - vWorldPosition);
+              float rim = pow(1.0 - abs(dot(normal, viewDirection)), 3.0);
+              float daylight = smoothstep(-0.35, 0.6, dot(normal, uSunDirection));
+              gl_FragColor = vec4(uColor, rim * daylight * 0.3);
+              #include <tonemapping_fragment>
+              #include <colorspace_fragment>
+            }`,
+        });
+        materials.add(atmosphere);
+        const shell = new THREE.Mesh(sphere, atmosphere); shell.scale.setScalar(index === 0 ? 1.035 : 1.018);
+        group.add(shell);
+      }
       if (index === 1) {
         const ringGeometry = new THREE.RingGeometry(1.25, 1.8, 64);
-        const ringMaterial = new THREE.MeshBasicMaterial({ color: '#5487ff', transparent: true, opacity: 0.2, side: THREE.DoubleSide, depthWrite: false });
+        // The source is a radial strip: map radius to U instead of planar XY coordinates.
+        const ringPositions = ringGeometry.attributes.position, uv = ringGeometry.attributes.uv;
+        for (let i = 0; i < ringPositions.count; i++)
+          uv.setXY(i, (Math.hypot(ringPositions.getX(i), ringPositions.getY(i)) - 1.25) / 0.55, 0.5);
+        // Dust scatters light through the thin ring; keep its bands legible at this small scale.
+        const ringMaterial = new THREE.MeshBasicMaterial({
+          color: '#c4d6f4', transparent: true, opacity: 0.62, toneMapped: false,
+          side: THREE.DoubleSide, depthWrite: false,
+        });
+        const ringTexture = loader.load('/textures/planets/saturn-rings.png', () => {
+          if (disposed) { ringTexture.dispose(); return; }
+          ringMaterial.map = ringTexture; ringMaterial.needsUpdate = true;
+        }, undefined, () => { /* Retain the simple ring if its map is unavailable. */ });
+        ringTexture.colorSpace = THREE.SRGBColorSpace; ringTexture.anisotropy = anisotropy;
+        textures.add(ringTexture);
         geometries.add(ringGeometry); materials.add(ringMaterial);
         const ring = new THREE.Mesh(ringGeometry, ringMaterial); ring.rotation.set(1.15, 0.2, -0.25); group.add(ring);
       }
