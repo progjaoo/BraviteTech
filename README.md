@@ -75,6 +75,8 @@ Mantenha `RESEND_API_KEY` somente no `.env` do servidor, nunca em variáveis `NE
 
 Para imagens na Cloudflare Images, configure `CLOUDFLARE_ACCOUNT_ID` e `CLOUDFLARE_IMAGES_TOKEN` com permissão de upload. A API armazena a URL `imagedelivery.net` devolvida pelo provedor e o Next otimiza a imagem. Em desenvolvimento, as imagens ficam em `.local/uploads`. Em produção, use Cloudflare ou armazenamento persistente; arquivos locais não sobrevivem a uma instância descartável.
 
+A integração com bucket R2 está planejada para `bravite-images`, com entrega em `media.bravite.com.br` e armazenamento privado separado para rascunhos. Ela ainda não foi implementada nem configurada na conta. Consulte o [plano de conexão das imagens](docs/implementation/PLANO-IMAGENS-CLOUDFLARE.md) e a [especificação das implementações Cloudflare](docs/implementation/CLOUDFLARE-IMPLEMENTACOES.md), que incluem a auditoria do código atual, contratos, migração, cache e demais usos recomendados.
+
 Use `.env.example` como referência para as variáveis. Em Replit ou outro host, configure as credenciais no gerenciador de Secrets, conecte um PostgreSQL persistente por `DATABASE_URL` e ajuste `APP_ORIGIN` e `NEXT_PUBLIC_SITE_URL` para a URL publicada. `APP_ORIGIN` aceita várias origens exatas separadas por vírgula. `API_URL` aponta para o processo NestJS; sua rota de proxy é definida no build. Em produção, use HTTPS e `NODE_ENV=production`, que ativa o cookie Secure. A API e o frontend precisam rodar no mesmo host para o endereço interno padrão funcionar.
 
 ## Validar e executar em produção
