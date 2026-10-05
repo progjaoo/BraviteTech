@@ -19,7 +19,7 @@ O header estava com `position: absolute`: acompanhava o início da página e sa�
 | Entradas dos cards ao rolar | GSAP + ScrollTrigger | `apps/web/src/components/showcase.tsx` |
 | Entradas de elementos com `data-reveal`, por rota | GSAP + ScrollTrigger/SplitText | `apps/web/src/components/scroll-effects.tsx` |
 | Inércia de roda no desktop | Lenis + ticker GSAP | `apps/web/src/components/scroll-effects.tsx` |
-| Faixa contínua de tecnologias | GSAP | `apps/web/src/components/technology-marquee.tsx` |
+| Faixa contínua de tecnologias | react-fast-marquee | `apps/web/src/components/technology-marquee.tsx` |
 | Entrada do menu mobile | Motion for React | `apps/web/src/components/header.tsx` |
 | Transições do formulário de análise | Motion for React | `apps/web/src/components/providers.tsx` |
 | Abrir e fechar respostas do FAQ | Motion for React | `apps/web/src/components/faq.tsx` |
@@ -33,7 +33,7 @@ GSAP e Motion têm capacidades que se sobrepõem. Para este projeto, timelines e
 1. Um único controlador por elemento e propriedade. Não combinar `gsap.to()` e `motion` alterando `transform`, `opacity` ou altura do mesmo elemento. Quando necessário, usar um wrapper para o reveal GSAP e um filho para a transição Motion.
 2. Não usar `useScroll`/`whileInView` do Motion em elementos já controlados pelo ScrollTrigger. Remover o controlador anterior antes de migrar um efeito.
 3. Criar timelines e ScrollTriggers em efeitos de componentes cliente, com refs e seletores limitados ao componente. Usar `gsap.context()` e `context.revert()` no cleanup. Recriar efeitos de página ao trocar a rota e evitar registros duplicados.
-4. Respeitar `prefers-reduced-motion`: GSAP usa `matchMedia`; Motion recebe `always`/`never` no `MotionConfig` conforme a preferência lida por um hook com `useSyncExternalStore`, que preserva a hidratação e acompanha mudanças em tempo real. Com movimento reduzido, o conteúdo continua visível e os controles funcionam. Por decisão de produto, o fundo decorativo da hero inicia automaticamente também nessa preferência, sem botão de play/pause. A faixa de tecnologias também inicia automaticamente e mantém seu controle manual de pausa.
+4. Respeitar `prefers-reduced-motion`: GSAP usa `matchMedia`; Motion recebe `always`/`never` no `MotionConfig` conforme a preferência lida por um hook com `useSyncExternalStore`, que preserva a hidratação e acompanha mudanças em tempo real. Com movimento reduzido, o conteúdo continua visível e os controles funcionam. Por decisão de produto, o fundo decorativo da hero inicia automaticamente também nessa preferência, sem botão de play/pause. O carrossel de tecnologias respeita essa preferência exibindo uma lista estática; o loop pertence exclusivamente ao react-fast-marquee.
 5. Priorizar `transform` e `opacity`. Animações de altura ficam limitadas a componentes que precisam disso, como o FAQ; não alterar repetidamente o layout durante scroll.
 6. Manter a semântica, teclado, foco e Escape dos diálogos nativos. Animação não substitui comportamento acessível.
 

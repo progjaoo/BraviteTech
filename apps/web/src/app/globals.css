@@ -55,15 +55,8 @@ body:has(dialog[open]){overflow:hidden}
  .hero-meta>span{max-width:100px}
 }
 
-/* Each repeated group includes its trailing gap so GSAP can loop exactly. */
+/* Shared heading; the carousel surface and items are scoped in its CSS module. */
 .tech-strip .tech-marquee-heading{margin-bottom:26px}
 .tech-strip .tech-marquee-actions{display:flex;align-items:center;gap:18px}
-.tech-marquee-actions .icon-button{border:1px solid #454b55;border-radius:50%;width:36px;height:36px}
-.tech-marquee{width:100%;overflow-x:auto}
-.tech-strip[data-animated=true] .tech-marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
-.tech-marquee-track{display:flex;width:max-content;will-change:transform}
-.tech-marquee-group{display:flex;flex-shrink:0;align-items:center;gap:42px;list-style:none;padding:0 42px 0 0;margin:0;white-space:nowrap}
-.tech-marquee-group li{display:flex;align-items:center;gap:42px;font-size:clamp(21px,2.3vw,33px);font-weight:500;letter-spacing:-.035em;line-height:1.5;color:var(--white)}
-.tech-marquee-group .blue-dot{width:5px;height:5px;flex-shrink:0}
-@media(max-width:700px){.hero-meta{flex-wrap:wrap}.hero-meta>span{flex:1}.hero-meta .hero-coordinate{display:none}.tech-strip .tech-marquee-heading{gap:14px;justify-content:space-between}.tech-strip .tech-marquee-actions{gap:12px}.tech-marquee-group,.tech-marquee-group li{gap:28px}.tech-marquee-group{padding-right:28px}.tech-strip .tech-marquee-actions a{font-size:9px}}
-.tech-strip:not([data-animated=true]) .tech-marquee-copy{display:none}
+.tech-marquee-actions .icon-button{border:1px solid var(--dark-line);border-radius:50%;width:36px;height:36px}
+@media(max-width:700px){.hero-meta{flex-wrap:wrap}.hero-meta>span{flex:1}.hero-meta .hero-coordinate{display:none}.tech-strip .tech-marquee-heading{gap:14px;justify-content:space-between}.tech-strip .tech-marquee-actions{gap:12px}.tech-strip .tech-marquee-actions a{font-size:9px}}

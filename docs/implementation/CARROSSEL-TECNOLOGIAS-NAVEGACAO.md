@@ -1,55 +1,42 @@
 # Carrossel de tecnologias e navegação pela logo
 
-A faixa de tecnologias fica imediatamente depois de `#solucoes` e antes de Processo. A mesma faixa foi removida da posição anterior, depois do FAQ. Mantém a paleta preta, azul e branca da Bravite.
+A faixa continua depois de Serviços e antes de Processo. Seu fundo, fonte e bordas usam os tokens `--black`, `--white`, `--font` e `--dark-line` da Bravite. As cores de marca pertencem somente aos ícones e badges.
 
-## Catálogo
+## Stack identificado
 
-A home apresenta os nomes nesta ordem:
+- Frontend: Next.js, React, JavaScript/TypeScript, Tailwind CSS, GSAP, Motion for React, Three.js, Lenis e Zod. Fontes: `apps/web/package.json`, PostCSS, CSS e componentes.
+- Backend: NestJS em Node.js; PostgreSQL com driver `pg` e migrações SQL em `packages/database/migrations/`. Fontes: `apps/api/package.json` e infraestrutura da API.
+- Infraestrutura: Docker prepara PostgreSQL 16 no desenvolvimento por `scripts/start-database.mjs`. Cloudflare Images tem integração opcional de upload e otimização implementada na API/Next.js; seu uso depende da configuração.
+- Ferramentas da empresa: OpenAI, Next.js, JavaScript, TypeScript, React, Node.js, PostgreSQL, SQL Server, Neon DB, Electron, React Native, Figma e Hermes Agent + n8n, conforme `src/lib/technologies.ts` e a documentação anterior. Essa lista registra o catálogo da empresa; não significa que todas estejam integradas ao runtime deste site.
+- Gerenciador: npm, workspaces e `package-lock.json`. As novas dependências são `react-fast-marquee@1.6.5` e `react-icons@5.7.0`, fixadas no workspace web.
 
-1. OpenAI
-2. Next.js
-3. JavaScript
-4. TypeScript
-5. React
-6. Node.js
-7. PostgreSQL
-8. SQL Server
-9. Neon DB
-10. Electron
-11. React Native
-12. Figma
-13. Hermes Agent + n8n
+O padrão em `src/lib/technology-icons.ts` preserva as 13 ferramentas da empresa e acrescenta NestJS, Tailwind CSS, Docker, GSAP, Motion, Three.js, Lenis, Zod e Cloudflare: 22 itens. A página Sobre continua usando o catálogo compartilhado da empresa.
 
-`src/lib/technologies.ts` é a fonte única do catálogo, compartilhado com as categorias da página Sobre. Ele representa as ferramentas da empresa, sem instalar ou integrar essas ferramentas ao runtime do site.
+## Ícones e visual
 
-## Movimento infinito
+Os símbolos disponíveis vêm de imports nomeados de `react-icons/si`, com cores oficiais e variantes brancas para marcas monocromáticas em fundo escuro. OpenAI, SQL Server, Motion e Lenis usam badges explícitos OAI, SQL, M e L, pois não têm o símbolo correspondente nesse pacote. Hermes Agent + n8n usa o símbolo oficial do n8n; o ícone `SiHermes` é da marca de moda e não representa o agente.
 
-- GSAP, já instalado, controla exclusivamente o `transform` da faixa. A distância de um ciclo é a largura medida de um grupo completo, incluindo o espaço final; `ease: 'none'` e `repeat: -1` dão movimento constante e continuidade entre o último item e o primeiro.
-- A largura da viewport determina o número de repetições: `max(2, ceil(viewport / grupo) + 1)`. Assim, sempre sobra um grupo para cobrir a passagem entre ciclos, inclusive em telas maiores que uma lista inteira.
-- `ResizeObserver` acompanha o grupo e a viewport. Ao mudar tamanho ou fonte, o tween é recriado preservando a fase do ciclo. A velocidade é de 60 px/s no desktop e 46 px/s abaixo de 760 px.
-- A faixa começa automaticamente, inclusive com movimento reduzido. Hover e foco não interrompem a animação. O botão permite pausa e retomada manual, com rótulo e `aria-pressed` coerentes; as demais transições de interface continuam seguindo a preferência do sistema.
-- Fora da viewport ou em aba oculta, o tween suspende seus frames. Ao voltar, retoma automaticamente, respeitando uma pausa manual escolhida pelo usuário.
-- Apenas a primeira lista é exposta às tecnologias assistivas; as repetições usam `aria-hidden`. Sem JavaScript, a lista original pode ser percorrida horizontalmente, sem cópias visíveis. Observers, listeners e tween são removidos ao desmontar o componente.
+Cada item começa com `grayscale(1)` e opacidade discreta. No hover, recupera sua cor, opacidade e sobe 3 px, com transição de 0,3 s. O módulo CSS isola o acabamento dos itens. Os fades são os da biblioteca, com `gradientColor="var(--black)"` e largura responsiva.
+
+## Movimento e acessibilidade
+
+- `react-fast-marquee` controla o loop; `autoFill` preenche viewports largas e `loop={0}` mantém repetição infinita. Não há tween GSAP nem keyframes próprios para essa faixa.
+- `pauseOnHover` pausa o conteúdo do carrossel. O estado do ponteiro da seção também pausa sobre o cabeçalho e os espaços da seção, sem prender a animação com eventos de toque.
+- O botão existente preserva pausa/retomada manual e seu estado `aria-pressed`. Fora da viewport ou em aba oculta, o loop pausa e retoma quando apropriado.
+- `prefers-reduced-motion` usa o hook existente, seguro para hidratação e atualizado em tempo real. Nessa preferência, a faixa exibe uma lista estática com quebra de linha, todos os itens disponíveis e sem deslocamento no hover.
+- Na renderização do servidor e antes da hidratação, o catálogo real permanece em uma lista horizontal navegável. As repetições animadas ficam ocultas para tecnologias assistivas; uma lista sem duplicatas fornece os nomes uma única vez.
+- Observers e listeners são removidos ao desmontar. O carregamento de dependências e o comportamento do carrossel não alteram a hero, o scroll ou a navegação.
+
+## Reutilização
+
+`TechnologyMarquee` recebe `technologies?: readonly Technology[]`, `speed?: number` e `id?: string`. Cada tecnologia possui `{ name, icon, color }`; `icon` aceita `IconType` de react-icons ou uma sigla explícita para badge. O valor padrão funciona com `<TechnologyMarquee />` na page existente. Listas customizadas com funções de ícone devem ser montadas num Client Component, conforme a fronteira de serialização do Next.js. Uma lista vazia não renderiza a seção; uma lista com um item fica estática.
 
 ## Logo do header
 
-- Links da logo mantêm `href="/"`. De uma página interna, a navegação Next.js existente abre a home no topo.
-- Quando já está na home, `onNavigate` cancela a navegação redundante e solicita retorno ao topo. Hash ou query são removidos da URL sem recarregar a página. Cliques com Ctrl/Cmd mantêm o comportamento nativo de abrir outra aba.
-- `src/lib/scroll-navigation.ts` emite um evento cancelável que o `ScrollEffects` atende. A instância ativa do Lenis executa `scrollTo(0)` e substitui qualquer inércia anterior. Sem Lenis, usa scroll nativo, instantâneo com movimento reduzido e suave nos demais cenários.
-- A logo do menu mobile fecha o diálogo antes do retorno. O listener é removido ao trocar de rota; não há ticker ou instância adicional de Lenis.
+O comportamento existente permanece: `href="/"` em páginas internas, retorno ao topo na home com Lenis ou scroll nativo, limpeza de hash/query e fechamento do menu mobile. `src/lib/scroll-navigation.ts` e o header não fazem parte dessa mudança.
 
-## Validação no navegador
+## Verificação da mudança
 
-Chromium na cópia de trabalho em nuvem, sem criar leads nem enviar mensagens:
+Na cópia temporária de revisão, `npm run typecheck --workspace=@bravite/web` passou. Chromium confirmou 22 itens, os ícones e badges, grayscale em repouso e cor/translateY de -3 px no hover, pausa sobre o cabeçalho e os itens, pausa manual e retomada, gradiente com o token preto e ausência de erros JavaScript. Uma inspeção determinística da animação CSS na fronteira do ciclo posicionou o mesmo item a +5 px e depois a -5 px, mantendo continuidade e cobertura da viewport.
 
-- Ordem Serviços → Tecnologias → Processo e os 13 nomes exatos: passaram.
-- Movimento automático, continuidade sob hover e pausa/retomada manual: passaram.
-- Um ciclo real foi observado. A transição passou de `x = -3034,14` para `x = -16,44`, com largura de grupo de `3038,70 px`. O mesmo item deslocou-se aproximadamente 21 px em 350 ms através da troca entre grupos, sem salto visual ou espaço vazio.
-- Tela de 3840 px: três grupos preencheram a faixa durante o ciclo. Mobile 390 e 320 px: movimento e ausência de overflow horizontal passaram.
-- Movimento reduzido na carga e alteração da preferência com a página aberta: faixa permaneceu animada.
-- Logo clicada repetidamente na home, home com hash, página interna e menu mobile: retorno ao topo passou. O diálogo mobile fechou corretamente.
-- Navegação para página interna e retorno: uma única faixa foi montada. A página Sobre exibiu o mesmo catálogo.
-- Nenhum erro de JavaScript nas interações verificadas.
-- `npm run build --workspace=@bravite/web` passou, incluindo validação TypeScript e geração das páginas.
-
-Prévias: [desktop](previews/technology-marquee-after-services-desktop.png) e [mobile](previews/technology-marquee-after-services-mobile-390.png). As verificações foram feitas no navegador da nuvem; esta sessão não inspeciona diretamente o localhost do Mac.
+Viewports de 390, 320 e 3840 px não apresentaram overflow horizontal. Movimento reduzido funcionou ao alterar a preferência com a página aberta e na carga inicial em mobile, exibindo todos os 22 nomes. No mobile com toque e movimento normal, tocar um item não deixou o loop preso em pausa. A revisão usou uma API temporária de leitura com listas vazias para renderizar a home, sem acessar PostgreSQL nem registrar leads.
