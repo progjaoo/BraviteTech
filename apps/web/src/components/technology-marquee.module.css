@@ -37,25 +37,11 @@
   transform: translateY(-3px);
 }
 
-.icon,
-.badge {
+.icon {
   flex-shrink: 0;
   width: 1.15em;
   height: 1.15em;
   color: var(--technology-color);
-}
-
-.badge {
-  display: inline-grid;
-  place-items: center;
-  width: 2.5em;
-  height: 2.5em;
-  border: 1px solid currentColor;
-  border-radius: 6px;
-  background: color-mix(in srgb, var(--technology-color) 12%, transparent);
-  font-size: .46em;
-  font-weight: 700;
-  letter-spacing: 0;
 }
 
 .staticList {
@@ -85,14 +71,13 @@
   border: 0;
 }
 
-@media (hover: none) {
-  /* Touch taps must not leave the library's :hover pause stuck on. */
-  .viewport:hover :global(.rfm-marquee) {
-    animation-play-state: var(--play);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
+  /* Keep this product-requested marquee moving; the global reset otherwise shortens it to 0.01ms. */
+  .section :global(.rfm-marquee) {
+    animation-duration: var(--duration) !important;
+    animation-iteration-count: infinite !important;
+  }
+
   .staticList {
     flex-wrap: wrap;
     gap: 16px 28px;
