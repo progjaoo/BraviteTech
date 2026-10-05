@@ -5,6 +5,7 @@ import { ArrowUpRight, X, Check, LoaderCircle } from 'lucide-react';
 import Link from 'next/link';
 import { ScrollEffects } from './scroll-effects';
 import { WhatsAppInput } from './whatsapp-input';
+import { CookieConsentProvider } from './cookie-consent';
 import { brand, services } from '@/lib/brand';
 import { request } from '@/lib/api';
 import { usePrefersReducedMotion } from '@/lib/use-prefers-reduced-motion';
@@ -43,7 +44,7 @@ export function Providers({children}:{children:ReactNode}){
   }catch(e){setState('idle');setError(e instanceof Error?e.message:'Tente novamente em instantes.');}
   finally{submitting.current=false;}
  }
- return <MotionConfig reducedMotion={reduced?'always':'never'}><AnalysisContext.Provider value={begin}>{children}<ScrollEffects/>
+ return <MotionConfig reducedMotion={reduced?'always':'never'}><CookieConsentProvider><AnalysisContext.Provider value={begin}>{children}<ScrollEffects/>
   <dialog ref={dialog} className="analysis-dialog" onCancel={e=>{e.preventDefault();if(state!=='sending')setOpen(false);}} onClick={e=>{if(e.target===dialog.current&&state!=='sending')setOpen(false);}} aria-labelledby="analysis-title">
    <AnimatePresence>{open&&<motion.div className="dialog-content" initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} exit={{opacity:0,y:12}}>
     <button className="icon-button dialog-close" onClick={()=>setOpen(false)} disabled={state==='sending'} aria-label="Fechar formulário"><X size={22}/></button>
@@ -62,5 +63,5 @@ export function Providers({children}:{children:ReactNode}){
      </form></>}
    </motion.div>}</AnimatePresence>
   </dialog>
- </AnalysisContext.Provider></MotionConfig>;
+ </AnalysisContext.Provider></CookieConsentProvider></MotionConfig>;
 }

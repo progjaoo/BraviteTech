@@ -10,6 +10,7 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test:integration": "node --env-file=.env.local --test scripts/test-integration.mjs",
     "test:form-security": "npm run build --workspace=@bravite/api && node --import tsx --test scripts/test-form-security.mjs",
+    "test:cookies": "node --import tsx --test scripts/test-cookie-consent.mjs",
     "db:start": "node scripts/start-database.mjs",
     "start": "dotenv -e .env.local -- concurrently -k -n api,web \"npm:start:api\" \"npm:start:web\"",
     "start:api": "npm run start --workspace=@bravite/api",
