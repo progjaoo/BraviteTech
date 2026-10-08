@@ -4,7 +4,6 @@ export const LEAD_SERVICES = [
   'Sistemas web & plataformas',
   'E-commerces',
   'Automação & inteligência artificial',
-  'Gestão de tráfego pago',
   'Análise de dados para negócios',
   'Ainda preciso entender a melhor solução',
 ];

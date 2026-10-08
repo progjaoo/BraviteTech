@@ -26,7 +26,7 @@ Login administrativo: consulte `ADMIN_EMAIL` e `ADMIN_PASSWORD` locais em `.env.
 
 ## Funcionalidades
 
-Home, sobre, seis páginas específicas de serviços, contato, cases, blog, política de privacidade e termos. Header fixo durante o scroll, com dropdown e menu mobile, hero animado, processo interativo com diagrama de sequência e FAQ. WhatsApp: `+55 24 99911-9722`. Instagram: `@bravite.br`.
+Home, sobre, cinco páginas específicas de serviços, contato, cases, blog, política de privacidade e termos. Gestão de tráfego pago é uma possibilidade de escopo de Criação de sites; não aparece como serviço separado. O endereço antigo redireciona temporariamente para Criação de sites. Header fixo durante o scroll, com dropdown e menu mobile, hero animado, processo interativo com diagrama de sequência e FAQ. WhatsApp: `+55 24 99911-9722`. Instagram: `@bravite.br`.
 
 O CTA registra um interesse anônimo e abre o formulário. Nome, e-mail, WhatsApp e desafio tornam-se um lead identificável após envio e consentimento. O painel permite acompanhar e excluir pedidos, editar e publicar artigos e cases, visualizar Markdown e enviar capas com descrição. Não há identificação automática de quem apenas visita nem disparo de WhatsApp sem dados de contato.
 

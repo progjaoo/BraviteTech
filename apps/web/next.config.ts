@@ -27,6 +27,7 @@ const config: NextConfig = {
       { protocol: "https", hostname: "media.bravite.com.br", port: "", pathname: "/editorial/**", search: "" },
     ],
   },
+  async redirects() { return [{ source: "/servicos/trafego-pago", destination: "/servicos/criacao-de-sites", permanent: false }]; },
   async rewrites() { return [{ source: "/api/:path*", destination: `${api}/api/:path*` }]; },
   async headers() { return [{ source: "/:path*", headers: [{ key: "X-Content-Type-Options", value: "nosniff" }, { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" }, { key: "X-Frame-Options", value: "DENY" }, { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" }] }]; },
 };
