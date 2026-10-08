@@ -12,6 +12,7 @@ import {
   type CookieChoices, type CookieConsent, type OptionalCookieCategory,
 } from '@/lib/cookie-consent';
 import styles from './cookie-consent.module.css';
+import { isPrivateAdminPath } from '@/lib/admin-path';
 
 type Cleanup = () => void;
 interface CookieContextValue {
@@ -150,10 +151,11 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
     if (revoked && persisted) window.location.reload();
   };
 
-  const hasConsent = useCallback((category: OptionalCookieCategory) => ready && !path.startsWith('/admin') && allowsCookieCategory(preferences, category), [ready, preferences, path]);
+  const privateAdminPath = isPrivateAdminPath(path);
+  const hasConsent = useCallback((category: OptionalCookieCategory) => ready && !privateAdminPath && allowsCookieCategory(preferences, category), [ready, preferences, privateAdminPath]);
   return <CookieContext.Provider value={{ ready, preferences, hasConsent, openPreferences, registerCleanup }}>
     {children}
-    {!path.startsWith('/admin') && <CookieConsentUI
+    {!privateAdminPath && <CookieConsentUI
       bannerVisible={ready && !preferences && !dismissed && !settingsOpen}
       settingsOpen={settingsOpen}
       draft={draft}

@@ -3,6 +3,7 @@ import type { ThrottlerModuleOptions } from '@nestjs/throttler';
 import { json, type Request, type RequestHandler, type Response } from 'express';
 import cookieParser from 'cookie-parser';
 import { randomUUID } from 'node:crypto';
+import { isIP } from 'node:net';
 import { map } from 'rxjs';
 import { checkOrigin } from '../application/auth';
 
@@ -20,6 +21,16 @@ export const formThrottlers: ThrottlerModuleOptions = [
   },
 ];
 
+/** Vercel overwrites these headers at its edge; local requests use Express' socket-aware IP. */
+export function clientAddress(req:Request):string|undefined {
+  if(process.env.VERCEL) {
+    const forwarded=req.headers['x-vercel-forwarded-for'];
+    const address=(Array.isArray(forwarded)?forwarded[0]:forwarded)?.split(',')[0]?.trim();
+    return address&&isIP(address)?address:undefined;
+  }
+  return req.ip||req.socket.remoteAddress||undefined;
+}
+
 @Injectable()
 class Envelope implements NestInterceptor {
   intercept(ctx:ExecutionContext,next:CallHandler) {
@@ -36,7 +47,7 @@ class Errors implements ExceptionFilter {
     const status=error instanceof HttpException?error.getStatus():pgCode==='23505'?409:500;
     const payload=error instanceof HttpException?error.getResponse():null;
     const info=typeof payload==='object'&&payload?payload as {message?:string|string[];details?:unknown}:null;
-    const message=status===429?'Muitos envios. Aguarde um minuto e tente novamente.':status===409?'Este endereço já está em uso. Escolha outro slug.':status===500?'Não foi possível concluir a solicitação.':info?.message||(typeof payload==='string'?payload:'Solicitação inválida.');
+    const message=status===429?(req.path.toLowerCase().endsWith('/login')?'Muitas tentativas. Aguarde antes de tentar novamente.':'Muitos envios. Aguarde um minuto e tente novamente.'):status===409?'Este endereço já está em uso. Escolha outro slug.':status===500?'Não foi possível concluir a solicitação.':info?.message||(typeof payload==='string'?payload:'Solicitação inválida.');
     if(status===500)console.error('API error:',error instanceof Error?error.name:'Unknown');
     res.status(status).json({success:false,error:{code:`HTTP_${status}`,message,details:info?.details},meta:{requestId:req.headers['x-request-id']}});
   }

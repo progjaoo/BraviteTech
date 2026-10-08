@@ -9,18 +9,20 @@ Requisitos locais: Node.js 22 ou superior, npm e Docker funcionando. No Replit o
 ```bash
 npm ci
 npm run db:start
+npm run db:migrate
+npm run db:bootstrap-admin
 npm run dev
 ```
 
-O banco é preparado antes do início da API. `db:start` cria `.env.local` com senhas aleatórias exclusivas na primeira execução, inicia PostgreSQL 16 e aguarda o banco responder. Reutiliza o volume `bravite-postgres-data` nas próximas execuções. Se `DATABASE_URL` vier do ambiente e apontar para um servidor externo, `db:start` não exige Docker. A API cria as tabelas ao iniciar.
+`db:start` cria `.env.local` com segredos aleatórios na primeira execução, inicia PostgreSQL 16 e aguarda o banco responder. O volume `bravite-postgres-data` é reutilizado nas próximas execuções. `db:migrate` aplica as migrações SQL e configura o papel runtime; `db:bootstrap-admin` cria uma conta inicial sem sobrescrever contas existentes. A API não altera o schema ou semeia conteúdo quando inicia.
 
 - Site: http://localhost:3000
-- Painel: http://localhost:3000/admin
-- Swagger: http://localhost:3000/api/docs
+- Painel: use `ADMIN_PANEL_PATH` do `.env.local` em `http://localhost:3000/<valor>`; `/admin` responde 404.
+- Swagger (somente desenvolvimento): http://localhost:3000/api/docs
 - OpenAPI JSON: http://localhost:3000/api/docs-json
 - Saúde da API: http://localhost:3000/api/v1/health
 
-Login administrativo: `bravitetech@gmail.com`; a senha local está em `ADMIN_PASSWORD` no arquivo `.env.local`, ignorado pelo Git. O usuário inicial é criado apenas se ainda não existir; alterar a variável depois não troca a senha já armazenada no banco.
+Login administrativo: consulte `ADMIN_EMAIL` e `ADMIN_PASSWORD` locais em `.env.local`, ignorado pelo Git. Rode o bootstrap uma vez depois da migration; alterar a senha em `.env.local` depois não troca a senha gravada no banco.
 
 ## Funcionalidades
 
@@ -28,7 +30,7 @@ Home, sobre, seis páginas específicas de serviços, contato, cases, blog, pol�
 
 O CTA registra um interesse anônimo e abre o formulário. Nome, e-mail, WhatsApp e desafio tornam-se um lead identificável após envio e consentimento. O painel permite acompanhar e excluir pedidos, editar e publicar artigos e cases, visualizar Markdown e enviar capas com descrição. Não há identificação automática de quem apenas visita nem disparo de WhatsApp sem dados de contato.
 
-O blog começa com três textos institucionais originais, editáveis. A carga inicial roda uma vez, sem repor conteúdo excluído. Cases começam vazios; publique os projetos reais autorizados no painel. Depoimentos podem ser acrescentados quando houver material aprovado.
+O schema pode começar sem conteúdo editorial; não há seed automático no startup de produção. Publique artigos e cases aprovados pelo painel. Depoimentos podem ser acrescentados quando houver material aprovado.
 
 GSAP controla o hero, as timelines e as entradas por scroll com ScrollTrigger/SplitText. Motion for React (antes Framer Motion) usa o pacote `motion` e imports de `motion/react` para as transições de menu, formulário, FAQ e etapas do processo. `react-fast-marquee` controla o loop do carrossel de tecnologias. Cada propriedade de um elemento deve ter um único controlador de animação. As animações de interface respeitam a preferência de movimento reduzido e removem seus efeitos ao desmontar os componentes. O header usa `position: fixed` em CSS. Veja o [plano de animações e header](docs/implementation/PLANO-ANIMACOES-HEADER.md).
 
@@ -61,7 +63,7 @@ docs/implementation/           Referência, validação e capturas
 
 O navegador chama `/api/v1/...` no mesmo domínio; o Next encaminha ao NestJS. As respostas JSON seguem `{ success: true, data, meta: { requestId } }` ou `{ success: false, error: { code, message, details? }, meta: { requestId } }`. Downloads de imagem e documentação usam seu formato próprio. DTOs com class-validator e @nestjs/swagger geram os contratos de entrada.
 
-Autenticação administrativa usa cookie HttpOnly/SameSite Strict, sessões opacas armazenadas como hash, senha com scrypt, verificação de origem em operações de escrita, limites por rota e queries parametrizadas. Imagens aceitas: PNG, JPEG, WebP e AVIF até 8 MB; SVG enviado pelo painel é rejeitado. Markdown não executa HTML arbitrário.
+Autenticação administrativa usa cookie HttpOnly/SameSite Strict, sessões opacas armazenadas como hash, senha com scrypt, verificação de origem em operações de escrita e queries parametrizadas. A interface fica em `ADMIN_PANEL_PATH`; o login tem rate limit local e compartilhado pelo PostgreSQL. Swagger/OpenAPI é desligado em produção. Imagens aceitas: PNG, JPEG, WebP e AVIF até 4 MiB; SVG enviado pelo painel é rejeitado. Markdown não executa HTML arbitrário.
 
 O formulário possui máscara de WhatsApp, validação no servidor, serviços permitidos, limite de JSON, honeypot e proteção contra repetição e abuso. Os controles e as referências OWASP estão em [Segurança do formulário](docs/implementation/SEGURANCA-FORMULARIO.md). Rode `npm run test:form-security` para verificar esses controles localmente, sem banco ou envio de e-mail.
 
@@ -73,11 +75,13 @@ Os pedidos são persistidos e as notificações para `bravitetech@gmail.com` ent
 
 Mantenha `RESEND_API_KEY` somente no `.env` do servidor, nunca em variáveis `NEXT_PUBLIC_*` nem no frontend, e reinicie a API depois de configurá-la. `LEAD_NOTIFICATION_EMAIL` define quem recebe os pedidos (o padrão é `bravitetech@gmail.com`). O endereço do lead é usado como `Reply-To`, permitindo responder diretamente. SMTP genérico continua disponível como fallback por `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` e `SMTP_FROM`. Sem um provedor configurado, os e-mails permanecem pendentes; há até cinco tentativas por notificação.
 
-Para imagens na Cloudflare Images, configure `CLOUDFLARE_ACCOUNT_ID` e `CLOUDFLARE_IMAGES_TOKEN` com permissão de upload. A API armazena a URL `imagedelivery.net` devolvida pelo provedor e o Next otimiza a imagem. Em desenvolvimento, as imagens ficam em `.local/uploads`. Em produção, use Cloudflare ou armazenamento persistente; arquivos locais não sobrevivem a uma instância descartável.
+Para imagens, configure `MEDIA_STORAGE=r2`, `CLOUDFLARE_ACCOUNT_ID`, `R2_BUCKET=bravite-images`, `R2_PUBLIC_URL=https://media.bravite.com.br` e as credenciais privadas `R2_ACCESS_KEY_ID`/`R2_SECRET_ACCESS_KEY`, limitadas ao bucket. O domínio personalizado e o cache de mídia estão configurados na Cloudflare. A API decodifica e normaliza os uploads para WebP sem EXIF/GPS, grava no R2 e registra a URL pública; o Next otimiza para cada tela. `npm run test:media-storage` valida o fluxo com dependências simuladas.
 
-A integração com bucket R2 está planejada para `bravite-images`, com entrega em `media.bravite.com.br` e armazenamento privado separado para rascunhos. Ela ainda não foi implementada nem configurada na conta. Consulte o [plano de conexão das imagens](docs/implementation/PLANO-IMAGENS-CLOUDFLARE.md) e a [especificação das implementações Cloudflare](docs/implementation/CLOUDFLARE-IMPLEMENTACOES.md), que incluem a auditoria do código atual, contratos, migração, cache e demais usos recomendados.
+As imagens enviadas já são públicas, mesmo em artigos em rascunho. Biblioteca com armazenamento privado e ciclo de publicação permanece uma etapa futura. A configuração operacional e as evidências ficam no guia local `docs/cloudflare-r2.md`; o planejamento está em `plans/2026-10-05-cloudflare-r2-imagens.md`. Esses diretórios são ignorados pelo Git. O [plano anterior](docs/implementation/PLANO-IMAGENS-CLOUDFLARE.md) e a [especificação editorial](docs/implementation/CLOUDFLARE-IMPLEMENTACOES.md) registram a evolução prevista.
 
-Use `.env.example` como referência para as variáveis. Em Replit ou outro host, configure as credenciais no gerenciador de Secrets, conecte um PostgreSQL persistente por `DATABASE_URL` e ajuste `APP_ORIGIN` e `NEXT_PUBLIC_SITE_URL` para a URL publicada. `APP_ORIGIN` aceita várias origens exatas separadas por vírgula. `API_URL` aponta para o processo NestJS; sua rota de proxy é definida no build. Em produção, use HTTPS e `NODE_ENV=production`, que ativa o cookie Secure. A API e o frontend precisam rodar no mesmo host para o endereço interno padrão funcionar.
+`MEDIA_STORAGE=cloudflare-images` preserva o provedor antigo com `CLOUDFLARE_IMAGES_TOKEN`. Em desenvolvimento, `MEDIA_STORAGE=local` usa `.local/uploads`; produção recusa esse modo. Configure os Secrets no host e reinicie a API depois de mudar o provedor. Esta entrega não publicou uma nova versão do site.
+
+Use `.env.example` como catálogo. Em produção, mantenha `DATABASE_MIGRATION_URL` e `ADMIN_PASSWORD` fora da Vercel; `DATABASE_URL` da API deve usar o papel Neon `bravite_runtime` e URL pooled. `APP_ORIGIN` aceita origens exatas separadas por vírgula. O Next usa `API_URL` para reescrever `/api/*`. A preparação Vercel + Neon, os passos para conectar depois o domínio e o estado do ensaio da migration estão em [docs/deploy-vercel-neon.md](docs/deploy-vercel-neon.md) e no [plano Vercel + Neon](plans/2026-10-07-producao-vercel-neon-login.md). Nenhum deploy foi feito.
 
 ## Validar e executar em produção
 

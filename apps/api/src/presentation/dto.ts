@@ -24,7 +24,7 @@ export class LeadDto implements LeadCommand {
  @ApiPropertyOptional({description:'Honeypot: must remain empty'}) @ValidateIf((_,value)=>value!==undefined) @IsString() @Equals('') website?:string;
 }
 export class LoginDto {
- @ApiProperty() @IsEmail() email!:string;
+ @ApiProperty({maxLength:254}) @Transform(({value})=>{if(typeof value!=='string')return value;const normalized=normalizeText(value);return typeof normalized==='string'?normalized.toLowerCase():value;}) @IsString() @IsEmail() @Length(3,254) @Matches(SINGLE_LINE_TEXT) email!:string;
  @ApiProperty() @IsString() @Length(1,200) password!:string;
 }
 export class StatusDto {

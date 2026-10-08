@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
 import { scrollToTopEvent } from '@/lib/scroll-navigation';
+import { isPrivateAdminPath } from '@/lib/admin-path';
 
 export function ScrollEffects() {
  const path=usePathname();
@@ -26,7 +27,7 @@ export function ScrollEffects() {
    window.scrollTo({top:target?target.getBoundingClientRect().top+window.scrollY-110:0,behavior:'instant'});
   }
   historyNavigation.current=false;
-  if(path.startsWith('/admin'))return;
+  if(isPrivateAdminPath(path))return;
   gsap.registerPlugin(ScrollTrigger,SplitText);
   const media=gsap.matchMedia();
   const splits:SplitText[]=[];

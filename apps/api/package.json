@@ -9,27 +9,30 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1146.0",
+    "@bravite/shared": "1.0.0",
     "@nestjs/common": "^11.1.0",
     "@nestjs/core": "^11.1.0",
     "@nestjs/platform-express": "^11.1.0",
     "@nestjs/swagger": "^11.2.0",
     "@nestjs/throttler": "^6.4.0",
-    "reflect-metadata": "^0.2.2",
-    "rxjs": "^7.8.0",
-    "class-validator": "^0.14.2",
+    "@vercel/functions": "^3.9.11",
     "class-transformer": "^0.5.1",
-    "pg": "^8.16.0",
+    "class-validator": "^0.14.2",
     "cookie-parser": "^1.4.7",
     "express": "^5.2.1",
     "nodemailer": "^7.0.0",
-    "@bravite/shared": "1.0.0"
+    "pg": "^8.16.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.0",
+    "sharp": "^0.35.5"
   },
   "devDependencies": {
-    "tsx": "^4.20.0",
-    "@types/pg": "^8.15.0",
-    "@types/express": "^5.0.0",
     "@types/cookie-parser": "^1.4.9",
+    "@types/express": "^5.0.0",
+    "@types/multer": "^2.0.0",
     "@types/nodemailer": "^7.0.0",
-    "@types/multer": "^2.0.0"
+    "@types/pg": "^8.15.0",
+    "tsx": "^4.20.0"
   }
 }

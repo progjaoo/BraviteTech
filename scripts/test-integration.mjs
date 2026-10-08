@@ -8,7 +8,7 @@ import pg from 'pg';
 const origin=process.env.APP_ORIGIN?.split(',')[0]||'http://localhost:3000';
 const target=new URL(origin);
 if(!['localhost','127.0.0.1'].includes(target.hostname))throw new Error('Integration tests require a local server.');
-if(process.env.RESEND_API_KEY||process.env.SMTP_HOST||process.env.CLOUDFLARE_IMAGES_TOKEN)throw new Error('Use local storage and disable external delivery when testing.');
+if(process.env.RESEND_API_KEY||process.env.SMTP_HOST||process.env.CLOUDFLARE_IMAGES_TOKEN||process.env.R2_ACCESS_KEY_ID||process.env.R2_SECRET_ACCESS_KEY||(process.env.MEDIA_STORAGE&&process.env.MEDIA_STORAGE!=='local'))throw new Error('Use local storage and disable external delivery when testing.');
 let cookie='';
 async function api(path,{method='GET',body,authenticated=false,expected=200,requestOrigin=origin}={}){
  const response=await fetch(`${origin}/api/v1/${path}`,{method,headers:{'Content-Type':'application/json',Origin:requestOrigin,...(authenticated?{Cookie:cookie}:{})},...(body?{body:JSON.stringify(body)}:{})});
@@ -64,7 +64,7 @@ test('lead consent, sessions, publishing, uploads and API contracts',async()=>{
   const image=new FormData();image.set('file',new Blob([png],{type:'image/png'}),'favicon.png');
   const uploaded=await fetch(`${origin}/api/v1/media/upload`,{method:'POST',headers:{Origin:origin,Cookie:cookie},body:image});
   assert.equal(uploaded.status,201);const media=(await uploaded.json()).data;uploadedMedia=media;
-  const delivered=await fetch(new URL(media.url,origin));assert.equal(delivered.status,200);assert.match(delivered.headers.get('Content-Type'),/image\/png/);
+  const delivered=await fetch(new URL(media.url,origin));assert.equal(delivered.status,200);assert.match(delivered.headers.get('Content-Type'),/image\/webp/);
   const spec=await(await fetch(`${origin}/api/docs-json`)).json();
   assert.ok(spec.paths['/api/v1/leads']);assert.ok(spec.components.schemas.LeadDto.properties.consent);
  }finally{

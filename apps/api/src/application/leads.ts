@@ -1,5 +1,6 @@
-import { BadRequestException, Inject, Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { randomUUID, randomBytes } from 'node:crypto';
+import { waitUntil } from '@vercel/functions';
 import nodemailer from 'nodemailer';
 import { Database } from '../infrastructure/database';
 import { digest } from './auth';
@@ -24,8 +25,7 @@ function mailConfiguration() {
 export function isMailConfigured(){return mailConfiguration()!==null;}
 
 @Injectable()
-export class LeadsService implements OnModuleInit,OnModuleDestroy {
- private timer?:NodeJS.Timeout;
+export class LeadsService {
  private processing=false;
  constructor(@Inject(Database)private db:Database){}
  async intent(source='site'){
@@ -34,33 +34,46 @@ export class LeadsService implements OnModuleInit,OnModuleDestroy {
   return {id,token};
  }
  async submit(dto:LeadCommand){
-  const client=await this.db.pool.connect();
-  try{
-   await client.query('BEGIN');let id:string|undefined;
+  const result=await this.db.transactionWithContext({worker:true,intentTokenHash:dto.intentToken?digest(dto.intentToken):undefined},async client=>{
+   let id:string|undefined;
    if(dto.intentId&&dto.intentToken){
     const updated=await client.query("UPDATE leads SET name=$1,email=$2,phone=$3,company=$4,service=$5,message=$6,status='new',consent_at=now(),consent_version='2026-10',intent_token_hash=NULL,updated_at=now() WHERE id=$7 AND intent_token_hash=$8 AND status='intent' AND created_at>now()-interval '30 minutes' RETURNING id",[dto.name.trim(),dto.email.toLowerCase(),dto.phone,dto.company||null,dto.service,dto.message.trim(),dto.intentId,digest(dto.intentToken)]);id=updated.rows[0]?.id;
     if(!id)throw new BadRequestException('Esta solicitação expirou ou já foi enviada. Feche e abra o formulário para tentar novamente.');
    }
    if(!id){id=randomUUID();await client.query("INSERT INTO leads(id,name,email,phone,company,service,message,status,consent_at,consent_version,source) VALUES($1,$2,$3,$4,$5,$6,$7,'new',now(),'2026-10','form')",[id,dto.name.trim(),dto.email.toLowerCase(),dto.phone,dto.company||null,dto.service,dto.message.trim()]);}
    await client.query('INSERT INTO notification_outbox(id,lead_id) VALUES($1,$2)',[randomUUID(),id]);
-   await client.query('COMMIT');void this.flush();return {id,status:'received'};
-  }catch(e){await client.query('ROLLBACK');throw e;}finally{client.release();}
+   return {id,status:'received' as const};
+  });
+  const flush=this.flush().then(()=>undefined);
+  if(process.env.VERCEL)waitUntil(flush);else void flush;
+  return result;
  }
- async flush(){
+ async flush():Promise<{processed:number}>{
   const configuration=mailConfiguration();
-  if(!configuration||this.processing)return;
+  if(!configuration||this.processing)return {processed:0};
   this.processing=true;
+  let processed=0;
   try{
    const mail=nodemailer.createTransport(configuration.transport);
-   const {rows}=await this.db.query("SELECT o.id AS notification_id,l.* FROM notification_outbox o JOIN leads l ON l.id=o.lead_id WHERE o.status='pending' AND o.attempts<5 ORDER BY o.created_at LIMIT 5");
+   const {rows}=await this.db.queryWithContext({worker:true},`WITH candidates AS (
+    SELECT id FROM notification_outbox
+    WHERE attempts<5 AND (status='pending' OR (status='processing' AND locked_at<now()-interval '10 minutes'))
+    ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 5
+   ), claimed AS (
+    UPDATE notification_outbox AS outbox
+    SET status='processing',locked_at=now(),attempts=outbox.attempts+1
+    FROM candidates WHERE outbox.id=candidates.id
+    RETURNING outbox.id,outbox.lead_id
+   )
+   SELECT claimed.id AS notification_id,leads.* FROM claimed JOIN leads ON leads.id=claimed.lead_id`);
    for(const lead of rows){
     try{
      await mail.sendMail({from:configuration.from,to:process.env.LEAD_NOTIFICATION_EMAIL||'bravitetech@gmail.com',replyTo:lead.email,subject:'Bravite — novo pedido de análise',text:`Nome: ${lead.name}\nE-mail: ${lead.email}\nWhatsApp: ${lead.phone}\nEmpresa: ${lead.company||'Não informada'}\nServiço: ${lead.service}\n\n${lead.message}`});
-     await this.db.query("UPDATE notification_outbox SET status='sent',sent_at=now(),error=NULL WHERE id=$1",[lead.notification_id]);
-    }catch{await this.db.query("UPDATE notification_outbox SET attempts=attempts+1,error='Falha no provedor de e-mail; verificar configuração e tentativas' WHERE id=$1",[lead.notification_id]);}
+     await this.db.queryWithContext({worker:true},"UPDATE notification_outbox SET status='sent',sent_at=now(),locked_at=NULL,error=NULL WHERE id=$1",[lead.notification_id]);
+    }catch{await this.db.queryWithContext({worker:true},"UPDATE notification_outbox SET status=CASE WHEN attempts>=5 THEN 'failed' ELSE 'pending' END,locked_at=NULL,error='Falha no provedor de e-mail; verificar configuração e tentativas' WHERE id=$1",[lead.notification_id]);}
+    processed++;
    }
   }catch{console.error('Notification queue unavailable.');}finally{this.processing=false;}
+  return {processed};
  }
- onModuleInit(){this.timer=setInterval(()=>void this.flush(),30000);this.timer.unref();}
- onModuleDestroy(){if(this.timer)clearInterval(this.timer);}
 }
