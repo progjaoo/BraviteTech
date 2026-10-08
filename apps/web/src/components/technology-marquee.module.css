@@ -9,6 +9,21 @@
   min-height: 72px;
 }
 
+.frame {
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.frame[data-dragging="true"] {
+  cursor: grabbing;
+}
+
+.frame[data-dragging="true"] :global(.rfm-marquee) {
+  animation-play-state: paused !important;
+}
+
 .viewport {
   padding-block: 8px;
   overflow-y: hidden;

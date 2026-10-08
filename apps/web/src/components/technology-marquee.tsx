@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import Link from 'next/link';
 import Marquee from 'react-fast-marquee';
 import { ArrowRight } from 'lucide-react';
@@ -14,6 +14,30 @@ export interface TechnologyMarqueeProps {
   technologies?: readonly Technology[];
   speed?: number;
   id?: string;
+}
+
+type MarqueeAnimationSnapshot = {
+  animation: Animation;
+  currentTime: number;
+  duration: number;
+};
+
+function getMarqueeAnimations(element: HTMLElement): MarqueeAnimationSnapshot[] {
+  return Array.from(element.querySelectorAll<HTMLElement>('.rfm-marquee')).flatMap(track =>
+    track.getAnimations().flatMap(animation => {
+      const currentTime = animation.currentTime;
+      const duration = animation.effect?.getComputedTiming().duration;
+      if (
+        typeof currentTime !== 'number'
+        || typeof duration !== 'number'
+        || !Number.isFinite(duration)
+        || duration <= 0
+      ) {
+        return [];
+      }
+      return [{ animation, currentTime, duration }];
+    }),
+  );
 }
 
 function TechnologyItem({ technology }: { technology: Technology }) {
@@ -34,9 +58,20 @@ export function TechnologyMarquee({
   id = 'tecnologias',
 }: TechnologyMarqueeProps = {}) {
   const root = useRef<HTMLElement>(null);
+  const marquee = useRef<HTMLDivElement>(null);
+  const drag = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    moved: boolean;
+    vertical: boolean;
+    pixelsPerSecond: number;
+    animations: MarqueeAnimationSnapshot[];
+  } | null>(null);
   const reducedMotion = usePrefersReducedMotion();
   const [visible, setVisible] = useState(true);
   const [pageVisible, setPageVisible] = useState(true);
+  const [dragging, setDragging] = useState(false);
 
   useEffect(() => {
     const element = root.current;
@@ -55,9 +90,64 @@ export function TechnologyMarquee({
   if (!technologies.length) return null;
 
   const staticMode = technologies.length < 2;
-  const playing = !staticMode && visible && pageVisible;
+  const playing = !staticMode && visible && pageVisible && !dragging;
   const requestedSpeed = Number.isFinite(speed) && speed > 0 ? speed : 50;
   const marqueeSpeed = reducedMotion ? Math.min(requestedSpeed, 24) : requestedSpeed;
+
+  function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    if (!marquee.current || drag.current) return;
+
+    drag.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      moved: false,
+      vertical: false,
+      pixelsPerSecond: marqueeSpeed,
+      animations: getMarqueeAnimations(marquee.current),
+    };
+    setDragging(true);
+  }
+
+  function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
+    const currentDrag = drag.current;
+    const element = marquee.current;
+    if (!currentDrag || !element || currentDrag.pointerId !== event.pointerId || currentDrag.vertical) return;
+
+    const totalX = event.clientX - currentDrag.startX;
+    const totalY = event.clientY - currentDrag.startY;
+    if (!currentDrag.moved && Math.max(Math.abs(totalX), Math.abs(totalY)) < 5) return;
+    if (!currentDrag.moved && Math.abs(totalY) > Math.abs(totalX)) {
+      currentDrag.vertical = true;
+      return;
+    }
+
+    currentDrag.moved = true;
+    event.preventDefault();
+    if (!event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    }
+
+    const offsetInMs = (totalX / currentDrag.pixelsPerSecond) * 1000;
+    for (const snapshot of currentDrag.animations) {
+      // Seek the CSS loop itself, so its animation resumes from the dragged position.
+      const nextTime = ((snapshot.currentTime - offsetInMs) % snapshot.duration + snapshot.duration)
+        % snapshot.duration;
+      snapshot.animation.currentTime = nextTime;
+    }
+  }
+
+  function finishPointer(event: PointerEvent<HTMLDivElement>) {
+    const currentDrag = drag.current;
+    if (!currentDrag || currentDrag.pointerId !== event.pointerId) return;
+
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+    drag.current = null;
+    setDragging(false);
+  }
 
   return (
     <section
@@ -88,13 +178,24 @@ export function TechnologyMarquee({
           <ul className={styles.srOnly}>
             {technologies.map(technology => <li key={technology.name}>{technology.name}</li>)}
           </ul>
-          <div className={styles.frame} aria-hidden="true">
+          <div
+            className={styles.frame}
+            data-dragging={dragging}
+            aria-hidden="true"
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={finishPointer}
+            onPointerCancel={finishPointer}
+            onLostPointerCapture={finishPointer}
+          >
             <Marquee
+              ref={marquee}
               className={styles.viewport}
               autoFill
               loop={0}
               play={playing}
-              pauseOnHover
+              pauseOnHover={false}
+              pauseOnClick={false}
               speed={marqueeSpeed}
               gradient
               gradientColor="var(--black)"

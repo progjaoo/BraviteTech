@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { CaseStudy } from '@bravite/shared';
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
+import { Pause, Play } from 'lucide-react';
 import { CaseCard } from './cards';
 import { usePrefersReducedMotion } from '@/lib/use-prefers-reduced-motion';
 import styles from './case-carousel.module.css';
@@ -93,9 +93,6 @@ export function CaseCarousel({ cases }: { cases: CaseStudy[] }) {
                 {pausedByUser ? <Play size={16} aria-hidden="true" /> : <Pause size={16} aria-hidden="true" />}
               </button>
             )}
-            <button className={styles.button} type="button" aria-label="Cases anteriores" onClick={() => moveTo(page - 1)}>
-              <ChevronLeft size={19} aria-hidden="true" />
-            </button>
             <div className={styles.dots} role="group" aria-label="Selecionar página de cases">
               {Array.from({ length: pageCount }, (_, index) => (
                 <button
@@ -109,9 +106,6 @@ export function CaseCarousel({ cases }: { cases: CaseStudy[] }) {
                 />
               ))}
             </div>
-            <button className={styles.button} type="button" aria-label="Próximos cases" onClick={() => moveTo(page + 1)}>
-              <ChevronRight size={19} aria-hidden="true" />
-            </button>
           </div>
         </div>
       )}
