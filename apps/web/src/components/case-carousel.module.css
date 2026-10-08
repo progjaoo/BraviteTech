@@ -1,0 +1,129 @@
+.root {
+  width: 100%;
+}
+
+.viewport {
+  min-height: 610px;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  animation: enter 520ms cubic-bezier(.2, .75, .25, 1) both;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-top: 21px;
+  border-top: 1px solid var(--dark-line);
+}
+
+.counter {
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: .08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.counter > span {
+  color: var(--muted-inverse);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.button {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  padding: 0;
+  color: var(--white);
+  background: transparent;
+  border: 1px solid var(--dark-line);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+
+.button:hover {
+  color: var(--black);
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.button:focus-visible,
+.dot:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding-inline: 4px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: var(--dark-line);
+  cursor: pointer;
+  transition: width .2s ease, background-color .2s ease;
+}
+
+.dot[data-active="true"] {
+  width: 22px;
+  background: var(--blue);
+}
+
+@keyframes enter {
+  from { opacity: .25; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 700px) {
+  .viewport {
+    min-height: 460px;
+  }
+
+  .cards {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .controls {
+    padding-top: 17px;
+  }
+
+  .actions {
+    gap: 7px;
+  }
+
+  .button {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cards {
+    animation: none;
+  }
+
+  .button,
+  .dot {
+    transition: none;
+  }
+}

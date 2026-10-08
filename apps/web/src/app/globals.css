@@ -63,4 +63,5 @@ body:has(dialog[open]){overflow:hidden}
 .tech-strip .tech-marquee-heading{margin-bottom:26px}
 .tech-strip .tech-marquee-actions{display:flex;align-items:center;gap:18px}
 .tech-marquee-actions .icon-button{border:1px solid var(--dark-line);border-radius:50%;width:36px;height:36px}
+.footer-socials{display:flex;align-items:center;gap:10px;margin-top:16px}.footer-socials>a{display:grid!important;width:38px;height:38px;place-items:center;padding:0!important;border:1px solid var(--dark-line);border-radius:50%;color:var(--muted-inverse);transition:color .2s,border-color .2s,background-color .2s}.footer-socials>a:hover{color:var(--black);border-color:var(--blue);background:var(--blue)}.footer-socials>a:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 @media(max-width:700px){.hero-meta{flex-wrap:wrap}.hero-meta>span{flex:1}.hero-meta .hero-coordinate{display:none}.tech-strip .tech-marquee-heading{gap:14px;justify-content:space-between}.tech-strip .tech-marquee-actions{gap:12px}.tech-strip .tech-marquee-actions a{font-size:9px}}

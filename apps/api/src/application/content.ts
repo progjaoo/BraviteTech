@@ -12,8 +12,9 @@ function mediaURL(value?:string|null){
 export class ContentService {
  constructor(@Inject(Database)private db:Database){}
  async list(kind:'posts'|'cases',admin=false,context?:DatabaseContext){
-  const sql=`SELECT * FROM ${kind} ${admin?'':"WHERE status='published'"} ORDER BY created_at DESC`;
-  return (await (context?this.db.queryWithContext(context,sql):this.db.query(sql))).rows;
+  const sql=`SELECT * FROM ${kind} ${admin?'':'WHERE status=$1'} ORDER BY created_at DESC`;
+  const values=admin?[]:['published'];
+  return (await (context?this.db.queryWithContext(context,sql,values):this.db.query(sql,values))).rows;
  }
  async one(kind:'posts'|'cases',slug:string){
   const {rows}=await this.db.query(`SELECT * FROM ${kind} WHERE slug=$1 AND status='published'`,[slug]);

@@ -9,5 +9,8 @@ export async function request<T>(path:string,options:RequestInit={}):Promise<T>{
 export async function content<T>(path:string):Promise<T>{
  const response=await fetch(`${process.env.API_URL||'http://127.0.0.1:4000'}/api/v1/${path}`,{cache:'no-store',signal:AbortSignal.timeout(5000)});
  const payload=await response.json() as Envelope<T>;
- if(!payload.success)throw new ContentError(payload.error.message,response.status);return payload.data;
+ if(!payload.success)throw new ContentError(payload.error.message,response.status);
+ const data=payload.data;
+ if(path==='posts'||path==='cases')return (data as Array<{status?:string}>).filter(item=>item.status==='published') as T;
+ return data;
 }
