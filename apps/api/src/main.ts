@@ -12,6 +12,7 @@ import { MediaService } from './application/media';
 import { MediaStorage } from './infrastructure/media-storage';
 import { PublicController, AuthController, AdminController, MediaController, NotificationsController } from './presentation/controllers';
 import { configureHttp, formThrottlers } from './presentation/http-security';
+import type { Request, Response } from 'express';
 
 @Module({imports:[ThrottlerModule.forRoot(formThrottlers)],controllers:[PublicController,AuthController,AdminController,MediaController,NotificationsController],providers:[Database,AuthService,AdminGuard,ContentService,LeadsService,MediaService,MediaStorage,{provide:APP_GUARD,useClass:ThrottlerGuard}]})
 class ApplicationModule{}
@@ -25,6 +26,19 @@ export async function createApplication(){
  app.enableShutdownHooks();
  await app.init();
  return app;
+}
+let serverlessApplication: ReturnType<typeof createApplication> | undefined;
+export default async function vercelHandler(request:Request,response:Response){
+ try{
+  serverlessApplication??=createApplication();
+  const app=await serverlessApplication;
+  return app.getHttpAdapter().getInstance()(request,response);
+ }catch{
+  serverlessApplication=undefined;
+  console.error('API could not initialize. Check database and environment configuration.');
+  if(!response.headersSent)return response.status(503).json({success:false,error:{code:'SERVICE_UNAVAILABLE',message:'Serviço temporariamente indisponível.'}});
+  return response.end();
+ }
 }
 async function bootstrap(){
  const app=await createApplication();
