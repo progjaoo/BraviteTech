@@ -33,9 +33,15 @@ export default async function vercelHandler(request:Request,response:Response){
   serverlessApplication??=createApplication();
   const app=await serverlessApplication;
   return app.getHttpAdapter().getInstance()(request,response);
- }catch{
+ }catch(error){
   serverlessApplication=undefined;
-  console.error('API could not initialize. Check database and environment configuration.');
+  const message=error instanceof Error?error.message:'Unknown startup error';
+  const safeMessage=message
+   .replace(/postgres(?:ql)?:\/\/[^\s"'`]+/gi,'[database connection redacted]')
+   .replace(/(password|secret|token|authorization)\s*[=:]\s*[^&\s,;]+/gi,'$1=[redacted]')
+   .slice(0,240);
+  const code=typeof error==='object'&&error!==null&&'code' in error&&typeof error.code==='string'?error.code:undefined;
+  console.error('API could not initialize.',{name:error instanceof Error?error.name:'UnknownError',code,message:safeMessage});
   if(!response.headersSent)return response.status(503).json({success:false,error:{code:'SERVICE_UNAVAILABLE',message:'Serviço temporariamente indisponível.'}});
   return response.end();
  }

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 const configuredApi = process.env.API_URL?.trim();
 if (process.env.VERCEL && !configuredApi) {
   throw new Error("Set API_URL to the deployed Bravite API origin before building this Vercel project.");
@@ -10,6 +11,15 @@ const api = configuredApi || "http://127.0.0.1:4000";
 const config: NextConfig = {
   devIndicators: false,
   output: "standalone",
+  // Keep the source alias resolvable from both the monorepo and Vercel's
+  // apps/web project root when webpack compiles production routes.
+  webpack(webpackConfig) {
+    webpackConfig.resolve.alias = {
+      ...webpackConfig.resolve.alias,
+      "@": path.resolve(process.cwd(), "src"),
+    };
+    return webpackConfig;
+  },
   images: {
     maximumRedirects: 0,
     remotePatterns: [
