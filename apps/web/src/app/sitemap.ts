@@ -1,6 +1,40 @@
 import type { MetadataRoute } from 'next';
-import type { Post,CaseStudy } from '@bravite/shared';
+import type { Post, CaseStudy } from '@bravite/shared';
 import { services } from '@/lib/brand';
 import { content } from '@/lib/api';
-export const dynamic='force-dynamic';
-export default async function sitemap():Promise<MetadataRoute.Sitemap>{const base=process.env.NEXT_PUBLIC_SITE_URL||'https://www.bravite.com.br';const [posts,cases]=await Promise.all([content<Post[]>('posts'),content<CaseStudy[]>('cases')]);return ['','/sobre','/contato','/cases','/blog','/politica-de-cookies','/politica-de-privacidade','/termos-de-uso',...services.map(s=>`/servicos/${s.slug}`),...posts.map(p=>`/blog/${p.slug}`),...cases.map(c=>`/cases/${c.slug}`)].map(path=>({url:base+path}));}
+import { absoluteSiteUrl } from '@/lib/seo';
+
+export const dynamic = 'force-dynamic';
+
+function validLastModified(value?: string | null): Date | undefined {
+  if (!value) return undefined;
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [posts, cases] = await Promise.all([
+    content<Post[]>('posts'),
+    content<CaseStudy[]>('cases'),
+  ]);
+
+  const staticPaths = [
+    '/', '/sobre', '/contato', '/cases', '/blog', '/politica-de-cookies',
+    '/politica-de-privacidade', '/termos-de-uso',
+    ...services.map(service => `/servicos/${service.slug}`),
+  ];
+  const entries: MetadataRoute.Sitemap = staticPaths.map(path => ({ url: absoluteSiteUrl(path) }));
+
+  for (const post of posts) {
+    if (post.status !== 'published') continue;
+    const lastModified = validLastModified(post.published_at || post.created_at);
+    entries.push({ url: absoluteSiteUrl(`/blog/${post.slug}`), ...(lastModified ? { lastModified } : {}) });
+  }
+
+  for (const project of cases) {
+    if (project.status !== 'published') continue;
+    entries.push({ url: absoluteSiteUrl(`/cases/${project.slug}`) });
+  }
+
+  return entries;
+}

@@ -24,7 +24,7 @@ export function Hero(){
   <div className="hero-content container"><p className="eyebrow hero-intro"><span className="blue-dot"/>SOFTWARE HOUSE · BRAVITE</p>
    <h1 id="hero-heading"><span className="word-mask"><span className="hero-word">Coragem para criar.</span></span><span className="word-mask"><span className="hero-word hero-accent">Engenharia para evoluir.</span></span></h1>
    <p className="hero-description hero-intro">Transformamos desafios de negócio em experiências digitais,<br className="desktop-break"/> sistemas e soluções construídas com intenção.</p>
-   <div className="hero-actions"><AnalysisButton source="hero"/><a href={brand.whatsapp} className="button button-outline" target="_blank" rel="noopener noreferrer">Conversar no WhatsApp<ArrowUpRight size={18}/></a></div>
+   <div className="hero-actions"><AnalysisButton source="hero"/><a href={brand.whatsapp} data-analytics-location="hero" className="button button-outline" target="_blank" rel="noopener noreferrer">Conversar no WhatsApp<ArrowUpRight size={18}/></a></div>
   </div>
   <div className="hero-meta container"><span>ESTRATÉGIA. DESIGN. DESENVOLVIMENTO.</span><a href="#solucoes">Explore as possibilidades<ArrowDownRight size={18}/></a><span className="hero-coordinate">BRAVE + IT + ENGINEER</span></div>
  </section>;

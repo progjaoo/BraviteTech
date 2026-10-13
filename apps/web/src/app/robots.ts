@@ -1,2 +1,30 @@
 import type { MetadataRoute } from 'next';
-export default function robots():MetadataRoute.Robots{return {rules:{userAgent:'*',allow:'/',disallow:['/api']},sitemap:`${process.env.NEXT_PUBLIC_SITE_URL||'https://www.bravite.com.br'}/sitemap.xml`};}
+import { absoluteSiteUrl } from '@/lib/seo';
+
+const allowPublic = (userAgent: string) => ({
+  userAgent,
+  allow: '/',
+  disallow: '/api/',
+});
+
+export default function robots(): MetadataRoute.Robots {
+  if (process.env.VERCEL_ENV === 'preview') {
+    return { rules: { userAgent: '*', disallow: '/' } };
+  }
+
+  return {
+    rules: [
+      { userAgent: '*', allow: '/', disallow: '/api/' },
+      allowPublic('Googlebot'),
+      allowPublic('Google-Extended'),
+      allowPublic('OAI-SearchBot'),
+      { userAgent: 'GPTBot', disallow: '/' },
+      allowPublic('ChatGPT-User'),
+      allowPublic('PerplexityBot'),
+      { userAgent: 'ClaudeBot', disallow: '/' },
+      allowPublic('Claude-SearchBot'),
+      allowPublic('Claude-User'),
+    ],
+    sitemap: absoluteSiteUrl('/sitemap.xml'),
+  };
+}

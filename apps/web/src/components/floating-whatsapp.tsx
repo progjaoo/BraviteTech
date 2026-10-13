@@ -1,7 +1,7 @@
 import { brand } from '@/lib/brand';
 
 export function FloatingWhatsApp() {
-  return <a className="whatsapp-float" href={brand.whatsapp} target="_blank" rel="noopener noreferrer"
+  return <a className="whatsapp-float" href={brand.whatsapp} data-analytics-location="floating-whatsapp" target="_blank" rel="noopener noreferrer"
     aria-label="Conversar com a Bravite no WhatsApp (abre em nova aba)">
     <span className="whatsapp-float-label" aria-hidden="true">Converse com a Bravite</span>
     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">

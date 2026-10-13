@@ -1,6 +1,6 @@
 export const CONSENT_COOKIE_NAME = 'bravite_cookie_consent';
 // Increment this when purposes, providers or cookie inventory change materially.
-export const CONSENT_VERSION = 1;
+export const CONSENT_VERSION = 2;
 export const CONSENT_MAX_AGE = 180 * 24 * 60 * 60;
 export const CONSENT_CHANNEL = 'bravite-cookie-consent';
 

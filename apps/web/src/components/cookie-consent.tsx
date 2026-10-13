@@ -13,6 +13,7 @@ import {
 } from '@/lib/cookie-consent';
 import styles from './cookie-consent.module.css';
 import { isPrivateAdminPath } from '@/lib/admin-path';
+import { clearGoogleAnalyticsCookies } from '@/lib/analytics';
 
 type Cleanup = () => void;
 interface CookieContextValue {
@@ -69,6 +70,7 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
   const cleanups = useRef<Record<OptionalCookieCategory, Set<Cleanup>>>({ analytics: new Set(), marketing: new Set() });
 
   const stopDeniedResources = useCallback((next: CookieConsent | null) => {
+    if (!allowsCookieCategory(next, 'analytics')) clearGoogleAnalyticsCookies();
     for (const category of ['analytics', 'marketing'] as const) {
       if (allowsCookieCategory(next, category)) continue;
       const registered = Array.from(cleanups.current[category]);
@@ -235,13 +237,13 @@ function CookieConsentUI({ bannerVisible, settingsOpen, draft, onDraft, onSettin
         <button type="button" className={styles.close} onClick={onCloseSettings} aria-label="Fechar definições de cookies"><X size={20} aria-hidden="true" /></button>
         <h2 id="cookie-settings-title">Sua privacidade.<br />Suas preferências.</h2>
         <p className={styles.intro} id="cookie-settings-description">Escolha quais categorias opcionais você permite. Rejeitar não impede navegar nem solicitar uma análise. Você pode mudar sua escolha pelo rodapé a qualquer momento.</p>
-        <p className={styles.inventoryNote}>Atualmente, usamos apenas cookies essenciais. Nenhuma ferramenta de análise ou publicidade está ativa nesta versão. Se isso mudar, atualizaremos a política e pediremos sua escolha novamente.</p>
+        <p className={styles.inventoryNote}>Com sua autorização para análise, o site carrega Google Analytics 4 e Vercel Web Analytics para medir páginas e interações gerais. Os eventos configurados não incluem os campos do formulário. Nenhuma ferramenta de publicidade está ativa.</p>
         <label className={styles.category}>
           <span><span className={styles.categoryTitle}>Essenciais <span className={styles.required}>Sempre ativos</span></span><span className={styles.categoryDescription}>Guardam sua escolha de cookies e permitem o acesso seguro ao painel administrativo.</span></span>
           <input type="checkbox" checked disabled aria-label="Cookies essenciais, sempre ativos" />
         </label>
         <label className={styles.category}>
-          <span><span className={styles.categoryTitle}>Análise e desempenho</span><span className={styles.categoryDescription}>Permitem medir visitas e entender como melhorar a experiência, quando houver ferramentas dessa categoria.</span></span>
+          <span><span className={styles.categoryTitle}>Análise e desempenho</span><span className={styles.categoryDescription}>Ativam Google Analytics 4 e Vercel Web Analytics para medir páginas e interações gerais do site.</span></span>
           <input type="checkbox" checked={draft.analytics} onChange={event => onDraft({ ...draft, analytics: event.target.checked })} aria-label="Permitir cookies de análise e desempenho" />
         </label>
         <label className={styles.category}>
