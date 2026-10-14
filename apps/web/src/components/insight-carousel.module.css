@@ -1,0 +1,75 @@
+.root {
+  width: 100%;
+}
+
+.viewport {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  cursor: grab;
+  outline-offset: 6px;
+  -webkit-overflow-scrolling: touch;
+}
+
+.viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.viewport:focus-visible {
+  outline: 2px solid var(--blue);
+}
+
+.viewport[data-dragging="true"] {
+  cursor: grabbing;
+  scroll-snap-type: none;
+  scroll-behavior: auto;
+  user-select: none;
+}
+
+.track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 50px) / 3);
+  align-items: stretch;
+  gap: 25px;
+  width: 100%;
+}
+
+.track > :global(.post-card) {
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.hint {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: .04em;
+}
+
+@media (max-width: 900px) {
+  .track {
+    grid-auto-columns: calc((100% - 25px) / 2);
+    gap: 25px;
+  }
+}
+
+@media (max-width: 700px) {
+  .track {
+    grid-auto-columns: 100%;
+    gap: 0;
+  }
+
+  .hint {
+    margin-top: 14px;
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewport {
+    scroll-behavior: auto;
+  }
+}
