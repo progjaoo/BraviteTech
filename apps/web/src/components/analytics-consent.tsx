@@ -10,7 +10,7 @@ const SAFE_LOCATIONS = new Set([
   'site', 'hero', 'servicos', 'criacao-de-sites', 'sistemas-web', 'e-commerces',
   'automacao-inteligencia-artificial', 'analise-de-dados', 'card-analise', 'contato',
   'cases', 'pagina-cases', 'floating-whatsapp', 'footer', 'home-analysis',
-  'contact', 'success',
+  'contact', 'success', 'blog', 'blog-end',
 ]);
 
 function safeLocation(value: string | undefined): string {
