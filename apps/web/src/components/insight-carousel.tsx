@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type MouseEvent, type PointerEvent, type ReactNode } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { usePrefersReducedMotion } from '@/lib/use-prefers-reduced-motion';
 import styles from './insight-carousel.module.css';
 
@@ -125,6 +126,21 @@ export function InsightCarousel({ children, itemCount }: { children: ReactNode; 
     clickReset.current = null;
   }, []);
 
+  const moveByCard = (direction: -1 | 1) => {
+    const element = viewport.current;
+    const firstCard = element?.firstElementChild?.firstElementChild as HTMLElement | null;
+    if (!element || !firstCard) return;
+    const gap = parseFloat(getComputedStyle(element.firstElementChild as Element).columnGap || '0');
+    const step = firstCard.getBoundingClientRect().width + gap;
+    const maxScroll = element.scrollWidth - element.clientWidth;
+    const target = direction < 0 && element.scrollLeft <= 2
+      ? maxScroll
+      : direction > 0 && element.scrollLeft >= maxScroll - 4
+        ? 0
+        : Math.max(0, Math.min(maxScroll, element.scrollLeft + step * direction));
+    element.scrollTo({ left: target, behavior: reducedMotion ? 'auto' : 'smooth' });
+  };
+
   if (!itemCount) return null;
 
   return (
@@ -155,6 +171,14 @@ export function InsightCarousel({ children, itemCount }: { children: ReactNode; 
       >
         <div className={styles.track}>{children}</div>
       </div>
+      {itemCount > 1 && <div className={styles.controls} aria-label="Navegar pelos insights">
+        <button type="button" className={styles.control} aria-label="Insight anterior" onClick={() => moveByCard(-1)}>
+          <ArrowLeft size={17} aria-hidden="true" />
+        </button>
+        <button type="button" className={styles.control} aria-label="Próximo insight" onClick={() => moveByCard(1)}>
+          <ArrowRight size={17} aria-hidden="true" />
+        </button>
+      </div>}
       <p className={styles.hint} aria-hidden="true">Arraste ou deslize para ver todos os insights</p>
     </div>
   );
