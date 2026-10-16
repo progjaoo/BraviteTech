@@ -29,19 +29,21 @@ export class ContentService {
    const link=caseDto.website_url;
    if(link){try{const url=new URL(link);if(!['https:','http:'].includes(url.protocol)||url.username||url.password)throw new Error();}catch{throw new BadRequestException('Informe um endereço válido para o projeto.');}}
    values.website_url=link||null;
-   const position=caseDto.home_featured_position??null;
-   if(caseDto.status==='draft'&&position!==null)throw new BadRequestException('Somente projetos publicados podem aparecer na página inicial.');
+  }
+  if(kind==='posts'||kind==='cases'){
+   const position=dto.home_featured_position??null;
+   if(dto.status==='draft'&&position!==null)throw new BadRequestException('Somente conteúdo publicado pode aparecer na página inicial.');
    values.home_featured_position=position;
-   const columns=Object.keys(values),args=Object.values(values),caseId=id||randomUUID();
+   const columns=Object.keys(values),args=Object.values(values),contentId=id||randomUUID();
    const save=async(client:import('pg').PoolClient)=>{
-    if(position!==null)await client.query('UPDATE cases SET home_featured_position=NULL,updated_at=now() WHERE home_featured_position=$1 AND id<>$2',[position,caseId]);
+    if(position!==null)await client.query(`UPDATE ${kind} SET home_featured_position=NULL,updated_at=now() WHERE home_featured_position=$1 AND id<>$2`,[position,contentId]);
     if(id){
-     const sql=`UPDATE cases SET ${columns.map((c,i)=>`${c}=$${i+1}`).join(',')},updated_at=now() WHERE id=$${columns.length+1} RETURNING *`;
+     const sql=`UPDATE ${kind} SET ${columns.map((c,i)=>`${c}=$${i+1}`).join(',')},updated_at=now() WHERE id=$${columns.length+1} RETURNING *`;
      const {rows}=await client.query(sql,[...args,id]);
      if(!rows[0])throw new NotFoundException('Conteúdo não encontrado.');return rows[0];
     }
-    const sql=`INSERT INTO cases(id,${columns.join(',')}) VALUES($1,${columns.map((_,i)=>`$${i+2}`).join(',')}) RETURNING *`;
-    const {rows}=await client.query(sql,[caseId,...args]);return rows[0];
+    const sql=`INSERT INTO ${kind}(id,${columns.join(',')}) VALUES($1,${columns.map((_,i)=>`$${i+2}`).join(',')}) RETURNING *`;
+    const {rows}=await client.query(sql,[contentId,...args]);return rows[0];
    };
    return this.db.transactionWithContext(context||{},save);
   }
