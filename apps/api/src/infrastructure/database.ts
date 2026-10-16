@@ -74,7 +74,7 @@ export class Database implements OnModuleInit, OnModuleDestroy {
     }
 
     const { rows } = await this.query<{ version: number }>(
-      'SELECT version FROM schema_migrations WHERE version = 4',
+      'SELECT version FROM schema_migrations WHERE version = 5',
     );
     if (!rows.length) throw new Error('Database migrations must be applied before starting the API.');
 

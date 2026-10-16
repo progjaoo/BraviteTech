@@ -50,6 +50,7 @@ export class CaseDto implements CaseCommand {
  @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(2000) cover_url?:string|null;
  @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(200) cover_alt?:string;
  @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(2000) website_url?:string|null;
+ @ApiPropertyOptional({enum:[1,2],nullable:true,description:'Posição do projeto em destaque na página inicial.'}) @Transform(({value})=>value===''||value===undefined||value===null?null:Number(value)) @IsOptional() @IsIn([1,2]) home_featured_position?:1|2|null;
  @ApiProperty() @IsIn(['draft','published']) status!:'draft'|'published';
 }
 export class DtoPipe<T extends object> implements PipeTransform {

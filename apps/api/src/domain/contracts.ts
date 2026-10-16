@@ -9,5 +9,5 @@ export interface PostCommand {
 }
 export interface CaseCommand {
  title:string;slug:string;client:string;summary:string;content:string;category:string;
- cover_url?:string|null;cover_alt?:string;website_url?:string|null;status:'draft'|'published';
+ cover_url?:string|null;cover_alt?:string;website_url?:string|null;status:'draft'|'published';home_featured_position?:1|2|null;
 }
